@@ -11,6 +11,7 @@
         <generate_unity_build>true</generate_unity_build>
     </Generator>
     <Sources>
+        <Source>se.yabs.aichallenge.xml</Source>
         <Source>se.yabs.aichallenge.battleship.xml</Source>
     </Sources>
 </Project>

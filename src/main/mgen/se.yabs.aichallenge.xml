@@ -1,0 +1,23 @@
+<Module>
+	<Enums>
+		<GameSelection>
+			<BATTLESHIP />
+			<GOMOKU_not_yet_implemented />
+		</GameSelection>
+	</Enums>
+	<Types>
+
+		<Message />
+
+		<Checkin extends="Message">
+			<name type="String" />
+			<game type="GameSelection" />
+		</Checkin>
+
+		<GameChallengeFound extends="Message">
+			<game type="GameSelection" />
+			<opponent type="String" />
+		</GameChallengeFound>
+
+	</Types>
+</Module>

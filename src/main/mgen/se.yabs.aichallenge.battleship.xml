@@ -28,15 +28,15 @@
             <team type="Team"/>
             <shots type="list[Shot]"/>
         </Player>
-        <Game>
-            <redPlayer type="Player" id="29583"/>
+        <GameState>
+            <redPlayer type="Player"/>
             <bluePlayer type="Player"/>
             <observers type="list[Player]"/>
-            <redMap type="Map" id="21290"/>
+            <redMap type="Map"/>
             <blueMap type="Map"/>
             <phase type="Phase"/>
             <currentTeam type="Team"/>
-        </Game>
+        </GameState>
         <Vec2>
             <x type="int32"/>
             <y type="int32"/>

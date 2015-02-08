@@ -15,13 +15,25 @@
 namespace se {
 namespace yabs {
 namespace aichallenge {
+
+class Message;
+class Checkin;
+class GameChallengeFound;
+
+} // End namespace aichallenge
+} // End namespace yabs
+} // End namespace se
+
+namespace se {
+namespace yabs {
+namespace aichallenge {
 namespace battleship {
 
 class Ship;
 class Segment;
 class Map;
 class Player;
-class Game;
+class GameState;
 class Vec2;
 class Shot;
 

@@ -1,5 +1,5 @@
 package se.yabs.aichallenge
 
-class Game {
-
+class Game(selection: GameSelection) {
+ 
 }

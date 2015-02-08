@@ -18,6 +18,18 @@ public class Handler  {
 
 	protected void handleUnknown(MGenBase o) { handleDiscard(o); }
 
+	protected void handle(se.yabs.aichallenge.Message o) {
+		handleDiscard(o);
+	}
+
+	protected void handle(se.yabs.aichallenge.Checkin o) {
+		handle((se.yabs.aichallenge.Message)o);
+	}
+
+	protected void handle(se.yabs.aichallenge.GameChallengeFound o) {
+		handle((se.yabs.aichallenge.Message)o);
+	}
+
 	protected void handle(se.yabs.aichallenge.battleship.Ship o) {
 		handleDiscard(o);
 	}
@@ -34,7 +46,7 @@ public class Handler  {
 		handleDiscard(o);
 	}
 
-	protected void handle(se.yabs.aichallenge.battleship.Game o) {
+	protected void handle(se.yabs.aichallenge.battleship.GameState o) {
 		handleDiscard(o);
 	}
 

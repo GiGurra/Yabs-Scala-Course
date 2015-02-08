@@ -39,7 +39,6 @@
 			<redPlayer type="Player" />
 			<bluePlayer type="Player" />
 			<observers type="list[Player]" />
-			<mapSize type="Vec2" />
 			<phase type="Phase" />
 			<currentTeam type="Team" />
 		</GameState>
@@ -55,7 +54,7 @@
 
 		<!-- ********** MESSAGES ********** -->
 
-		<BattleshipMessage extends="se.yabs.aichallenge.Message" />
+		<BattleshipMessage extends="se.yabs.aichallenge.GameMessage" />
 
 		<PlaceShipsRequest extends="BattleshipMessage" />
 		<PlaceShips extends="BattleshipMessage">

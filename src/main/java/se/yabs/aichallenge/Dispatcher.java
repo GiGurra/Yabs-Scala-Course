@@ -24,6 +24,35 @@ public class Dispatcher  {
 		switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
 			case se.yabs.aichallenge.Message._TYPE_ID_16BIT:
 				switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
+					case se.yabs.aichallenge.GameMessage._TYPE_ID_16BIT:
+						switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
+							case se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT:
+								switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
+									case se.yabs.aichallenge.battleship.PlaceShipsRequest._TYPE_ID_16BIT:
+										handler.handle((se.yabs.aichallenge.battleship.PlaceShipsRequest)o);
+										break;
+									case se.yabs.aichallenge.battleship.PlaceShips._TYPE_ID_16BIT:
+										handler.handle((se.yabs.aichallenge.battleship.PlaceShips)o);
+										break;
+									case se.yabs.aichallenge.battleship.MakeShotRequest._TYPE_ID_16BIT:
+										handler.handle((se.yabs.aichallenge.battleship.MakeShotRequest)o);
+										break;
+									case se.yabs.aichallenge.battleship.MakeShot._TYPE_ID_16BIT:
+										handler.handle((se.yabs.aichallenge.battleship.MakeShot)o);
+										break;
+									case se.yabs.aichallenge.battleship.GameOver._TYPE_ID_16BIT:
+										handler.handle((se.yabs.aichallenge.battleship.GameOver)o);
+										break;
+									default:
+										handler.handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
+										break;
+								}
+								break;
+							default:
+								handler.handle((se.yabs.aichallenge.GameMessage)o);
+								break;
+						}
+						break;
 					case se.yabs.aichallenge.WelcomeMessage._TYPE_ID_16BIT:
 						handler.handle((se.yabs.aichallenge.WelcomeMessage)o);
 						break;
@@ -38,28 +67,6 @@ public class Dispatcher  {
 						break;
 					case se.yabs.aichallenge.GameChallengeFound._TYPE_ID_16BIT:
 						handler.handle((se.yabs.aichallenge.GameChallengeFound)o);
-						break;
-					case se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT:
-						switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
-							case se.yabs.aichallenge.battleship.PlaceShipsRequest._TYPE_ID_16BIT:
-								handler.handle((se.yabs.aichallenge.battleship.PlaceShipsRequest)o);
-								break;
-							case se.yabs.aichallenge.battleship.PlaceShips._TYPE_ID_16BIT:
-								handler.handle((se.yabs.aichallenge.battleship.PlaceShips)o);
-								break;
-							case se.yabs.aichallenge.battleship.MakeShotRequest._TYPE_ID_16BIT:
-								handler.handle((se.yabs.aichallenge.battleship.MakeShotRequest)o);
-								break;
-							case se.yabs.aichallenge.battleship.MakeShot._TYPE_ID_16BIT:
-								handler.handle((se.yabs.aichallenge.battleship.MakeShot)o);
-								break;
-							case se.yabs.aichallenge.battleship.GameOver._TYPE_ID_16BIT:
-								handler.handle((se.yabs.aichallenge.battleship.GameOver)o);
-								break;
-							default:
-								handler.handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
-								break;
-						}
 						break;
 					default:
 						handler.handle((se.yabs.aichallenge.Message)o);

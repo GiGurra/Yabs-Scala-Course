@@ -8,6 +8,7 @@
 	<Types>
 
 		<Message />
+		<GameMessage extends="Message" />
 
 		<WelcomeMessage extends="Message">
 			<msg type="String" />
@@ -25,7 +26,7 @@
 		<PlayGame extends="Message">
 			<game type="GameSelection" />
 		</PlayGame>
-		
+
 		<GameChallengeFound extends="Message">
 			<game type="GameSelection" />
 			<opponent type="String" />

@@ -44,6 +44,10 @@ void Handler::handle(se::yabs::aichallenge::Message& o) {
 	handleDiscard(o);
 }
 
+void Handler::handle(se::yabs::aichallenge::GameMessage& o) {
+	handle(static_cast<se::yabs::aichallenge::Message&>(o));
+}
+
 void Handler::handle(se::yabs::aichallenge::WelcomeMessage& o) {
 	handle(static_cast<se::yabs::aichallenge::Message&>(o));
 }
@@ -89,7 +93,7 @@ void Handler::handle(se::yabs::aichallenge::battleship::Shot& o) {
 }
 
 void Handler::handle(se::yabs::aichallenge::battleship::BattleshipMessage& o) {
-	handle(static_cast<se::yabs::aichallenge::Message&>(o));
+	handle(static_cast<se::yabs::aichallenge::GameMessage&>(o));
 }
 
 void Handler::handle(se::yabs::aichallenge::battleship::PlaceShipsRequest& o) {

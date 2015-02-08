@@ -9,6 +9,7 @@
 
 #include "ClassRegistry.h"
 #include "se/yabs/aichallenge/Message.cpp"
+#include "se/yabs/aichallenge/GameMessage.cpp"
 #include "se/yabs/aichallenge/WelcomeMessage.cpp"
 #include "se/yabs/aichallenge/ErrorMessage.cpp"
 #include "se/yabs/aichallenge/Checkin.cpp"
@@ -39,6 +40,7 @@ namespace aichallenge {
 
 ClassRegistry::ClassRegistry() {
 	add<se::yabs::aichallenge::Message>();
+	add<se::yabs::aichallenge::GameMessage>();
 	add<se::yabs::aichallenge::WelcomeMessage>();
 	add<se::yabs::aichallenge::ErrorMessage>();
 	add<se::yabs::aichallenge::Checkin>();
@@ -63,6 +65,7 @@ ClassRegistry::~ClassRegistry() {
 
 const mgen::ClassRegistryEntry * se::yabs::aichallenge::ClassRegistry::getByIds(const std::vector<short>& ids) const {
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_Message(se::yabs::aichallenge::Message::_type_ids(), se::yabs::aichallenge::Message::_type_name(), se::yabs::aichallenge::Message::_newInstance);
+	static const mgen::ClassRegistryEntry se_yabs_aichallenge_GameMessage(se::yabs::aichallenge::GameMessage::_type_ids(), se::yabs::aichallenge::GameMessage::_type_name(), se::yabs::aichallenge::GameMessage::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_WelcomeMessage(se::yabs::aichallenge::WelcomeMessage::_type_ids(), se::yabs::aichallenge::WelcomeMessage::_type_name(), se::yabs::aichallenge::WelcomeMessage::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_ErrorMessage(se::yabs::aichallenge::ErrorMessage::_type_ids(), se::yabs::aichallenge::ErrorMessage::_type_name(), se::yabs::aichallenge::ErrorMessage::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_Checkin(se::yabs::aichallenge::Checkin::_type_ids(), se::yabs::aichallenge::Checkin::_type_name(), se::yabs::aichallenge::Checkin::_newInstance);
@@ -85,6 +88,35 @@ const mgen::ClassRegistryEntry * se::yabs::aichallenge::ClassRegistry::getByIds(
 	switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
 		case se::yabs::aichallenge::Message::_type_id_16bit:
 			switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+				case se::yabs::aichallenge::GameMessage::_type_id_16bit:
+					switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+						case se::yabs::aichallenge::battleship::BattleshipMessage::_type_id_16bit:
+							switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+								case se::yabs::aichallenge::battleship::PlaceShipsRequest::_type_id_16bit:
+									return &se_yabs_aichallenge_battleship_PlaceShipsRequest;
+									break;
+								case se::yabs::aichallenge::battleship::PlaceShips::_type_id_16bit:
+									return &se_yabs_aichallenge_battleship_PlaceShips;
+									break;
+								case se::yabs::aichallenge::battleship::MakeShotRequest::_type_id_16bit:
+									return &se_yabs_aichallenge_battleship_MakeShotRequest;
+									break;
+								case se::yabs::aichallenge::battleship::MakeShot::_type_id_16bit:
+									return &se_yabs_aichallenge_battleship_MakeShot;
+									break;
+								case se::yabs::aichallenge::battleship::GameOver::_type_id_16bit:
+									return &se_yabs_aichallenge_battleship_GameOver;
+									break;
+								default:
+									return &se_yabs_aichallenge_battleship_BattleshipMessage;
+									break;
+							}
+							break;
+						default:
+							return &se_yabs_aichallenge_GameMessage;
+							break;
+					}
+					break;
 				case se::yabs::aichallenge::WelcomeMessage::_type_id_16bit:
 					return &se_yabs_aichallenge_WelcomeMessage;
 					break;
@@ -99,28 +131,6 @@ const mgen::ClassRegistryEntry * se::yabs::aichallenge::ClassRegistry::getByIds(
 					break;
 				case se::yabs::aichallenge::GameChallengeFound::_type_id_16bit:
 					return &se_yabs_aichallenge_GameChallengeFound;
-					break;
-				case se::yabs::aichallenge::battleship::BattleshipMessage::_type_id_16bit:
-					switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
-						case se::yabs::aichallenge::battleship::PlaceShipsRequest::_type_id_16bit:
-							return &se_yabs_aichallenge_battleship_PlaceShipsRequest;
-							break;
-						case se::yabs::aichallenge::battleship::PlaceShips::_type_id_16bit:
-							return &se_yabs_aichallenge_battleship_PlaceShips;
-							break;
-						case se::yabs::aichallenge::battleship::MakeShotRequest::_type_id_16bit:
-							return &se_yabs_aichallenge_battleship_MakeShotRequest;
-							break;
-						case se::yabs::aichallenge::battleship::MakeShot::_type_id_16bit:
-							return &se_yabs_aichallenge_battleship_MakeShot;
-							break;
-						case se::yabs::aichallenge::battleship::GameOver::_type_id_16bit:
-							return &se_yabs_aichallenge_battleship_GameOver;
-							break;
-						default:
-							return &se_yabs_aichallenge_battleship_BattleshipMessage;
-							break;
-					}
 					break;
 				default:
 					return &se_yabs_aichallenge_Message;

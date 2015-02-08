@@ -206,27 +206,27 @@ const std::string& MakeShot::_type_name() {
 }
 
 const std::vector<long long>& MakeShot::_type_ids() {
-	static const std::vector<long long> out = mgen::make_vector<long long>() << 6843908126517847773LL << 2567022198048374295LL << 3005587010339637453LL;
+	static const std::vector<long long> out = mgen::make_vector<long long>() << 6843908126517847773LL << 2246573734118294447LL << 2567022198048374295LL << 3005587010339637453LL;
 	return out;
 }
 
 const std::vector<short>& MakeShot::_type_ids_16bit() {
-	static const std::vector<short> out = mgen::make_vector<short>() << -23638 << 29355 << 32406;
+	static const std::vector<short> out = mgen::make_vector<short>() << -23638 << -25529 << 29355 << 32406;
 	return out;
 }
 
 const std::vector<std::string>& MakeShot::_type_names() {
-	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "se.yabs.aichallenge.Message" << "se.yabs.aichallenge.battleship.BattleshipMessage" << "se.yabs.aichallenge.battleship.MakeShot";
+	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "se.yabs.aichallenge.Message" << "se.yabs.aichallenge.GameMessage" << "se.yabs.aichallenge.battleship.BattleshipMessage" << "se.yabs.aichallenge.battleship.MakeShot";
 	return out;
 }
 
 const std::vector<std::string>& MakeShot::_type_ids_16bit_base64() {
-	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "o6o" << "cqs" << "fpY";
+	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "o6o" << "nEc" << "cqs" << "fpY";
 	return out;
 }
 
 const std::string& MakeShot::_type_ids_16bit_base64_string() {
-	static const std::string out("o6ocqsfpY");
+	static const std::string out("o6onEccqsfpY");
 	return out;
 }
 

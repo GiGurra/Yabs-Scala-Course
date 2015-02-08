@@ -22,6 +22,10 @@ public class Handler  {
 		handleDiscard(o);
 	}
 
+	protected void handle(se.yabs.aichallenge.GameMessage o) {
+		handle((se.yabs.aichallenge.Message)o);
+	}
+
 	protected void handle(se.yabs.aichallenge.WelcomeMessage o) {
 		handle((se.yabs.aichallenge.Message)o);
 	}
@@ -67,7 +71,7 @@ public class Handler  {
 	}
 
 	protected void handle(se.yabs.aichallenge.battleship.BattleshipMessage o) {
-		handle((se.yabs.aichallenge.Message)o);
+		handle((se.yabs.aichallenge.GameMessage)o);
 	}
 
 	protected void handle(se.yabs.aichallenge.battleship.PlaceShipsRequest o) {

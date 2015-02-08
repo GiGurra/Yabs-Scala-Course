@@ -1,14 +1,12 @@
 package se.yabs.aichallenge.host
 
 import java.util.ArrayList
-
 import scala.collection.JavaConversions.seqAsJavaList
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.HashMap
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
-
 import se.yabs.aichallenge.Checkin
 import se.yabs.aichallenge.ErrorMessage
 import se.yabs.aichallenge.Game
@@ -21,6 +19,7 @@ import se.yabs.aichallenge.battleship.BattleshipGame
 import se.yabs.aichallenge.util.SimpleThread
 import se.yabs.aichallenge.util.ZmqSocket
 import se.yabs.aichallenge.util.ZmqUtil
+import se.yabs.aichallenge.GameMessage
 
 class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends SimpleThread[GameHost] {
   val bindAddr = ZmqUtil.mkAddr(ifc, port)
@@ -58,8 +57,9 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
     clients.get(clientId) match {
       case Some(client) =>
         msg match {
-          case msg: PlayGame => handlePlayGame(client, msg.getGame)
-          case _             => throw new RuntimeException(s"Bad message type: ${msg.getClass}")
+          case msg: PlayGame    => handlePlayGame(client, msg.getGame)
+          case msg: GameMessage => handleGameMsg(client, msg)
+          case _                => throw new RuntimeException(s"Bad message type: ${msg.getClass}")
         }
       case None =>
         msg match {
@@ -67,6 +67,20 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
           case _            => throw new RuntimeException(s"Bad message type: ${msg.getClass}")
         }
     }
+  }
+
+  private def handleGameMsg(client: ClientState, msg: GameMessage) {
+    findGameOf(client) match {
+      case Some(game) =>
+        game.handleMessage.applyOrElse(msg, {
+          throw new RuntimeException(s"$client sent a ${msg.getClass}, but the game he is in ($game) doesn't know how to handle this message type")
+        })
+      case None => throw new RuntimeException(s"$client sent a GameMessage, but isn't playing any game")
+    }
+  }
+
+  private def findGameOf(client: ClientState): Option[Game] = {
+    ongoingGames.find(_.isPlayer(client))
   }
 
   private def handlePlayGame(client: ClientState, game: GameSelection) {
@@ -114,8 +128,8 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
   }
 
   private def handleFinishedGames() {
-    while (ongoingGames.exists(_.isFinished)) {
-      ongoingGames -= ongoingGames.find(_.isFinished).get
+    while (ongoingGames.exists(_.isGameOver)) {
+      ongoingGames -= ongoingGames.find(_.isGameOver).get
     }
   }
 

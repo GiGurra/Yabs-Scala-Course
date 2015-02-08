@@ -7,27 +7,26 @@
  ********************************************************************************************************************
  ********************************************************************************************************************/
 
-#ifndef SE_YABS_AICHALLENGE_BATTLESHIP_BATTLESHIPMESSAGE
-#define SE_YABS_AICHALLENGE_BATTLESHIP_BATTLESHIPMESSAGE
+#ifndef SE_YABS_AICHALLENGE_GAMEMESSAGE
+#define SE_YABS_AICHALLENGE_GAMEMESSAGE
 
-#include "se/yabs/aichallenge/GameMessage.h"
+#include "se/yabs/aichallenge/Message.h"
 /* custom_includes_begin *//* custom_includes_end */
 
 namespace se {
 namespace yabs {
 namespace aichallenge {
-namespace battleship {
 
-class BattleshipMessage : public se::yabs::aichallenge::GameMessage /* custom_ifcs_begin *//* custom_ifcs_end */ {
+class GameMessage : public Message /* custom_ifcs_begin *//* custom_ifcs_end */ {
 private:
 public:
-	BattleshipMessage();
-	virtual ~BattleshipMessage();
+	GameMessage();
+	virtual ~GameMessage();
 
 	/* custom_methods_begin *//* custom_methods_end */
 
-	bool operator==(const BattleshipMessage& other) const;
-	bool operator!=(const BattleshipMessage& other) const;
+	bool operator==(const GameMessage& other) const;
+	bool operator!=(const GameMessage& other) const;
 
 
 							
@@ -96,7 +95,7 @@ public:
 
 	bool _isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth depth) const;
 
-	BattleshipMessage& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
+	GameMessage& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
 
 	int _numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTransient) const;
 
@@ -104,7 +103,7 @@ public:
 
 	bool _equals(const mgen::MGenBase& other) const;
 
-	BattleshipMessage * _deepCopy() const;
+	GameMessage * _deepCopy() const;
 
 	static mgen::MGenBase * _newInstance();
 
@@ -119,10 +118,10 @@ public:
  ********************************************************************************************************************
  ********************************************************************************************************************/	 		  
 		  
-	static const long long _type_id = 2567022198048374295LL;
+	static const long long _type_id = 2246573734118294447LL;
 	static const std::vector<long long>& _type_ids();
 
-	static const short _type_id_16bit = 29355;
+	static const short _type_id_16bit = -25529;
 	static const std::vector<short>& _type_ids_16bit();
 
 	static const std::string& _type_id_16bit_base64();
@@ -137,9 +136,8 @@ public:
 
 	static const std::vector<mgen::Field>& _field_metadatas();
 
-}; // End class BattleshipMessage
+}; // End class GameMessage
 
-} // End namespace battleship
 } // End namespace aichallenge
 } // End namespace yabs
 } // End namespace se

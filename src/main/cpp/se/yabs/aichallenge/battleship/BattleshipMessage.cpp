@@ -146,27 +146,27 @@ const std::string& BattleshipMessage::_type_name() {
 }
 
 const std::vector<long long>& BattleshipMessage::_type_ids() {
-	static const std::vector<long long> out = mgen::make_vector<long long>() << 6843908126517847773LL << 2567022198048374295LL;
+	static const std::vector<long long> out = mgen::make_vector<long long>() << 6843908126517847773LL << 2246573734118294447LL << 2567022198048374295LL;
 	return out;
 }
 
 const std::vector<short>& BattleshipMessage::_type_ids_16bit() {
-	static const std::vector<short> out = mgen::make_vector<short>() << -23638 << 29355;
+	static const std::vector<short> out = mgen::make_vector<short>() << -23638 << -25529 << 29355;
 	return out;
 }
 
 const std::vector<std::string>& BattleshipMessage::_type_names() {
-	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "se.yabs.aichallenge.Message" << "se.yabs.aichallenge.battleship.BattleshipMessage";
+	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "se.yabs.aichallenge.Message" << "se.yabs.aichallenge.GameMessage" << "se.yabs.aichallenge.battleship.BattleshipMessage";
 	return out;
 }
 
 const std::vector<std::string>& BattleshipMessage::_type_ids_16bit_base64() {
-	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "o6o" << "cqs";
+	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "o6o" << "nEc" << "cqs";
 	return out;
 }
 
 const std::string& BattleshipMessage::_type_ids_16bit_base64_string() {
-	static const std::string out("o6ocqs");
+	static const std::string out("o6onEccqs");
 	return out;
 }
 

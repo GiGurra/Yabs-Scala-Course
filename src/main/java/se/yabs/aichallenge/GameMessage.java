@@ -6,45 +6,19 @@
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
-package se.yabs.aichallenge.battleship;
+package se.yabs.aichallenge;
 
 import se.culvertsoft.mgen.api.model.Field;
 import se.culvertsoft.mgen.javapack.metadata.FieldSetDepth;
 import se.culvertsoft.mgen.javapack.metadata.FieldVisitSelection;
 import se.culvertsoft.mgen.javapack.serialization.FieldVisitor;
 import se.culvertsoft.mgen.javapack.serialization.Reader;
-import se.culvertsoft.mgen.javapack.util.FieldHasher;
 /* custom_imports_begin *//* custom_imports_end */
 
-public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom_ifcs_end */ {
+public class GameMessage extends Message /* custom_ifcs_begin *//* custom_ifcs_end */ {
 
-	private BattleshipResult m_result;
-
-	public GameOver() {
+	public GameMessage() {
 		super();
-		m_result = null;
-	}
-
-	public GameOver(final BattleshipResult result) {
-		m_result = result;
-	}
-
-	public BattleshipResult getResult() {
-		return m_result;
-	}
-
-	public boolean hasResult() {
-		return _isResultSet(FieldSetDepth.SHALLOW);
-	}
-
-	public GameOver unsetResult() {
-		_setResultSet(false, FieldSetDepth.SHALLOW);
-		return this;
-	}
-
-	public GameOver setResult(final BattleshipResult result) {
-		m_result = result;
-		return this;
 	}
 
 	/* custom_methods_begin *//* custom_methods_end */
@@ -56,28 +30,20 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1224667668;
-		result = _isResultSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getResult(), _result_METADATA.typ())) : result;
-		return result;
+		return -1357383703;
 	}
 
 	@Override
 	public boolean equals(final Object other) {
 		if (other == null) return false;
 		if (other == this) return true;
-		if (GameOver.class != other.getClass()) return false;
-		final GameOver o = (GameOver)other;
-		return true
-		  && hasResult() == o.hasResult()
-		  && getResult() == o.getResult();
+		if (GameMessage.class != other.getClass()) return false;
+		return true;
 	}
 
 	@Override
-	public GameOver deepCopy() {
-		final GameOver out = new GameOver(
-			getResult());
-		return out;
+	public GameMessage deepCopy() {
+		return new GameMessage();
 	}
 
 
@@ -142,15 +108,12 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 	public void _accept(final FieldVisitor visitor, final FieldVisitSelection selection) throws java.io.IOException {
 		switch(selection) {
 			case ALL: {
-				visitor.beginVisit(this, 1);
-				visitor.visit(getResult(), _result_METADATA);
+				visitor.beginVisit(this, 0);
 				visitor.endVisit();
 				break;
 			}
 			default /* case ALL_SET_NONTRANSIENT */ : {
 				visitor.beginVisit(this, _nFieldsSet(FieldSetDepth.SHALLOW, false));
-				if (_isResultSet(FieldSetDepth.SHALLOW))
-					visitor.visit(getResult(), _result_METADATA);
 				visitor.endVisit();
 				break;
 			}
@@ -162,9 +125,6 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 	                         final Object context,
 	                         final Reader reader) throws java.io.IOException {
 		switch(fieldId) {
-			case (_result_ID):
-				setResult((BattleshipResult)reader.readEnumField(_result_METADATA, context));
-				return true;
 			default:
 				reader.handleUnknownField(null, context);
 				return false;
@@ -176,29 +136,14 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 		return _FIELDS;
 	}
 
-	public boolean _isResultSet(final FieldSetDepth fieldSetDepth) {
-		return m_result != null;
-	}
-
 	public boolean _isFieldSet(final Field field, final FieldSetDepth depth) {
 		switch(field.id()) {
-			case (_result_ID):
-				return _isResultSet(depth);
 			default:
 				return false;
 		}
 	}
 
-	public GameOver _setResultSet(final boolean state, final FieldSetDepth depth) {
-		if (state)
-			m_result = m_result != null ? m_result : BattleshipResult.UNKNOWN;
-		else
-			m_result = null;
-		return this;
-	}
-
-	public GameOver _setAllFieldsSet(final boolean state, final FieldSetDepth depth) { 
-		_setResultSet(state, depth);
+	public GameMessage _setAllFieldsSet(final boolean state, final FieldSetDepth depth) { 
 		return this;
 	}
 
@@ -213,15 +158,12 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 	@Override
 	public int _nFieldsSet(final FieldSetDepth depth, final boolean includeTransient) {
 		int out = 0;
-		out += _isResultSet(depth) ? 1 : 0;
 		return out;
 	}
 
 	@Override
 	public Field _fieldById(final short fieldId) {
 		switch(fieldId) {
-			case (_result_ID):
-				return _result_METADATA;
 			default:
 				return null;
 		}
@@ -230,8 +172,6 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 	@Override
 	public Field _fieldByName(final String fieldName) {
 		switch(fieldName) {
-			case ("result"):
-				return _result_METADATA;
 			default:
 				return null;
 		}
@@ -250,28 +190,24 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
  ********************************************************************************************************************/	 		  
 		  
 
-	public static final long _TYPE_ID = 1789310646936949934L;
+	public static final long _TYPE_ID = 2246573734118294447L;
 
-	public static final long[] _TYPE_IDS = { se.yabs.aichallenge.Message._TYPE_ID, se.yabs.aichallenge.GameMessage._TYPE_ID, se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID, se.yabs.aichallenge.battleship.GameOver._TYPE_ID };
+	public static final long[] _TYPE_IDS = { se.yabs.aichallenge.Message._TYPE_ID, se.yabs.aichallenge.GameMessage._TYPE_ID };
 
-	public static final short _TYPE_ID_16BIT = -7695;
+	public static final short _TYPE_ID_16BIT = -25529;
 
-	public static final short[] _TYPE_IDS_16BIT = { se.yabs.aichallenge.Message._TYPE_ID_16BIT, se.yabs.aichallenge.GameMessage._TYPE_ID_16BIT, se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT, se.yabs.aichallenge.battleship.GameOver._TYPE_ID_16BIT };
+	public static final short[] _TYPE_IDS_16BIT = { se.yabs.aichallenge.Message._TYPE_ID_16BIT, se.yabs.aichallenge.GameMessage._TYPE_ID_16BIT };
 
-	public static final String _TYPE_ID_16BIT_BASE64 = "4fE";
+	public static final String _TYPE_ID_16BIT_BASE64 = "nEc";
 
-	public static final String[] _TYPE_IDS_16BIT_BASE64 = { se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64, se.yabs.aichallenge.GameMessage._TYPE_ID_16BIT_BASE64, se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT_BASE64, se.yabs.aichallenge.battleship.GameOver._TYPE_ID_16BIT_BASE64 };
+	public static final String[] _TYPE_IDS_16BIT_BASE64 = { se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64, se.yabs.aichallenge.GameMessage._TYPE_ID_16BIT_BASE64 };
 
-	public static final String _TYPE_IDS_16BIT_BASE64_STRING = se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64 + se.yabs.aichallenge.GameMessage._TYPE_ID_16BIT_BASE64 + se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT_BASE64 + se.yabs.aichallenge.battleship.GameOver._TYPE_ID_16BIT_BASE64;
+	public static final String _TYPE_IDS_16BIT_BASE64_STRING = se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64 + se.yabs.aichallenge.GameMessage._TYPE_ID_16BIT_BASE64;
 
-	public static final String _TYPE_NAME = "se.yabs.aichallenge.battleship.GameOver";
+	public static final String _TYPE_NAME = "se.yabs.aichallenge.GameMessage";
 
-	public static final String[] _TYPE_NAMES = { se.yabs.aichallenge.Message._TYPE_NAME, se.yabs.aichallenge.GameMessage._TYPE_NAME, se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_NAME, se.yabs.aichallenge.battleship.GameOver._TYPE_NAME };
+	public static final String[] _TYPE_NAMES = { se.yabs.aichallenge.Message._TYPE_NAME, se.yabs.aichallenge.GameMessage._TYPE_NAME };
 
-	public static final Field _result_METADATA = new Field("se.yabs.aichallenge.battleship.GameOver", "result", se.yabs.aichallenge.battleship.BattleshipResult._TYPE, null, (short)24642);
-
-	public static final short _result_ID = (short)24642;
-
-	public static final Field[] _FIELDS = { _result_METADATA };
+	public static final Field[] _FIELDS = {  };
 
 }

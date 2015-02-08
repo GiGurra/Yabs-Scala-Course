@@ -14,7 +14,6 @@
 #include "se/yabs/aichallenge/battleship/Phase.h"
 #include "se/yabs/aichallenge/battleship/Player.h"
 #include "se/yabs/aichallenge/battleship/Team.h"
-#include "se/yabs/aichallenge/battleship/Vec2.h"
 /* custom_includes_begin *//* custom_includes_end */
 
 namespace se {
@@ -27,13 +26,11 @@ private:
 	Player m_redPlayer;
 	Player m_bluePlayer;
 	std::vector<Player>  m_observers;
-	Vec2 m_mapSize;
 	Phase m_phase;
 	Team m_currentTeam;
 	bool _m_redPlayer_isSet;
 	bool _m_bluePlayer_isSet;
 	bool _m_observers_isSet;
-	bool _m_mapSize_isSet;
 	bool _m_phase_isSet;
 	bool _m_currentTeam_isSet;
 
@@ -42,7 +39,6 @@ public:
 	GameState(const Player& redPlayer,
 			const Player& bluePlayer,
 			const std::vector<Player> & observers,
-			const Vec2& mapSize,
 			const Phase& phase,
 			const Team& currentTeam);
 	virtual ~GameState();
@@ -50,21 +46,18 @@ public:
 	const Player& getRedPlayer() const;
 	const Player& getBluePlayer() const;
 	const std::vector<Player> & getObservers() const;
-	const Vec2& getMapSize() const;
 	const Phase& getPhase() const;
 	const Team& getCurrentTeam() const;
 
 	Player& getRedPlayerMutable();
 	Player& getBluePlayerMutable();
 	std::vector<Player> & getObserversMutable();
-	Vec2& getMapSizeMutable();
 	Phase& getPhaseMutable();
 	Team& getCurrentTeamMutable();
 
 	GameState& setRedPlayer(const Player& redPlayer);
 	GameState& setBluePlayer(const Player& bluePlayer);
 	GameState& setObservers(const std::vector<Player> & observers);
-	GameState& setMapSize(const Vec2& mapSize);
 	GameState& setPhase(const Phase& phase);
 	GameState& setCurrentTeam(const Team& currentTeam);
 
@@ -73,14 +66,12 @@ public:
 	bool hasRedPlayer() const;
 	bool hasBluePlayer() const;
 	bool hasObservers() const;
-	bool hasMapSize() const;
 	bool hasPhase() const;
 	bool hasCurrentTeam() const;
 
 	GameState& unsetRedPlayer();
 	GameState& unsetBluePlayer();
 	GameState& unsetObservers();
-	GameState& unsetMapSize();
 	GameState& unsetPhase();
 	GameState& unsetCurrentTeam();
 
@@ -112,9 +103,6 @@ public:
 		case _field_observers_id:
 			reader.readField(_field_observers_metadata(), context, getObserversMutable());
 			break;
-		case _field_mapSize_id:
-			reader.readField(_field_mapSize_metadata(), context, getMapSizeMutable());
-			break;
 		case _field_phase_id:
 			reader.readField(_field_phase_metadata(), context, getPhaseMutable());
 			break;
@@ -131,11 +119,10 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) const {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 6);
+				visitor.beginVisit(*this, 5);
 				visitor.visit(getRedPlayer(), _field_redPlayer_metadata());
 				visitor.visit(getBluePlayer(), _field_bluePlayer_metadata());
 				visitor.visit(getObservers(), _field_observers_metadata());
-				visitor.visit(getMapSize(), _field_mapSize_metadata());
 				visitor.visit(getPhase(), _field_phase_metadata());
 				visitor.visit(getCurrentTeam(), _field_currentTeam_metadata());
 				visitor.endVisit();
@@ -149,8 +136,6 @@ public:
 					visitor.visit(getBluePlayer(), _field_bluePlayer_metadata());
 				if (_isObserversSet(mgen::SHALLOW))
 					visitor.visit(getObservers(), _field_observers_metadata());
-				if (_isMapSizeSet(mgen::SHALLOW))
-					visitor.visit(getMapSize(), _field_mapSize_metadata());
 				if (_isPhaseSet(mgen::SHALLOW))
 					visitor.visit(getPhase(), _field_phase_metadata());
 				if (_isCurrentTeamSet(mgen::SHALLOW))
@@ -165,11 +150,10 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 6);
+				visitor.beginVisit(*this, 5);
 				visitor.visit(getRedPlayerMutable(), _field_redPlayer_metadata());
 				visitor.visit(getBluePlayerMutable(), _field_bluePlayer_metadata());
 				visitor.visit(getObserversMutable(), _field_observers_metadata());
-				visitor.visit(getMapSizeMutable(), _field_mapSize_metadata());
 				visitor.visit(getPhaseMutable(), _field_phase_metadata());
 				visitor.visit(getCurrentTeamMutable(), _field_currentTeam_metadata());
 				visitor.endVisit();
@@ -183,8 +167,6 @@ public:
 					visitor.visit(getBluePlayerMutable(), _field_bluePlayer_metadata());
 				if (_isObserversSet(mgen::SHALLOW))
 					visitor.visit(getObserversMutable(), _field_observers_metadata());
-				if (_isMapSizeSet(mgen::SHALLOW))
-					visitor.visit(getMapSizeMutable(), _field_mapSize_metadata());
 				if (_isPhaseSet(mgen::SHALLOW))
 					visitor.visit(getPhaseMutable(), _field_phase_metadata());
 				if (_isCurrentTeamSet(mgen::SHALLOW))
@@ -215,7 +197,6 @@ public:
 	GameState& _setRedPlayerSet(const bool state, const mgen::FieldSetDepth depth);
 	GameState& _setBluePlayerSet(const bool state, const mgen::FieldSetDepth depth);
 	GameState& _setObserversSet(const bool state, const mgen::FieldSetDepth depth);
-	GameState& _setMapSizeSet(const bool state, const mgen::FieldSetDepth depth);
 	GameState& _setPhaseSet(const bool state, const mgen::FieldSetDepth depth);
 	GameState& _setCurrentTeamSet(const bool state, const mgen::FieldSetDepth depth);
 
@@ -226,7 +207,6 @@ public:
 	bool _isRedPlayerSet(const mgen::FieldSetDepth depth) const;
 	bool _isBluePlayerSet(const mgen::FieldSetDepth depth) const;
 	bool _isObserversSet(const mgen::FieldSetDepth depth) const;
-	bool _isMapSizeSet(const mgen::FieldSetDepth depth) const;
 	bool _isPhaseSet(const mgen::FieldSetDepth depth) const;
 	bool _isCurrentTeamSet(const mgen::FieldSetDepth depth) const;
 
@@ -266,14 +246,12 @@ public:
 	static const mgen::Field& _field_redPlayer_metadata();
 	static const mgen::Field& _field_bluePlayer_metadata();
 	static const mgen::Field& _field_observers_metadata();
-	static const mgen::Field& _field_mapSize_metadata();
 	static const mgen::Field& _field_phase_metadata();
 	static const mgen::Field& _field_currentTeam_metadata();
 
 	static const short _field_redPlayer_id = -7294;
 	static const short _field_bluePlayer_id = 10760;
 	static const short _field_observers_id = 22106;
-	static const short _field_mapSize_id = -24724;
 	static const short _field_phase_id = 7625;
 	static const short _field_currentTeam_id = -14726;
 

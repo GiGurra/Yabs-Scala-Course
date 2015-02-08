@@ -34,7 +34,7 @@
 #include "se/yabs/aichallenge/battleship/GameOver.cpp"
 #include "se/yabs/aichallenge/GameSelection.cpp"
 #include "se/yabs/aichallenge/battleship/Team.cpp"
-#include "se/yabs/aichallenge/battleship/Phase.cpp"
+#include "se/yabs/aichallenge/battleship/GamePhase.cpp"
 #include "se/yabs/aichallenge/Dispatcher.cpp"
 #include "se/yabs/aichallenge/Handler.cpp"
 

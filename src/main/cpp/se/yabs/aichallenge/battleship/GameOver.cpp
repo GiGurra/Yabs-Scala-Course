@@ -20,18 +20,22 @@ namespace battleship {
 GameOver::GameOver() : 
 		_m_reason_isSet(false),
 		_m_winner_isSet(false),
-		_m_loser_isSet(false) {
+		_m_loser_isSet(false),
+		_m_board_isSet(false) {
 }
 
 GameOver::GameOver(const std::string& reason, 
 			const std::string& winner, 
-			const std::string& loser) : 
+			const std::string& loser, 
+			const GameState& board) : 
 		m_reason(reason),
 		m_winner(winner),
 		m_loser(loser),
+		m_board(board),
 		_m_reason_isSet(true),
 		_m_winner_isSet(true),
-		_m_loser_isSet(true) {
+		_m_loser_isSet(true),
+		_m_board_isSet(true) {
 }
 
 GameOver::~GameOver() {
@@ -49,6 +53,10 @@ const std::string& GameOver::getLoser() const {
 	return m_loser;
 }
 
+const GameState& GameOver::getBoard() const {
+	return m_board;
+}
+
 std::string& GameOver::getReasonMutable() {
 	_m_reason_isSet = true;
 	return m_reason;
@@ -62,6 +70,11 @@ std::string& GameOver::getWinnerMutable() {
 std::string& GameOver::getLoserMutable() {
 	_m_loser_isSet = true;
 	return m_loser;
+}
+
+GameState& GameOver::getBoardMutable() {
+	_m_board_isSet = true;
+	return m_board;
 }
 
 GameOver& GameOver::setReason(const std::string& reason) {
@@ -82,6 +95,12 @@ GameOver& GameOver::setLoser(const std::string& loser) {
 	return *this;
 }
 
+GameOver& GameOver::setBoard(const GameState& board) {
+	m_board = board;
+	_m_board_isSet = true;
+	return *this;
+}
+
 /* custom_methods_begin *//* custom_methods_end */
 
 bool GameOver::hasReason() const {
@@ -94,6 +113,10 @@ bool GameOver::hasWinner() const {
 
 bool GameOver::hasLoser() const {
 	return _isLoserSet(mgen::SHALLOW);
+}
+
+bool GameOver::hasBoard() const {
+	return _isBoardSet(mgen::SHALLOW);
 }
 
 GameOver& GameOver::unsetReason() {
@@ -111,14 +134,21 @@ GameOver& GameOver::unsetLoser() {
 	return *this;
 }
 
+GameOver& GameOver::unsetBoard() {
+	_setBoardSet(false, mgen::SHALLOW);
+	return *this;
+}
+
 bool GameOver::operator==(const GameOver& other) const {
 	return true
 		 && _isReasonSet(mgen::SHALLOW) == other._isReasonSet(mgen::SHALLOW)
 		 && _isWinnerSet(mgen::SHALLOW) == other._isWinnerSet(mgen::SHALLOW)
 		 && _isLoserSet(mgen::SHALLOW) == other._isLoserSet(mgen::SHALLOW)
+		 && _isBoardSet(mgen::SHALLOW) == other._isBoardSet(mgen::SHALLOW)
 		 && getReason() == other.getReason()
 		 && getWinner() == other.getWinner()
-		 && getLoser() == other.getLoser();
+		 && getLoser() == other.getLoser()
+		 && getBoard() == other.getBoard();
 }
 
 bool GameOver::operator!=(const GameOver& other) const {
@@ -145,13 +175,15 @@ const mgen::Field * GameOver::_fieldById(const short id) const {
 		return &_field_winner_metadata();
 	case _field_loser_id:
 		return &_field_loser_metadata();
+	case _field_board_id:
+		return &_field_board_metadata();
 	default:
 		return 0;
 	}
 }
 
 const mgen::Field * GameOver::_fieldByName(const std::string& name) const {
-	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("reason", &GameOver::_field_reason_metadata())("winner", &GameOver::_field_winner_metadata())("loser", &GameOver::_field_loser_metadata());
+	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("reason", &GameOver::_field_reason_metadata())("winner", &GameOver::_field_winner_metadata())("loser", &GameOver::_field_loser_metadata())("board", &GameOver::_field_board_metadata());
 	const std::map<std::string, const mgen::Field*>::const_iterator it = name2meta.find(name);
 	return it != name2meta.end() ? it->second : 0;
 }
@@ -217,10 +249,18 @@ GameOver& GameOver::_setLoserSet(const bool state, const mgen::FieldSetDepth dep
 	return *this;
 }
 
+GameOver& GameOver::_setBoardSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (depth == mgen::DEEP)
+		m_board._setAllFieldsSet(state, mgen::DEEP);
+	_m_board_isSet = state;
+	return *this;
+}
+
 GameOver& GameOver::_setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth) { 
 	_setReasonSet(state, depth);
 	_setWinnerSet(state, depth);
 	_setLoserSet(state, depth);
+	_setBoardSet(state, depth);
 	return *this;
 }
 
@@ -229,6 +269,7 @@ int GameOver::_numFieldsSet(const mgen::FieldSetDepth depth, const bool includeT
 	out += _isReasonSet(depth) ? 1 : 0;
 	out += _isWinnerSet(depth) ? 1 : 0;
 	out += _isLoserSet(depth) ? 1 : 0;
+	out += _isBoardSet(depth) ? 1 : 0;
 	return out;
 }
 
@@ -240,6 +281,8 @@ bool GameOver::_isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth d
 			return _isWinnerSet(depth);
 		case (_field_loser_id):
 			return _isLoserSet(depth);
+		case (_field_board_id):
+			return _isBoardSet(depth);
 		default:
 			return false;
 	}
@@ -257,11 +300,20 @@ bool GameOver::_isLoserSet(const mgen::FieldSetDepth depth) const {
 	return _m_loser_isSet;
 }
 
+bool GameOver::_isBoardSet(const mgen::FieldSetDepth depth) const {
+	if (depth == mgen::SHALLOW) {
+		return _m_board_isSet;
+	} else {
+		return _m_board_isSet && mgen::validation::validateFieldDeep(getBoard());
+	}
+}
+
 bool GameOver::_validate(const mgen::FieldSetDepth depth) const { 
 	if (depth == mgen::SHALLOW) {
 		return true;
 	} else {
-		return true;
+		return true
+				&& (!_isBoardSet(mgen::SHALLOW) || _isBoardSet(mgen::DEEP));
 	}
 }
 
@@ -325,7 +377,7 @@ const std::string& GameOver::_type_id_16bit_base64() {
 }
 
 const std::vector<mgen::Field>& GameOver::_field_metadatas() {
-	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_reason_metadata() << _field_winner_metadata() << _field_loser_metadata();
+	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_reason_metadata() << _field_winner_metadata() << _field_loser_metadata() << _field_board_metadata();
 	return out;
 }
 
@@ -341,6 +393,11 @@ const mgen::Field& GameOver::_field_winner_metadata() {
 
 const mgen::Field& GameOver::_field_loser_metadata() {
 	static const mgen::Field out(9621, "loser");
+	return out;
+}
+
+const mgen::Field& GameOver::_field_board_metadata() {
+	static const mgen::Field out(12077, "board");
 	return out;
 }
 

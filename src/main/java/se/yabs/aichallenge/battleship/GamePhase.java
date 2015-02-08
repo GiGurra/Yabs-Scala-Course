@@ -11,15 +11,17 @@ package se.yabs.aichallenge.battleship;
 import se.culvertsoft.mgen.api.model.RuntimeEnumType;
 import se.culvertsoft.mgen.javapack.classes.MGenEnum;
 
-public enum Phase implements MGenEnum {
-	LOBBY(0, "LOBBY"),
-	PLAYING(1, "PLAYING"),
-	UNKNOWN(2, "UNKNOWN");
+public enum GamePhase implements MGenEnum {
+	JOINING(0, "JOINING"),
+	PLACING_SHIPS(1, "PLACING_SHIPS"),
+	PLAYING(2, "PLAYING"),
+	GAME_OVER(3, "GAME_OVER"),
+	UNKNOWN(4, "UNKNOWN");
 
 	final int m_intValue;
 	final String m_stringValue;
 
-	Phase(final int intValue, final String stringValue) {
+	GamePhase(final int intValue, final String stringValue) {
 		m_intValue = intValue;
 		m_stringValue = stringValue;
 	}
@@ -34,15 +36,19 @@ public enum Phase implements MGenEnum {
 		return m_stringValue;
 	}
 
-	public static final RuntimeEnumType _TYPE = new RuntimeEnumType("Phase", "se.yabs.aichallenge.battleship.Phase") {
+	public static final RuntimeEnumType _TYPE = new RuntimeEnumType("GamePhase", "se.yabs.aichallenge.battleship.GamePhase") {
 
 		@Override
 		public Enum<?> get(final String entryStringName) {
 			switch(entryStringName) {
-				case "LOBBY":
-					return LOBBY;
+				case "JOINING":
+					return JOINING;
+				case "PLACING_SHIPS":
+					return PLACING_SHIPS;
 				case "PLAYING":
 					return PLAYING;
+				case "GAME_OVER":
+					return GAME_OVER;
 				case "UNKNOWN":
 					return UNKNOWN;
 				default:
@@ -54,10 +60,14 @@ public enum Phase implements MGenEnum {
 		public Enum<?> get(final int entryIntValue) {
 			switch(entryIntValue) {
 				case 0:
-					return LOBBY;
+					return JOINING;
 				case 1:
-					return PLAYING;
+					return PLACING_SHIPS;
 				case 2:
+					return PLAYING;
+				case 3:
+					return GAME_OVER;
+				case 4:
 					return UNKNOWN;
 				default:
 					return UNKNOWN;

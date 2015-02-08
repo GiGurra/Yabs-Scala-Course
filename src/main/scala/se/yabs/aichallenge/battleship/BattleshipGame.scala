@@ -5,6 +5,10 @@ import java.util.ArrayList
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.util.Random
 
+import GamePhase.GAME_OVER
+import GamePhase.JOINING
+import GamePhase.PLACING_SHIPS
+import GamePhase.PLAYING
 import se.yabs.aichallenge.Game
 import se.yabs.aichallenge.GameChallengeFound
 import se.yabs.aichallenge.GameMessage
@@ -16,25 +20,18 @@ object BattleshipGame {
   val NUM_SHIPS = 5
   val SHIP_LENGTHS = Seq(2, 3, 4, 5, 6)
   val MAX_LEN = SHIP_LENGTHS.max
-
-  abstract class GamePhase
-  case object JOINING extends GamePhase
-  case object PLACING_SHIPS extends GamePhase
-  case object PLAYING extends GamePhase
-  case object GAME_OVER extends GamePhase
-
 }
 
 class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
-  import BattleshipGame._
+  import GamePhase._
 
   println(s"A new battleship game ($this) is hosted")
 
   private var redUser: LoggedInUser = null
   private var blueUser: LoggedInUser = null
   private var phase: GamePhase = JOINING
-  private var tLastMove: Double = 0.0
-  private var tStartedSelectingShips: Double = 0.0
+  private var tLastMove = 0.0
+  private var tStartedSelectingShips = 0.0
 
   private val randomizer = new Random(System.nanoTime)
   private val gameState = new GameState
@@ -138,9 +135,6 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
 
     val result = BattleshipUtil.fireAt(player, opponent, msg.getShot)
 
-    player.getShotsFired.add(result.getShot)
-    opponent.getShotsReceived.add(result.getShot)
-
     broadCast(result)
 
     // Check alive
@@ -196,8 +190,8 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     val player = playerOf(winner)
     val opponent = opponentOf(player)
     phase = GAME_OVER
-    println(s"Game over [$redUser vs $blueUser]: $winner won!")
-    broadCast(new GameOver(player.getName, opponent.getName, "no ships alive"))
+    println(s"Game over [$redUser vs $blueUser]: $winner won after ${player.getShotsFired.size} moves!")
+    broadCast(new GameOver(player.getName, opponent.getName, "no ships alive", gameState))
   }
 
   private def userOf(team: Team): LoggedInUser = {
@@ -253,7 +247,7 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     gameState.setRedPlayer(mkPlayer(redUser, Team.RED))
     gameState.setCurrentTeam(curTeam)
     gameState.setObservers(new ArrayList)
-    gameState.setPhase(Phase.LOBBY)
+    gameState.setPhase(GamePhase.JOINING)
   }
 
   private def startGame() {

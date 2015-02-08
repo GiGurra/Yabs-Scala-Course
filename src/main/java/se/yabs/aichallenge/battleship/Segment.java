@@ -28,9 +28,9 @@ public class Segment extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cu
 
 	public Segment() {
 		super();
-		m_alive = false;
+		m_alive = true;
 		m_pos = null;
-		_m_alive_isSet = false;
+		_m_alive_isSet = true;
 	}
 
 	public Segment(final boolean alive,
@@ -242,7 +242,7 @@ public class Segment extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cu
 
 	public Segment _setAliveSet(final boolean state, final FieldSetDepth depth) {
 		if (!state)
-			m_alive = false;
+			m_alive = true;
 		_m_alive_isSet = state;
 		return this;
 	}

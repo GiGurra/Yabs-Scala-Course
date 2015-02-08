@@ -7,10 +7,12 @@
 			<OBSERVERS />
 		</Team>
 
-		<Phase>
-			<LOBBY />
+		<GamePhase>
+			<JOINING />
+			<PLACING_SHIPS />
 			<PLAYING />
-		</Phase>
+			<GAME_OVER />
+		</GamePhase>
 
 	</Enums>
 	<Types>
@@ -20,7 +22,7 @@
 			<points type="list[Segment]" />
 		</Ship>
 		<Segment>
-			<alive type="bool" >true</alive>
+			<alive type="bool">true</alive>
 			<pos type="Vec2" />
 		</Segment>
 		<Player>
@@ -34,7 +36,7 @@
 			<redPlayer type="Player" />
 			<bluePlayer type="Player" />
 			<observers type="list[Player]" />
-			<phase type="Phase" />
+			<phase type="GamePhase" />
 			<currentTeam type="Team" />
 		</GameState>
 		<Vec2>
@@ -71,6 +73,7 @@
 			<reason type="String" />
 			<winner type="String" />
 			<loser type="String" />
+			<board type="GameState" />
 		</GameOver>
 
 	</Types>

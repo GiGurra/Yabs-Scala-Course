@@ -18,7 +18,7 @@ namespace aichallenge {
 namespace battleship {
 
 GameState::GameState() : 
-		m_phase(Phase_UNKNOWN),
+		m_phase(GamePhase_UNKNOWN),
 		m_currentTeam(Team_UNKNOWN),
 		_m_redPlayer_isSet(false),
 		_m_bluePlayer_isSet(false),
@@ -30,7 +30,7 @@ GameState::GameState() :
 GameState::GameState(const Player& redPlayer, 
 			const Player& bluePlayer, 
 			const std::vector<Player> & observers, 
-			const Phase& phase, 
+			const GamePhase& phase, 
 			const Team& currentTeam) : 
 		m_redPlayer(redPlayer),
 		m_bluePlayer(bluePlayer),
@@ -59,7 +59,7 @@ const std::vector<Player> & GameState::getObservers() const {
 	return m_observers;
 }
 
-const Phase& GameState::getPhase() const {
+const GamePhase& GameState::getPhase() const {
 	return m_phase;
 }
 
@@ -82,7 +82,7 @@ std::vector<Player> & GameState::getObserversMutable() {
 	return m_observers;
 }
 
-Phase& GameState::getPhaseMutable() {
+GamePhase& GameState::getPhaseMutable() {
 	_m_phase_isSet = true;
 	return m_phase;
 }
@@ -110,7 +110,7 @@ GameState& GameState::setObservers(const std::vector<Player> & observers) {
 	return *this;
 }
 
-GameState& GameState::setPhase(const Phase& phase) {
+GameState& GameState::setPhase(const GamePhase& phase) {
 	m_phase = phase;
 	_m_phase_isSet = true;
 	return *this;
@@ -287,7 +287,7 @@ GameState& GameState::_setObserversSet(const bool state, const mgen::FieldSetDep
 
 GameState& GameState::_setPhaseSet(const bool state, const mgen::FieldSetDepth depth) {
 	if (!state)
-		m_phase = Phase_UNKNOWN;
+		m_phase = GamePhase_UNKNOWN;
 	_m_phase_isSet = state;
 	return *this;
 }

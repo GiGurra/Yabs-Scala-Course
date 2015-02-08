@@ -11,6 +11,7 @@
 #define SE_YABS_AICHALLENGE_BATTLESHIP_GAMEOVER
 
 #include "se/yabs/aichallenge/battleship/BattleshipMessage.h"
+#include "se/yabs/aichallenge/battleship/GameState.h"
 /* custom_includes_begin *//* custom_includes_end */
 
 namespace se {
@@ -23,38 +24,46 @@ private:
 	std::string m_reason;
 	std::string m_winner;
 	std::string m_loser;
+	GameState m_board;
 	bool _m_reason_isSet;
 	bool _m_winner_isSet;
 	bool _m_loser_isSet;
+	bool _m_board_isSet;
 
 public:
 	GameOver();
 	GameOver(const std::string& reason,
 			const std::string& winner,
-			const std::string& loser);
+			const std::string& loser,
+			const GameState& board);
 	virtual ~GameOver();
 
 	const std::string& getReason() const;
 	const std::string& getWinner() const;
 	const std::string& getLoser() const;
+	const GameState& getBoard() const;
 
 	std::string& getReasonMutable();
 	std::string& getWinnerMutable();
 	std::string& getLoserMutable();
+	GameState& getBoardMutable();
 
 	GameOver& setReason(const std::string& reason);
 	GameOver& setWinner(const std::string& winner);
 	GameOver& setLoser(const std::string& loser);
+	GameOver& setBoard(const GameState& board);
 
 	/* custom_methods_begin *//* custom_methods_end */
 
 	bool hasReason() const;
 	bool hasWinner() const;
 	bool hasLoser() const;
+	bool hasBoard() const;
 
 	GameOver& unsetReason();
 	GameOver& unsetWinner();
 	GameOver& unsetLoser();
+	GameOver& unsetBoard();
 
 	bool operator==(const GameOver& other) const;
 	bool operator!=(const GameOver& other) const;
@@ -84,6 +93,9 @@ public:
 		case _field_loser_id:
 			reader.readField(_field_loser_metadata(), context, getLoserMutable());
 			break;
+		case _field_board_id:
+			reader.readField(_field_board_metadata(), context, getBoardMutable());
+			break;
 		default:
 			reader.handleUnknownField(fieldId, context);
 			break;
@@ -94,10 +106,11 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) const {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 3);
+				visitor.beginVisit(*this, 4);
 				visitor.visit(getReason(), _field_reason_metadata());
 				visitor.visit(getWinner(), _field_winner_metadata());
 				visitor.visit(getLoser(), _field_loser_metadata());
+				visitor.visit(getBoard(), _field_board_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -109,6 +122,8 @@ public:
 					visitor.visit(getWinner(), _field_winner_metadata());
 				if (_isLoserSet(mgen::SHALLOW))
 					visitor.visit(getLoser(), _field_loser_metadata());
+				if (_isBoardSet(mgen::SHALLOW))
+					visitor.visit(getBoard(), _field_board_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -119,10 +134,11 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 3);
+				visitor.beginVisit(*this, 4);
 				visitor.visit(getReasonMutable(), _field_reason_metadata());
 				visitor.visit(getWinnerMutable(), _field_winner_metadata());
 				visitor.visit(getLoserMutable(), _field_loser_metadata());
+				visitor.visit(getBoardMutable(), _field_board_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -134,6 +150,8 @@ public:
 					visitor.visit(getWinnerMutable(), _field_winner_metadata());
 				if (_isLoserSet(mgen::SHALLOW))
 					visitor.visit(getLoserMutable(), _field_loser_metadata());
+				if (_isBoardSet(mgen::SHALLOW))
+					visitor.visit(getBoardMutable(), _field_board_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -160,6 +178,7 @@ public:
 	GameOver& _setReasonSet(const bool state, const mgen::FieldSetDepth depth);
 	GameOver& _setWinnerSet(const bool state, const mgen::FieldSetDepth depth);
 	GameOver& _setLoserSet(const bool state, const mgen::FieldSetDepth depth);
+	GameOver& _setBoardSet(const bool state, const mgen::FieldSetDepth depth);
 
 	GameOver& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
 
@@ -168,6 +187,7 @@ public:
 	bool _isReasonSet(const mgen::FieldSetDepth depth) const;
 	bool _isWinnerSet(const mgen::FieldSetDepth depth) const;
 	bool _isLoserSet(const mgen::FieldSetDepth depth) const;
+	bool _isBoardSet(const mgen::FieldSetDepth depth) const;
 
 	bool _validate(const mgen::FieldSetDepth depth) const;
 
@@ -205,10 +225,12 @@ public:
 	static const mgen::Field& _field_reason_metadata();
 	static const mgen::Field& _field_winner_metadata();
 	static const mgen::Field& _field_loser_metadata();
+	static const mgen::Field& _field_board_metadata();
 
 	static const short _field_reason_id = -15867;
 	static const short _field_winner_id = -7291;
 	static const short _field_loser_id = 9621;
+	static const short _field_board_id = 12077;
 
 	static const std::vector<mgen::Field>& _field_metadatas();
 

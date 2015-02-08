@@ -49,6 +49,7 @@ class BattleshipClient(name: String, pw: String, zmqAddr: String) {
         case msg: GameOver           => return Some(msg)
         case msg: ShotResult         => ai.shotFired(msg.getShooterName, msg.getShot.getPos, msg.getShot.getIsHit)
         case msg: ErrorMessage       => throw new RuntimeException(s"ErrorMessage received from server: ${msg.getMsg}")
+        case msg                     => System.err.println(s"Warning: BattleshipClient '$name' ignoring msg of type: ${msg.getClass}")
       }
     }
     return None

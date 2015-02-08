@@ -11,7 +11,7 @@
 #define SE_YABS_AICHALLENGE_BATTLESHIP_GAMESTATE
 
 #include "mgen/classes/MGenBase.h"
-#include "se/yabs/aichallenge/battleship/Phase.h"
+#include "se/yabs/aichallenge/battleship/GamePhase.h"
 #include "se/yabs/aichallenge/battleship/Player.h"
 #include "se/yabs/aichallenge/battleship/Team.h"
 /* custom_includes_begin *//* custom_includes_end */
@@ -26,7 +26,7 @@ private:
 	Player m_redPlayer;
 	Player m_bluePlayer;
 	std::vector<Player>  m_observers;
-	Phase m_phase;
+	GamePhase m_phase;
 	Team m_currentTeam;
 	bool _m_redPlayer_isSet;
 	bool _m_bluePlayer_isSet;
@@ -39,26 +39,26 @@ public:
 	GameState(const Player& redPlayer,
 			const Player& bluePlayer,
 			const std::vector<Player> & observers,
-			const Phase& phase,
+			const GamePhase& phase,
 			const Team& currentTeam);
 	virtual ~GameState();
 
 	const Player& getRedPlayer() const;
 	const Player& getBluePlayer() const;
 	const std::vector<Player> & getObservers() const;
-	const Phase& getPhase() const;
+	const GamePhase& getPhase() const;
 	const Team& getCurrentTeam() const;
 
 	Player& getRedPlayerMutable();
 	Player& getBluePlayerMutable();
 	std::vector<Player> & getObserversMutable();
-	Phase& getPhaseMutable();
+	GamePhase& getPhaseMutable();
 	Team& getCurrentTeamMutable();
 
 	GameState& setRedPlayer(const Player& redPlayer);
 	GameState& setBluePlayer(const Player& bluePlayer);
 	GameState& setObservers(const std::vector<Player> & observers);
-	GameState& setPhase(const Phase& phase);
+	GameState& setPhase(const GamePhase& phase);
 	GameState& setCurrentTeam(const Team& currentTeam);
 
 	/* custom_methods_begin *//* custom_methods_end */

@@ -25,7 +25,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 	private Player m_redPlayer;
 	private Player m_bluePlayer;
 	private java.util.ArrayList<Player> m_observers;
-	private Phase m_phase;
+	private GamePhase m_phase;
 	private Team m_currentTeam;
 
 	public GameState() {
@@ -40,7 +40,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 	public GameState(final Player redPlayer,
 				final Player bluePlayer,
 				final java.util.ArrayList<Player> observers,
-				final Phase phase,
+				final GamePhase phase,
 				final Team currentTeam) {
 		m_redPlayer = redPlayer;
 		m_bluePlayer = bluePlayer;
@@ -61,7 +61,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		return m_observers;
 	}
 
-	public Phase getPhase() {
+	public GamePhase getPhase() {
 		return m_phase;
 	}
 
@@ -129,7 +129,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		return this;
 	}
 
-	public GameState setPhase(final Phase phase) {
+	public GameState setPhase(final GamePhase phase) {
 		m_phase = phase;
 		return this;
 	}
@@ -293,7 +293,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 				setObservers((java.util.ArrayList<Player>)reader.readListField(_observers_METADATA, context));
 				return true;
 			case (_phase_ID):
-				setPhase((Phase)reader.readEnumField(_phase_METADATA, context));
+				setPhase((GamePhase)reader.readEnumField(_phase_METADATA, context));
 				return true;
 			case (_currentTeam_ID):
 				setCurrentTeam((Team)reader.readEnumField(_currentTeam_METADATA, context));
@@ -390,7 +390,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 
 	public GameState _setPhaseSet(final boolean state, final FieldSetDepth depth) {
 		if (state)
-			m_phase = m_phase != null ? m_phase : Phase.UNKNOWN;
+			m_phase = m_phase != null ? m_phase : GamePhase.UNKNOWN;
 		else
 			m_phase = null;
 		return this;
@@ -505,7 +505,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 	public static final Field _redPlayer_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "redPlayer", new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Player", 5600893473471973514L), null, (short)-7294);
 	public static final Field _bluePlayer_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "bluePlayer", new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Player", 5600893473471973514L), null, (short)10760);
 	public static final Field _observers_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "observers", new se.culvertsoft.mgen.api.model.ListType(new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Player", 5600893473471973514L)), null, (short)22106);
-	public static final Field _phase_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "phase", se.yabs.aichallenge.battleship.Phase._TYPE, null, (short)7625);
+	public static final Field _phase_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "phase", se.yabs.aichallenge.battleship.GamePhase._TYPE, null, (short)7625);
 	public static final Field _currentTeam_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "currentTeam", se.yabs.aichallenge.battleship.Team._TYPE, null, (short)-14726);
 
 	public static final short _redPlayer_ID = (short)-7294;

@@ -18,8 +18,8 @@ namespace aichallenge {
 namespace battleship {
 
 Segment::Segment() : 
-		m_alive(false),
-		_m_alive_isSet(false),
+		m_alive(true),
+		_m_alive_isSet(true),
 		_m_pos_isSet(false) {
 }
 
@@ -166,6 +166,8 @@ const std::vector<mgen::Field>& Segment::_fieldMetadatas() const {
 }
 
 Segment& Segment::_setAliveSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isAliveSet(mgen::SHALLOW))
+		m_alive = true;
 	if (!state)
 		m_alive = false;
 	_m_alive_isSet = state;

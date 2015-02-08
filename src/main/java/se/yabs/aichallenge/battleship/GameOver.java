@@ -14,7 +14,10 @@ import se.culvertsoft.mgen.javapack.metadata.FieldVisitSelection;
 import se.culvertsoft.mgen.javapack.serialization.FieldVisitor;
 import se.culvertsoft.mgen.javapack.serialization.Reader;
 import se.culvertsoft.mgen.javapack.util.FieldHasher;
+import se.culvertsoft.mgen.javapack.util.DeepCopyer;
 import se.culvertsoft.mgen.javapack.util.EqualityTester;
+import se.culvertsoft.mgen.javapack.util.Validator;
+import se.culvertsoft.mgen.javapack.util.Marker;
 /* custom_imports_begin *//* custom_imports_end */
 
 public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom_ifcs_end */ {
@@ -22,20 +25,24 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 	private String m_reason;
 	private String m_winner;
 	private String m_loser;
+	private GameState m_board;
 
 	public GameOver() {
 		super();
 		m_reason = null;
 		m_winner = null;
 		m_loser = null;
+		m_board = null;
 	}
 
 	public GameOver(final String reason,
 				final String winner,
-				final String loser) {
+				final String loser,
+				final GameState board) {
 		m_reason = reason;
 		m_winner = winner;
 		m_loser = loser;
+		m_board = board;
 	}
 
 	public String getReason() {
@@ -50,6 +57,10 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 		return m_loser;
 	}
 
+	public GameState getBoard() {
+		return m_board;
+	}
+
 	public boolean hasReason() {
 		return _isReasonSet(FieldSetDepth.SHALLOW);
 	}
@@ -60,6 +71,10 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 
 	public boolean hasLoser() {
 		return _isLoserSet(FieldSetDepth.SHALLOW);
+	}
+
+	public boolean hasBoard() {
+		return _isBoardSet(FieldSetDepth.SHALLOW);
 	}
 
 	public GameOver unsetReason() {
@@ -74,6 +89,11 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 
 	public GameOver unsetLoser() {
 		_setLoserSet(false, FieldSetDepth.SHALLOW);
+		return this;
+	}
+
+	public GameOver unsetBoard() {
+		_setBoardSet(false, FieldSetDepth.SHALLOW);
 		return this;
 	}
 
@@ -92,6 +112,11 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 		return this;
 	}
 
+	public GameOver setBoard(final GameState board) {
+		m_board = board;
+		return this;
+	}
+
 	/* custom_methods_begin *//* custom_methods_end */
 
 	@Override
@@ -106,6 +131,7 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 		result = _isReasonSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getReason(), _reason_METADATA.typ())) : result;
 		result = _isWinnerSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getWinner(), _winner_METADATA.typ())) : result;
 		result = _isLoserSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getLoser(), _loser_METADATA.typ())) : result;
+		result = _isBoardSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getBoard(), _board_METADATA.typ())) : result;
 		return result;
 	}
 
@@ -119,9 +145,11 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 		  && hasReason() == o.hasReason()
 		  && hasWinner() == o.hasWinner()
 		  && hasLoser() == o.hasLoser()
+		  && hasBoard() == o.hasBoard()
 		  && EqualityTester.areEqual(getReason(), o.getReason(), _reason_METADATA.typ())
 		  && EqualityTester.areEqual(getWinner(), o.getWinner(), _winner_METADATA.typ())
-		  && EqualityTester.areEqual(getLoser(), o.getLoser(), _loser_METADATA.typ());
+		  && EqualityTester.areEqual(getLoser(), o.getLoser(), _loser_METADATA.typ())
+		  && EqualityTester.areEqual(getBoard(), o.getBoard(), _board_METADATA.typ());
 	}
 
 	@Override
@@ -129,7 +157,8 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 		final GameOver out = new GameOver(
 			getReason(),
 			getWinner(),
-			getLoser());
+			getLoser(),
+			DeepCopyer.deepCopy(getBoard(), _board_METADATA.typ()));
 		return out;
 	}
 
@@ -195,10 +224,11 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 	public void _accept(final FieldVisitor visitor, final FieldVisitSelection selection) throws java.io.IOException {
 		switch(selection) {
 			case ALL: {
-				visitor.beginVisit(this, 3);
+				visitor.beginVisit(this, 4);
 				visitor.visit(getReason(), _reason_METADATA);
 				visitor.visit(getWinner(), _winner_METADATA);
 				visitor.visit(getLoser(), _loser_METADATA);
+				visitor.visit(getBoard(), _board_METADATA);
 				visitor.endVisit();
 				break;
 			}
@@ -210,6 +240,8 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 					visitor.visit(getWinner(), _winner_METADATA);
 				if (_isLoserSet(FieldSetDepth.SHALLOW))
 					visitor.visit(getLoser(), _loser_METADATA);
+				if (_isBoardSet(FieldSetDepth.SHALLOW))
+					visitor.visit(getBoard(), _board_METADATA);
 				visitor.endVisit();
 				break;
 			}
@@ -229,6 +261,9 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 				return true;
 			case (_loser_ID):
 				setLoser((String)reader.readStringField(_loser_METADATA, context));
+				return true;
+			case (_board_ID):
+				setBoard((GameState)reader.readMgenObjectField(_board_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);
@@ -253,6 +288,14 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 		return m_loser != null;
 	}
 
+	public boolean _isBoardSet(final FieldSetDepth fieldSetDepth) {
+		if (fieldSetDepth == FieldSetDepth.SHALLOW) {
+			return m_board != null;
+		} else {
+			return m_board != null && Validator.validateFieldDeep(getBoard(), _board_METADATA.typ());
+		}
+	}
+
 	public boolean _isFieldSet(final Field field, final FieldSetDepth depth) {
 		switch(field.id()) {
 			case (_reason_ID):
@@ -261,6 +304,8 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 				return _isWinnerSet(depth);
 			case (_loser_ID):
 				return _isLoserSet(depth);
+			case (_board_ID):
+				return _isBoardSet(depth);
 			default:
 				return false;
 		}
@@ -290,10 +335,21 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 		return this;
 	}
 
+	public GameOver _setBoardSet(final boolean state, final FieldSetDepth depth) {
+		if (state)
+			m_board = m_board != null ? m_board : new GameState();
+		else
+			m_board = null;
+		if (depth == FieldSetDepth.DEEP)
+			Marker.setFieldSetDeep(getBoard(), _board_METADATA.typ());
+		return this;
+	}
+
 	public GameOver _setAllFieldsSet(final boolean state, final FieldSetDepth depth) { 
 		_setReasonSet(state, depth);
 		_setWinnerSet(state, depth);
 		_setLoserSet(state, depth);
+		_setBoardSet(state, depth);
 		return this;
 	}
 
@@ -301,7 +357,8 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 		if (fieldSetDepth == FieldSetDepth.SHALLOW) {
 			return true;
 		} else {
-			return true;
+			return true
+				&& (!_isBoardSet(FieldSetDepth.SHALLOW) || _isBoardSet(FieldSetDepth.DEEP));
 		}
 	}
 
@@ -311,6 +368,7 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 		out += _isReasonSet(depth) ? 1 : 0;
 		out += _isWinnerSet(depth) ? 1 : 0;
 		out += _isLoserSet(depth) ? 1 : 0;
+		out += _isBoardSet(depth) ? 1 : 0;
 		return out;
 	}
 
@@ -323,6 +381,8 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 				return _winner_METADATA;
 			case (_loser_ID):
 				return _loser_METADATA;
+			case (_board_ID):
+				return _board_METADATA;
 			default:
 				return null;
 		}
@@ -337,6 +397,8 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 				return _winner_METADATA;
 			case ("loser"):
 				return _loser_METADATA;
+			case ("board"):
+				return _board_METADATA;
 			default:
 				return null;
 		}
@@ -376,11 +438,13 @@ public class GameOver extends BattleshipMessage /* custom_ifcs_begin *//* custom
 	public static final Field _reason_METADATA = new Field("se.yabs.aichallenge.battleship.GameOver", "reason", se.culvertsoft.mgen.api.model.StringType.INSTANCE, null, (short)-15867);
 	public static final Field _winner_METADATA = new Field("se.yabs.aichallenge.battleship.GameOver", "winner", se.culvertsoft.mgen.api.model.StringType.INSTANCE, null, (short)-7291);
 	public static final Field _loser_METADATA = new Field("se.yabs.aichallenge.battleship.GameOver", "loser", se.culvertsoft.mgen.api.model.StringType.INSTANCE, null, (short)9621);
+	public static final Field _board_METADATA = new Field("se.yabs.aichallenge.battleship.GameOver", "board", new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.GameState", 7830028132583391513L), null, (short)12077);
 
 	public static final short _reason_ID = (short)-15867;
 	public static final short _winner_ID = (short)-7291;
 	public static final short _loser_ID = (short)9621;
+	public static final short _board_ID = (short)12077;
 
-	public static final Field[] _FIELDS = { _reason_METADATA, _winner_METADATA, _loser_METADATA };
+	public static final Field[] _FIELDS = { _reason_METADATA, _winner_METADATA, _loser_METADATA, _board_METADATA };
 
 }

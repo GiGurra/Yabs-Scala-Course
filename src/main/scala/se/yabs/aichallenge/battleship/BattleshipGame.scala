@@ -1,8 +1,11 @@
-package se.yabs.aichallenge
+package se.yabs.aichallenge.battleship
 
 import se.yabs.aichallenge.host.ClientState
+import se.yabs.aichallenge.Game
+import se.yabs.aichallenge.GameChallengeFound
+import se.yabs.aichallenge.GameSelection
 
-class Battleship extends Game(GameSelection.BATTLESHIP) {
+class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   println(s"A new battleship game ($this) is hosted")
 
   var redPlayer: ClientState = null

@@ -2,13 +2,12 @@ package se.yabs.scalacourse
 
 import scala.annotation.elidable
 import scala.annotation.elidable.ASSERTION
-
 import org.junit.Test
-
 import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.WelcomeMessage
 import se.yabs.aichallenge.client.GameClient
 import se.yabs.aichallenge.host.GameHost
+import se.yabs.aichallenge.battleship.BattleshipClient
 
 class test_GameHost_func {
 
@@ -87,6 +86,36 @@ class test_GameHost_func {
 
     clientA.playGame(GameSelection.BATTLESHIP)
     clientB.playGame(GameSelection.BATTLESHIP)
+    val challangeA = clientA.getNewMessages(2000)
+    val challangeB = clientB.getNewMessages(2000)
+    assert(challangeA.nonEmpty)
+    assert(challangeB.nonEmpty)
+    
+    clientA.close()
+    clientB.close()
+    host.signalStop()
+    host.join()
+
+    assert(!host.isRunning)
+
+  }
+
+
+  @Test
+  def twoPlayersJoin2() {
+
+    val port = TestPorts.getAndIncrement
+    val host = new GameHost(port).start()
+
+    val clientA = new BattleshipClient("a", host)
+    val clientB = new BattleshipClient("b", host)
+    val welcomeMsgA = clientA.getNewMessages(2000)
+    val welcomeMsgB = clientB.getNewMessages(2000)
+    assert(welcomeMsgA.nonEmpty)
+    assert(welcomeMsgB.nonEmpty)
+
+    clientA.playGame()
+    clientB.playGame()
     val challangeA = clientA.getNewMessages(2000)
     val challangeB = clientB.getNewMessages(2000)
     assert(challangeA.nonEmpty)

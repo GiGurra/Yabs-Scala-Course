@@ -9,7 +9,7 @@ import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
 
-import se.yabs.aichallenge.Battleship
+import se.yabs.aichallenge.battleship.BattleshipGame
 import se.yabs.aichallenge.Checkin
 import se.yabs.aichallenge.ErrorMessage
 import se.yabs.aichallenge.Game
@@ -94,7 +94,7 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
   private def startNewGame(client: ClientState, selection: GameSelection) {
     selection match {
       case GameSelection.BATTLESHIP =>
-        val game = new Battleship
+        val game = new BattleshipGame
         game.join(client)
         ongoingGames += game
       case _ =>

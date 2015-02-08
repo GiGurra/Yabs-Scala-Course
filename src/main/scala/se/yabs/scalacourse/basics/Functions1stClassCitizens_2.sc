@@ -11,8 +11,8 @@ object Functions1stClassCitizens {
   // Remember the slides:
   // Function arguments can be data or other functions
 
-  def calc(input: Long, f: () => Long): Long = {
-    input * f()
+  def calc(x: Long, f: () => Long): Long = {
+    x * f()
   }                                               //> calc: (input: Long, f: () => Long)Long
 
   def scala = () => nextLong()                    //> scala: => () => Long

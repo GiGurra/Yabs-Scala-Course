@@ -31,7 +31,7 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
   private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER)
 
   override def step() {
-
+    
     for (zmqMsgParts <- socket.getNewMessages(100)) {
       Try(handleMsg(zmqMsgParts)) match {
         case Success(_) =>
@@ -44,7 +44,6 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
     }
 
     stepGames()
-
     handleFinishedGames()
   }
 

@@ -7,9 +7,8 @@ trait SimpleThread[T <: SimpleThread[T]] {
   private val thread = new Thread {
     override def run() {
       init()
-      while (!stopSignal) {
+      while (!stopSignal)
         step()
-      }
       finish()
     }
   }

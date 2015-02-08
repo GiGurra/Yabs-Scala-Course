@@ -14,7 +14,7 @@ class GameClient(val name: String, val zmqAddr: String) extends SimpleThread[Gam
   private val socket = new ZmqSocket(zmqAddr, ZmqSocket.Type.CLIENT)
   checkin()
 
-  def getNewMessages(pollTimeMillis: Int = 2000): Seq[Message] = {
+  def getNewMessages(pollTimeMillis: Int): Seq[Message] = {
     socket.getNewMessages(pollTimeMillis) map (parts => Serializer.read(parts.last))
   }
 

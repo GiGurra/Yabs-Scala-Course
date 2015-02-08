@@ -37,7 +37,7 @@ class test_GameHost_func {
 
     val client = host.connectTo()
 
-    val msgs = client.getNewMessages()
+    val msgs = client.getNewMessages(2000)
     assert(msgs.nonEmpty)
     assert(msgs.head.isInstanceOf[WelcomeMessage])
 
@@ -58,7 +58,7 @@ class test_GameHost_func {
 
     val client = host.connectTo()
 
-    val welcomeMsg = client.getNewMessages()
+    val welcomeMsg = client.getNewMessages(2000)
 
     client.playGame(GameSelection.BATTLESHIP)
 
@@ -76,12 +76,12 @@ class test_GameHost_func {
 
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
-
+    
     val a = host.connectTo("a")
     val b = host.connectTo("b")
 
-    val welcomeMsgA = a.getNewMessages()
-    val welcomeMsgB = b.getNewMessages()
+    val welcomeMsgA = a.getNewMessages(2000)
+    val welcomeMsgB = b.getNewMessages(2000)
 
     a.playGame(GameSelection.BATTLESHIP)
     b.playGame(GameSelection.BATTLESHIP)

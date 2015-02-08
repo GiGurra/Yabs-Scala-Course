@@ -31,10 +31,10 @@ object ZmqUtil {
   }
 
   def mkAddr(port: Int): String = {
-    "tcp:/" + s"/*:$port"
+    s"tcp://*:$port"
   }
 
   def mkAddr(addr: String, port: Int): String = {
-    "tcp:/" + s"/$addr:$port"
+    s"tcp://$addr:$port"
   }
 }

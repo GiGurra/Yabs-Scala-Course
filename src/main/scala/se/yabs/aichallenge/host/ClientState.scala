@@ -12,7 +12,7 @@ class ClientState(
   }
   
   override def toString(): String = {
-    s"$name ($id)"
+    s"$name (${new String(id.zmqId.toArray)})"
   }
   
 }

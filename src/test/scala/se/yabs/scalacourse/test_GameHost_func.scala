@@ -1,11 +1,14 @@
 package se.yabs.scalacourse
 
+import scala.annotation.elidable
+import scala.annotation.elidable.ASSERTION
+
 import org.junit.Test
-import se.yabs.aichallenge.host.GameHost
-import se.yabs.aichallenge.client.GameClient
-import se.yabs.aichallenge.Checkin
+
 import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.WelcomeMessage
+import se.yabs.aichallenge.client.GameClient
+import se.yabs.aichallenge.host.GameHost
 
 class test_GameHost_func {
 
@@ -35,7 +38,7 @@ class test_GameHost_func {
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
 
-    val client = host.connectTo()
+    val client = new GameClient("TestName", host)
 
     val msgs = client.getNewMessages(2000)
     assert(msgs.nonEmpty)
@@ -55,15 +58,13 @@ class test_GameHost_func {
 
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
-
-    val client = host.connectTo()
+    val client = new GameClient("TestName", host)
 
     val welcomeMsg = client.getNewMessages(2000)
 
     client.playGame(GameSelection.BATTLESHIP)
 
     client.close()
-
     host.signalStop()
     host.join()
 
@@ -76,21 +77,23 @@ class test_GameHost_func {
 
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
+
+    val clientA = new GameClient("a", host)
+    val clientB = new GameClient("b", host)
+    val welcomeMsgA = clientA.getNewMessages(2000)
+    val welcomeMsgB = clientB.getNewMessages(2000)
+    assert(welcomeMsgA.nonEmpty)
+    assert(welcomeMsgB.nonEmpty)
+
+    clientA.playGame(GameSelection.BATTLESHIP)
+    clientB.playGame(GameSelection.BATTLESHIP)
+    val challangeA = clientA.getNewMessages(2000)
+    val challangeB = clientB.getNewMessages(2000)
+    assert(challangeA.nonEmpty)
+    assert(challangeB.nonEmpty)
     
-    val a = host.connectTo("a")
-    val b = host.connectTo("b")
-
-    val welcomeMsgA = a.getNewMessages(2000)
-    val welcomeMsgB = b.getNewMessages(2000)
-
-    a.playGame(GameSelection.BATTLESHIP)
-    b.playGame(GameSelection.BATTLESHIP)
-
-    a.close()
-    b.close()
-    
-    Thread.sleep(1000)
-
+    clientA.close()
+    clientB.close()
     host.signalStop()
     host.join()
 

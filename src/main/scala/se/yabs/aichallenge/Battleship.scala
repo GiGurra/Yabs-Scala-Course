@@ -19,6 +19,7 @@ class Battleship extends Game(GameSelection.BATTLESHIP) {
   }
 
   override def join(client: ClientState) {
+    
     if (redPlayer == null) {
       redPlayer = client
       println(s"${client} joined $this as red player ")
@@ -27,6 +28,12 @@ class Battleship extends Game(GameSelection.BATTLESHIP) {
       println(s"${client} joined $this as blue player ")
     } else
       throw new RuntimeException("Tried to join full game")
+    
+    if (hasTwoPlayers) {
+      redPlayer.send(new GameChallengeFound(gameSelected, bluePlayer.name))
+      bluePlayer.send(new GameChallengeFound(gameSelected, redPlayer.name))
+    }
+    
   }
 
   override def canJoin(client: ClientState): Boolean = {

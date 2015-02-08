@@ -1,37 +1,37 @@
 package se.yabs.aichallenge.host
 
 import java.util.ArrayList
+
 import scala.collection.JavaConversions.seqAsJavaList
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.HashMap
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
+
+import se.yabs.aichallenge.Battleship
 import se.yabs.aichallenge.Checkin
 import se.yabs.aichallenge.ErrorMessage
 import se.yabs.aichallenge.Game
 import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.Message
+import se.yabs.aichallenge.PlayGame
 import se.yabs.aichallenge.Serializer
 import se.yabs.aichallenge.WelcomeMessage
 import se.yabs.aichallenge.client.GameClient
 import se.yabs.aichallenge.util.SimpleThread
 import se.yabs.aichallenge.util.ZmqSocket
 import se.yabs.aichallenge.util.ZmqUtil
-import se.yabs.aichallenge.PlayGame
-import se.yabs.aichallenge.Battleship
 
 class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends SimpleThread[GameHost] {
-
   val bindAddr = ZmqUtil.mkAddr(ifc, port)
+
   private val clients = new HashMap[ClientId, ClientState]
   private val ongoingGames = new ArrayBuffer[Game]
-
-  // Lazy to be initialized by internal thread
-  private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER)
+  private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER) // Lazy to be initialized by internal thread
 
   override def step() {
-    
+
     for (zmqMsgParts <- socket.getNewMessages(100)) {
       Try(handleMsg(zmqMsgParts)) match {
         case Success(_) =>
@@ -49,10 +49,6 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
 
   override def finish() {
     socket.close()
-  }
-
-  def connectTo(name: String = "TestClient"): GameClient = {
-    new GameClient(name, "127.0.0.1", port)
   }
 
   private def stepGames() {
@@ -79,7 +75,7 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
 
   private def handlePlayGame(client: ClientState, game: GameSelection) {
 
-    println(s"Client '${client.name}' wants to play '$game'")
+    println(s"Client '$client' wants to play '$game'")
 
     if (isPlaying(client))
       throw new RuntimeException("Your're already playing a game!")
@@ -90,11 +86,11 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
     }
 
   }
-  
+
   private def findCompatibleGame(client: ClientState, selection: GameSelection): Option[Game] = {
     ongoingGames.find(_.canJoin(client))
   }
-  
+
   private def startNewGame(client: ClientState, selection: GameSelection) {
     selection match {
       case GameSelection.BATTLESHIP =>
@@ -111,9 +107,10 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
   }
 
   private def handleNewClient(clientId: ClientId, msg: Checkin) {
-    println(s"Client '${msg.getName}' checked in ($clientId)")
     sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", gamesAvail))
-    clients.put(clientId, new ClientState(clientId, msg.getName, sendTo(clientId, _)))
+    val newClient = new ClientState(clientId, msg.getName, sendTo(clientId, _))
+    println(s"Client '$newClient' checked in")
+    clients.put(clientId, newClient)
   }
 
   private def gamesAvail = {

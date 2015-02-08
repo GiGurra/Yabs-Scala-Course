@@ -10,7 +10,7 @@ import se.yabs.aichallenge.host.GameHost
 import se.yabs.aichallenge.battleship.BattleshipClient
 
 class test_GameHost_func {
-/*
+  /*
   @Test
   def init() {
     val port = TestPorts.getAndIncrement
@@ -100,7 +100,6 @@ class test_GameHost_func {
 
   }*/
 
-
   @Test
   def dumbAiGame() {
 
@@ -111,7 +110,7 @@ class test_GameHost_func {
     val clientB = new BattleshipClient("b", "testPw", host)
 
     BattleshipClient.playGame(clientA, new DumbAi, clientB, new DumbAi)
-    
+
     clientA.close()
     clientB.close()
     host.signalStop()
@@ -120,31 +119,19 @@ class test_GameHost_func {
     assert(!host.isRunning)
 
   }
-  
-/*
+
   @Test
-  def placeShips() {
+  def dumbAiGames() {
 
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
 
     val clientA = new BattleshipClient("a", "testPw", host)
     val clientB = new BattleshipClient("b", "testPw", host)
-    val welcomeMsgA = clientA.getNewMessages(2000)
-    val welcomeMsgB = clientB.getNewMessages(2000)
-    assert(welcomeMsgA.nonEmpty)
-    assert(welcomeMsgB.nonEmpty)
 
-    clientA.playGame(new DumbAi)
-    clientB.playGame(new DumbAi)
-    
-    Thread.sleep(100)
-    
-    val challangeA = clientA.getNewMessages(2000)
-    val challangeB = clientB.getNewMessages(2000)
-    assert(challangeA.nonEmpty)
-    assert(challangeB.nonEmpty)
-    
+    for (i <- 0 until 100)
+      BattleshipClient.playGame(clientA, new DumbAi, clientB, new DumbAi)
+
     clientA.close()
     clientB.close()
     host.signalStop()
@@ -152,6 +139,6 @@ class test_GameHost_func {
 
     assert(!host.isRunning)
 
-  }*/
+  }
 
 }

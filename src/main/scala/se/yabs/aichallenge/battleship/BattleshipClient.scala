@@ -40,10 +40,10 @@ class BattleshipClient(name: String, pw: String, zmqAddr: String) {
   }
 
   private def poll(ai: BattleshipAi): Option[GameOver] = {
-    for (msg <- getNewMessages(100)) {
+    for (msg <- getNewMessages(10)) {
       msg match {
         case msg: GameChallengeFound =>
-        case msg: WelcomeMessage     => gameClient.playGame(GameSelection.BATTLESHIP)
+        case msg: WelcomeMessage     => println(msg.getMsg)
         case msg: PlaceShipsRequest  => gameClient.send(new PlaceShips(new ArrayList(ai.placeShips())))
         case msg: MakeShotRequest    => gameClient.send(new MakeShot(ai.makeShot()))
         case msg: GameOver           => return Some(msg)
@@ -66,6 +66,9 @@ object BattleshipClient {
     clientA: BattleshipClient, aiA: BattleshipAi,
     clientB: BattleshipClient, aiB: BattleshipAi): GameOver = {
 
+    clientA.gameClient.playGame(GameSelection.BATTLESHIP)
+    clientB.gameClient.playGame(GameSelection.BATTLESHIP)
+    
     while (true) {
       val optGameOverA = clientA.poll(aiA)
       val optGameOverB = clientB.poll(aiB)

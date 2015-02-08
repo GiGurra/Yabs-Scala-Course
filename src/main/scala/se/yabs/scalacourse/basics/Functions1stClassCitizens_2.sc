@@ -13,7 +13,7 @@ object Functions1stClassCitizens {
 
   def calc(x: Long, f: () => Long): Long = {
     x * f()
-  }                                               //> calc: (input: Long, f: () => Long)Long
+  }                                               //> calc: (x: Long, f: () => Long)Long
 
   def scala = () => nextLong()                    //> scala: => () => Long
   def bad = () => 1L                              //> bad: => () => Long

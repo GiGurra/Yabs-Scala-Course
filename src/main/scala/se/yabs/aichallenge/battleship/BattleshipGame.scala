@@ -16,8 +16,6 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   private var nShots = 0
 
   private val gameState = new GameState
-  private val bluePlayer = new Player
-  private val redPlayer = new Player
 
   ///////////////////////////////////////////////////////////////////
   /////   API 

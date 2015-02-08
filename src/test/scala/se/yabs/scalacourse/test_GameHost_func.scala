@@ -58,10 +58,9 @@ class test_GameHost_func {
 
     val client = host.connectTo()
 
-    val msgs = client.getNewMessages()
-    
-    assert(msgs.nonEmpty)
-    assert(msgs.head.isInstanceOf[WelcomeMessage])
+    val welcomeMsg = client.getNewMessages()
+
+    client.playGame(GameSelection.BATTLESHIP)
 
     client.close()
 
@@ -71,5 +70,32 @@ class test_GameHost_func {
     assert(!host.isRunning)
 
   }
-  
+
+  @Test
+  def twoPlayersJoin() {
+
+    val port = TestPorts.getAndIncrement
+    val host = new GameHost(port).start()
+
+    val a = host.connectTo("a")
+    val b = host.connectTo("b")
+
+    val welcomeMsgA = a.getNewMessages()
+    val welcomeMsgB = b.getNewMessages()
+
+    a.playGame(GameSelection.BATTLESHIP)
+    b.playGame(GameSelection.BATTLESHIP)
+
+    a.close()
+    b.close()
+    
+    Thread.sleep(1000)
+
+    host.signalStop()
+    host.join()
+
+    assert(!host.isRunning)
+
+  }
+
 }

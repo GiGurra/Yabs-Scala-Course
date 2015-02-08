@@ -13,7 +13,7 @@ object Functions1stClassCitizens {
 	// 'makeMagicTool' is a function that returns a new function,
 	// (Oh and btw, 'Unit' is scalas word for 'void')
 	
-	type MagicTool = (Int => Unit)
+	type MagicTool = Int => Unit
 	
   def makeMagicTool(magicNumber: Int): MagicTool = {
     
@@ -47,10 +47,8 @@ object Functions1stClassCitizens {
 
 
 	////////////////////////////////////////////////////////////
-  // Here's an example
-  // Suppose we have a tool which builds magic black boxes
-  // And every time we use the
-  // The magic black box does new things every time we use it
+  // Now let's make some magic tools
+  // and use them
 
   val magicTool1 = makeMagicTool(1)               //> magicTool1  : se.yabs.scalacourse.basics.Functions1stClassCitizens.MagicToo
                                                   //| l = <function1>
@@ -68,12 +66,11 @@ object Functions1stClassCitizens {
 	val magicToolX = makeMagicTool(Random.nextInt(999999))
                                                   //> magicToolX  : se.yabs.scalacourse.basics.Functions1stClassCitizens.MagicToo
                                                   //| l = <function1>
-	magicToolX(1)                             //> recurse from 879379 -> 87937
-                                                  //| recurse from 87937 -> 8793
-                                                  //| recurse from 8793 -> 879
-                                                  //| recurse from 879 -> 87
-                                                  //| recurse from 87 -> 8
-                                                  //| recurse from 8 -> 0
+	magicToolX(1)                             //> recurse from 449219 -> 44921
+                                                  //| recurse from 44921 -> 4492
+                                                  //| recurse from 4492 -> 449
+                                                  //| recurse from 449 -> 44
+                                                  //| recurse from 44 -> 4
                                                   //| Hello 1!
                                                   
 	//magicTool666(0)

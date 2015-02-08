@@ -11,7 +11,8 @@ parallelExecution in Test := false
 libraryDependencies ++= Seq(
     "com.novocode" % "junit-interface" % "0.11" % "test",
     "org.zeromq" % "jeromq" % "0.3.4",
-    "se.culvertsoft" % "mgen-javalib" % "0.1"
+    "se.culvertsoft" % "mgen-javalib" % "0.1",
+    "org.scala-lang.modules" %% "scala-xml" % "1.0.3"
 )
 
 EclipseKeys.withSource := true

@@ -17,6 +17,8 @@ namespace yabs {
 namespace aichallenge {
 
 class Message;
+class WelcomeMessage;
+class ErrorMessage;
 class Checkin;
 class GameChallengeFound;
 

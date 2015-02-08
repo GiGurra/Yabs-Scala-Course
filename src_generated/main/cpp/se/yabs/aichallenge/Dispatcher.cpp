@@ -20,6 +20,12 @@ void dispatch(mgen::MGenBase& object, se::yabs::aichallenge::Handler& handler) {
 	switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
 		case se::yabs::aichallenge::Message::_type_id_16bit:
 			switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+				case se::yabs::aichallenge::WelcomeMessage::_type_id_16bit:
+					handler.handle(static_cast<se::yabs::aichallenge::WelcomeMessage&>(object));
+					break;
+				case se::yabs::aichallenge::ErrorMessage::_type_id_16bit:
+					handler.handle(static_cast<se::yabs::aichallenge::ErrorMessage&>(object));
+					break;
 				case se::yabs::aichallenge::Checkin::_type_id_16bit:
 					handler.handle(static_cast<se::yabs::aichallenge::Checkin&>(object));
 					break;

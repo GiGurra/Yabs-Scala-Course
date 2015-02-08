@@ -12,6 +12,8 @@
 
 #include "mgen/classes/ClassRegistryBase.h"
 #include "se/yabs/aichallenge/Message.h"
+#include "se/yabs/aichallenge/WelcomeMessage.h"
+#include "se/yabs/aichallenge/ErrorMessage.h"
 #include "se/yabs/aichallenge/Checkin.h"
 #include "se/yabs/aichallenge/GameChallengeFound.h"
 #include "se/yabs/aichallenge/battleship/Ship.h"
@@ -41,6 +43,12 @@ public:
 		switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
 			case se::yabs::aichallenge::Message::_type_id_16bit:
 				switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+					case se::yabs::aichallenge::WelcomeMessage::_type_id_16bit:
+						reader.readFields(static_cast<se::yabs::aichallenge::WelcomeMessage&>(o), context);
+						break;
+					case se::yabs::aichallenge::ErrorMessage::_type_id_16bit:
+						reader.readFields(static_cast<se::yabs::aichallenge::ErrorMessage&>(o), context);
+						break;
 					case se::yabs::aichallenge::Checkin::_type_id_16bit:
 						reader.readFields(static_cast<se::yabs::aichallenge::Checkin&>(o), context);
 						break;
@@ -89,6 +97,12 @@ public:
 		switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
 			case se::yabs::aichallenge::Message::_type_id_16bit:
 				switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+					case se::yabs::aichallenge::WelcomeMessage::_type_id_16bit:
+						static_cast<se::yabs::aichallenge::WelcomeMessage&>(o)._accept<VisitorType>(visitor, selection);
+						break;
+					case se::yabs::aichallenge::ErrorMessage::_type_id_16bit:
+						static_cast<se::yabs::aichallenge::ErrorMessage&>(o)._accept<VisitorType>(visitor, selection);
+						break;
 					case se::yabs::aichallenge::Checkin::_type_id_16bit:
 						static_cast<se::yabs::aichallenge::Checkin&>(o)._accept<VisitorType>(visitor, selection);
 						break;
@@ -137,6 +151,12 @@ public:
 		switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
 			case se::yabs::aichallenge::Message::_type_id_16bit:
 				switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+					case se::yabs::aichallenge::WelcomeMessage::_type_id_16bit:
+						static_cast<const se::yabs::aichallenge::WelcomeMessage&>(o)._accept<VisitorType>(visitor, selection);
+						break;
+					case se::yabs::aichallenge::ErrorMessage::_type_id_16bit:
+						static_cast<const se::yabs::aichallenge::ErrorMessage&>(o)._accept<VisitorType>(visitor, selection);
+						break;
 					case se::yabs::aichallenge::Checkin::_type_id_16bit:
 						static_cast<const se::yabs::aichallenge::Checkin&>(o)._accept<VisitorType>(visitor, selection);
 						break;

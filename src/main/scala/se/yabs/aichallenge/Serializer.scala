@@ -13,12 +13,16 @@ object Serializer {
   private val jsonWriter = new JsonPrettyWriter(buffer, reg, true)
   private val jsonReader = new JsonReader(new ByteArrayInputStream(Array[Byte]()), reg)
 
-  def write(o: Message): String = synchronized {
-    jsonWriter.writeObjectToString(o)
+  def write(o: Message): Array[Byte] = synchronized {
+    jsonWriter.writeObject(o)
+    val out = buffer.toByteArray()
+    buffer.reset()
+    out
   }
-  
-  def read(message: String): Message = synchronized {
-    jsonReader.readObject(message, classOf[Message])
+
+  def read(message: Array[Byte]): Message = synchronized {
+    jsonReader.setInput(new ByteArrayInputStream(message))
+    jsonReader.readObject(classOf[Message])
   }
 
 }

@@ -22,6 +22,14 @@ public class Handler  {
 		handleDiscard(o);
 	}
 
+	protected void handle(se.yabs.aichallenge.WelcomeMessage o) {
+		handle((se.yabs.aichallenge.Message)o);
+	}
+
+	protected void handle(se.yabs.aichallenge.ErrorMessage o) {
+		handle((se.yabs.aichallenge.Message)o);
+	}
+
 	protected void handle(se.yabs.aichallenge.Checkin o) {
 		handle((se.yabs.aichallenge.Message)o);
 	}

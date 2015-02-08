@@ -15,6 +15,8 @@ import se.culvertsoft.mgen.javapack.classes.MGenBase;
 public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassRegistryBase  {
 
 	public static ClassRegistryEntry se_yabs_aichallenge_Message = new ClassRegistryEntry(6843908126517847773L, se.yabs.aichallenge.Message._TYPE_IDS, "se.yabs.aichallenge.Message", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.Message(); } });
+	public static ClassRegistryEntry se_yabs_aichallenge_WelcomeMessage = new ClassRegistryEntry(519923755957276911L, se.yabs.aichallenge.WelcomeMessage._TYPE_IDS, "se.yabs.aichallenge.WelcomeMessage", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.WelcomeMessage(); } });
+	public static ClassRegistryEntry se_yabs_aichallenge_ErrorMessage = new ClassRegistryEntry(4495102748553798680L, se.yabs.aichallenge.ErrorMessage._TYPE_IDS, "se.yabs.aichallenge.ErrorMessage", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.ErrorMessage(); } });
 	public static ClassRegistryEntry se_yabs_aichallenge_Checkin = new ClassRegistryEntry(4589873252555491528L, se.yabs.aichallenge.Checkin._TYPE_IDS, "se.yabs.aichallenge.Checkin", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.Checkin(); } });
 	public static ClassRegistryEntry se_yabs_aichallenge_GameChallengeFound = new ClassRegistryEntry(7479712952545752927L, se.yabs.aichallenge.GameChallengeFound._TYPE_IDS, "se.yabs.aichallenge.GameChallengeFound", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.GameChallengeFound(); } });
 	public static ClassRegistryEntry se_yabs_aichallenge_battleship_Ship = new ClassRegistryEntry(6060363830252660056L, se.yabs.aichallenge.battleship.Ship._TYPE_IDS, "se.yabs.aichallenge.battleship.Ship", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.Ship(); } });
@@ -27,6 +29,8 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 
 	public ClassRegistry() {
 		add(se_yabs_aichallenge_Message);
+		add(se_yabs_aichallenge_WelcomeMessage);
+		add(se_yabs_aichallenge_ErrorMessage);
 		add(se_yabs_aichallenge_Checkin);
 		add(se_yabs_aichallenge_GameChallengeFound);
 		add(se_yabs_aichallenge_battleship_Ship);
@@ -44,6 +48,10 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 		switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
 			case se.yabs.aichallenge.Message._TYPE_ID_16BIT:
 				switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
+					case se.yabs.aichallenge.WelcomeMessage._TYPE_ID_16BIT:
+						return se_yabs_aichallenge_WelcomeMessage;
+					case se.yabs.aichallenge.ErrorMessage._TYPE_ID_16BIT:
+						return se_yabs_aichallenge_ErrorMessage;
 					case se.yabs.aichallenge.Checkin._TYPE_ID_16BIT:
 						return se_yabs_aichallenge_Checkin;
 					case se.yabs.aichallenge.GameChallengeFound._TYPE_ID_16BIT:
@@ -76,6 +84,10 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 		switch((i < ids.length ? ids[i++] : "0xFFFFFFFF")) {
 			case se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64:
 				switch((i < ids.length ? ids[i++] : "0xFFFFFFFF")) {
+					case se.yabs.aichallenge.WelcomeMessage._TYPE_ID_16BIT_BASE64:
+						return se_yabs_aichallenge_WelcomeMessage;
+					case se.yabs.aichallenge.ErrorMessage._TYPE_ID_16BIT_BASE64:
+						return se_yabs_aichallenge_ErrorMessage;
 					case se.yabs.aichallenge.Checkin._TYPE_ID_16BIT_BASE64:
 						return se_yabs_aichallenge_Checkin;
 					case se.yabs.aichallenge.GameChallengeFound._TYPE_ID_16BIT_BASE64:

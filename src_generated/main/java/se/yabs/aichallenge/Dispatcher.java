@@ -24,6 +24,12 @@ public class Dispatcher  {
 		switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
 			case se.yabs.aichallenge.Message._TYPE_ID_16BIT:
 				switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
+					case se.yabs.aichallenge.WelcomeMessage._TYPE_ID_16BIT:
+						handler.handle((se.yabs.aichallenge.WelcomeMessage)o);
+						break;
+					case se.yabs.aichallenge.ErrorMessage._TYPE_ID_16BIT:
+						handler.handle((se.yabs.aichallenge.ErrorMessage)o);
+						break;
 					case se.yabs.aichallenge.Checkin._TYPE_ID_16BIT:
 						handler.handle((se.yabs.aichallenge.Checkin)o);
 						break;

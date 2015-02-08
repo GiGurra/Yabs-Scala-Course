@@ -8,6 +8,8 @@
  ********************************************************************************************************************/
 
 #include "Handler.h"
+#include "se/yabs/aichallenge/WelcomeMessage.h"
+#include "se/yabs/aichallenge/ErrorMessage.h"
 #include "se/yabs/aichallenge/Checkin.h"
 #include "se/yabs/aichallenge/GameChallengeFound.h"
 #include "se/yabs/aichallenge/battleship/Ship.h"
@@ -35,6 +37,14 @@ void Handler::handleUnknown(mgen::MGenBase& o) {
 
 void Handler::handle(se::yabs::aichallenge::Message& o) {
 	handleDiscard(o);
+}
+
+void Handler::handle(se::yabs::aichallenge::WelcomeMessage& o) {
+	handle(static_cast<se::yabs::aichallenge::Message&>(o));
+}
+
+void Handler::handle(se::yabs::aichallenge::ErrorMessage& o) {
+	handle(static_cast<se::yabs::aichallenge::Message&>(o));
 }
 
 void Handler::handle(se::yabs::aichallenge::Checkin& o) {

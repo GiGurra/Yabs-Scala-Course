@@ -1,5 +1,6 @@
 package se.yabs.aichallenge
 
-class Game(selection: GameSelection) {
- 
+abstract class Game(selection: GameSelection) {
+   def step(): Unit
+   def isFinished(): Boolean
 }

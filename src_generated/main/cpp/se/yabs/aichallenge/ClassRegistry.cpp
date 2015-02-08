@@ -9,6 +9,8 @@
 
 #include "ClassRegistry.h"
 #include "se/yabs/aichallenge/Message.cpp"
+#include "se/yabs/aichallenge/WelcomeMessage.cpp"
+#include "se/yabs/aichallenge/ErrorMessage.cpp"
 #include "se/yabs/aichallenge/Checkin.cpp"
 #include "se/yabs/aichallenge/GameChallengeFound.cpp"
 #include "se/yabs/aichallenge/battleship/Ship.cpp"
@@ -30,6 +32,8 @@ namespace aichallenge {
 
 ClassRegistry::ClassRegistry() {
 	add<se::yabs::aichallenge::Message>();
+	add<se::yabs::aichallenge::WelcomeMessage>();
+	add<se::yabs::aichallenge::ErrorMessage>();
 	add<se::yabs::aichallenge::Checkin>();
 	add<se::yabs::aichallenge::GameChallengeFound>();
 	add<se::yabs::aichallenge::battleship::Ship>();
@@ -46,6 +50,8 @@ ClassRegistry::~ClassRegistry() {
 
 const mgen::ClassRegistryEntry * se::yabs::aichallenge::ClassRegistry::getByIds(const std::vector<short>& ids) const {
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_Message(se::yabs::aichallenge::Message::_type_ids(), se::yabs::aichallenge::Message::_type_name(), se::yabs::aichallenge::Message::_newInstance);
+	static const mgen::ClassRegistryEntry se_yabs_aichallenge_WelcomeMessage(se::yabs::aichallenge::WelcomeMessage::_type_ids(), se::yabs::aichallenge::WelcomeMessage::_type_name(), se::yabs::aichallenge::WelcomeMessage::_newInstance);
+	static const mgen::ClassRegistryEntry se_yabs_aichallenge_ErrorMessage(se::yabs::aichallenge::ErrorMessage::_type_ids(), se::yabs::aichallenge::ErrorMessage::_type_name(), se::yabs::aichallenge::ErrorMessage::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_Checkin(se::yabs::aichallenge::Checkin::_type_ids(), se::yabs::aichallenge::Checkin::_type_name(), se::yabs::aichallenge::Checkin::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_GameChallengeFound(se::yabs::aichallenge::GameChallengeFound::_type_ids(), se::yabs::aichallenge::GameChallengeFound::_type_name(), se::yabs::aichallenge::GameChallengeFound::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_battleship_Ship(se::yabs::aichallenge::battleship::Ship::_type_ids(), se::yabs::aichallenge::battleship::Ship::_type_name(), se::yabs::aichallenge::battleship::Ship::_newInstance);
@@ -60,6 +66,12 @@ const mgen::ClassRegistryEntry * se::yabs::aichallenge::ClassRegistry::getByIds(
 	switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
 		case se::yabs::aichallenge::Message::_type_id_16bit:
 			switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+				case se::yabs::aichallenge::WelcomeMessage::_type_id_16bit:
+					return &se_yabs_aichallenge_WelcomeMessage;
+					break;
+				case se::yabs::aichallenge::ErrorMessage::_type_id_16bit:
+					return &se_yabs_aichallenge_ErrorMessage;
+					break;
 				case se::yabs::aichallenge::Checkin::_type_id_16bit:
 					return &se_yabs_aichallenge_Checkin;
 					break;

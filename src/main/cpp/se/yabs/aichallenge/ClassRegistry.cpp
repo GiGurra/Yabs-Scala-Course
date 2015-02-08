@@ -16,7 +16,6 @@
 #include "se/yabs/aichallenge/GameChallengeFound.cpp"
 #include "se/yabs/aichallenge/battleship/Ship.cpp"
 #include "se/yabs/aichallenge/battleship/Segment.cpp"
-#include "se/yabs/aichallenge/battleship/Map.cpp"
 #include "se/yabs/aichallenge/battleship/Player.cpp"
 #include "se/yabs/aichallenge/battleship/GameState.cpp"
 #include "se/yabs/aichallenge/battleship/Vec2.cpp"
@@ -47,7 +46,6 @@ ClassRegistry::ClassRegistry() {
 	add<se::yabs::aichallenge::GameChallengeFound>();
 	add<se::yabs::aichallenge::battleship::Ship>();
 	add<se::yabs::aichallenge::battleship::Segment>();
-	add<se::yabs::aichallenge::battleship::Map>();
 	add<se::yabs::aichallenge::battleship::Player>();
 	add<se::yabs::aichallenge::battleship::GameState>();
 	add<se::yabs::aichallenge::battleship::Vec2>();
@@ -72,7 +70,6 @@ const mgen::ClassRegistryEntry * se::yabs::aichallenge::ClassRegistry::getByIds(
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_GameChallengeFound(se::yabs::aichallenge::GameChallengeFound::_type_ids(), se::yabs::aichallenge::GameChallengeFound::_type_name(), se::yabs::aichallenge::GameChallengeFound::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_battleship_Ship(se::yabs::aichallenge::battleship::Ship::_type_ids(), se::yabs::aichallenge::battleship::Ship::_type_name(), se::yabs::aichallenge::battleship::Ship::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_battleship_Segment(se::yabs::aichallenge::battleship::Segment::_type_ids(), se::yabs::aichallenge::battleship::Segment::_type_name(), se::yabs::aichallenge::battleship::Segment::_newInstance);
-	static const mgen::ClassRegistryEntry se_yabs_aichallenge_battleship_Map(se::yabs::aichallenge::battleship::Map::_type_ids(), se::yabs::aichallenge::battleship::Map::_type_name(), se::yabs::aichallenge::battleship::Map::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_battleship_Player(se::yabs::aichallenge::battleship::Player::_type_ids(), se::yabs::aichallenge::battleship::Player::_type_name(), se::yabs::aichallenge::battleship::Player::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_battleship_GameState(se::yabs::aichallenge::battleship::GameState::_type_ids(), se::yabs::aichallenge::battleship::GameState::_type_name(), se::yabs::aichallenge::battleship::GameState::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_battleship_Vec2(se::yabs::aichallenge::battleship::Vec2::_type_ids(), se::yabs::aichallenge::battleship::Vec2::_type_name(), se::yabs::aichallenge::battleship::Vec2::_newInstance);
@@ -135,9 +132,6 @@ const mgen::ClassRegistryEntry * se::yabs::aichallenge::ClassRegistry::getByIds(
 			break;
 		case se::yabs::aichallenge::battleship::Segment::_type_id_16bit:
 			return &se_yabs_aichallenge_battleship_Segment;
-			break;
-		case se::yabs::aichallenge::battleship::Map::_type_id_16bit:
-			return &se_yabs_aichallenge_battleship_Map;
 			break;
 		case se::yabs::aichallenge::battleship::Player::_type_id_16bit:
 			return &se_yabs_aichallenge_battleship_Player;

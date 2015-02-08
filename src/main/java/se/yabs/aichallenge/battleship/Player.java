@@ -26,6 +26,7 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 	private String m_name;
 	private Team m_team;
 	private java.util.ArrayList<Shot> m_shots;
+	private java.util.ArrayList<Ship> m_ships;
 
 	public Player() {
 		super();
@@ -33,16 +34,19 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		m_name = null;
 		m_team = null;
 		m_shots = null;
+		m_ships = null;
 	}
 
 	public Player(final String uuid,
 				final String name,
 				final Team team,
-				final java.util.ArrayList<Shot> shots) {
+				final java.util.ArrayList<Shot> shots,
+				final java.util.ArrayList<Ship> ships) {
 		m_uuid = uuid;
 		m_name = name;
 		m_team = team;
 		m_shots = shots;
+		m_ships = ships;
 	}
 
 	public String getUuid() {
@@ -61,6 +65,10 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		return m_shots;
 	}
 
+	public java.util.ArrayList<Ship> getShips() {
+		return m_ships;
+	}
+
 	public boolean hasUuid() {
 		return _isUuidSet(FieldSetDepth.SHALLOW);
 	}
@@ -75,6 +83,10 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 
 	public boolean hasShots() {
 		return _isShotsSet(FieldSetDepth.SHALLOW);
+	}
+
+	public boolean hasShips() {
+		return _isShipsSet(FieldSetDepth.SHALLOW);
 	}
 
 	public Player unsetUuid() {
@@ -94,6 +106,11 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 
 	public Player unsetShots() {
 		_setShotsSet(false, FieldSetDepth.SHALLOW);
+		return this;
+	}
+
+	public Player unsetShips() {
+		_setShipsSet(false, FieldSetDepth.SHALLOW);
 		return this;
 	}
 
@@ -117,6 +134,11 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		return this;
 	}
 
+	public Player setShips(final java.util.ArrayList<Ship> ships) {
+		m_ships = ships;
+		return this;
+	}
+
 	/* custom_methods_begin *//* custom_methods_end */
 
 	@Override
@@ -132,6 +154,7 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		result = _isNameSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getName(), _name_METADATA.typ())) : result;
 		result = _isTeamSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getTeam(), _team_METADATA.typ())) : result;
 		result = _isShotsSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getShots(), _shots_METADATA.typ())) : result;
+		result = _isShipsSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getShips(), _ships_METADATA.typ())) : result;
 		return result;
 	}
 
@@ -146,10 +169,12 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		  && hasName() == o.hasName()
 		  && hasTeam() == o.hasTeam()
 		  && hasShots() == o.hasShots()
+		  && hasShips() == o.hasShips()
 		  && EqualityTester.areEqual(getUuid(), o.getUuid(), _uuid_METADATA.typ())
 		  && EqualityTester.areEqual(getName(), o.getName(), _name_METADATA.typ())
 		  && getTeam() == o.getTeam()
-		  && EqualityTester.areEqual(getShots(), o.getShots(), _shots_METADATA.typ());
+		  && EqualityTester.areEqual(getShots(), o.getShots(), _shots_METADATA.typ())
+		  && EqualityTester.areEqual(getShips(), o.getShips(), _ships_METADATA.typ());
 	}
 
 	@Override
@@ -158,7 +183,8 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 			getUuid(),
 			getName(),
 			getTeam(),
-			DeepCopyer.deepCopy(getShots(), _shots_METADATA.typ()));
+			DeepCopyer.deepCopy(getShots(), _shots_METADATA.typ()),
+			DeepCopyer.deepCopy(getShips(), _ships_METADATA.typ()));
 		return out;
 	}
 
@@ -224,11 +250,12 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 	public void _accept(final FieldVisitor visitor, final FieldVisitSelection selection) throws java.io.IOException {
 		switch(selection) {
 			case ALL: {
-				visitor.beginVisit(this, 4);
+				visitor.beginVisit(this, 5);
 				visitor.visit(getUuid(), _uuid_METADATA);
 				visitor.visit(getName(), _name_METADATA);
 				visitor.visit(getTeam(), _team_METADATA);
 				visitor.visit(getShots(), _shots_METADATA);
+				visitor.visit(getShips(), _ships_METADATA);
 				visitor.endVisit();
 				break;
 			}
@@ -242,6 +269,8 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 					visitor.visit(getTeam(), _team_METADATA);
 				if (_isShotsSet(FieldSetDepth.SHALLOW))
 					visitor.visit(getShots(), _shots_METADATA);
+				if (_isShipsSet(FieldSetDepth.SHALLOW))
+					visitor.visit(getShips(), _ships_METADATA);
 				visitor.endVisit();
 				break;
 			}
@@ -265,6 +294,9 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 				return true;
 			case (_shots_ID):
 				setShots((java.util.ArrayList<Shot>)reader.readListField(_shots_METADATA, context));
+				return true;
+			case (_ships_ID):
+				setShips((java.util.ArrayList<Ship>)reader.readListField(_ships_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);
@@ -297,6 +329,14 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		}
 	}
 
+	public boolean _isShipsSet(final FieldSetDepth fieldSetDepth) {
+		if (fieldSetDepth == FieldSetDepth.SHALLOW) {
+			return m_ships != null;
+		} else {
+			return m_ships != null && Validator.validateFieldDeep(getShips(), _ships_METADATA.typ());
+		}
+	}
+
 	public boolean _isFieldSet(final Field field, final FieldSetDepth depth) {
 		switch(field.id()) {
 			case (_uuid_ID):
@@ -307,6 +347,8 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 				return _isTeamSet(depth);
 			case (_shots_ID):
 				return _isShotsSet(depth);
+			case (_ships_ID):
+				return _isShipsSet(depth);
 			default:
 				return false;
 		}
@@ -346,11 +388,22 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		return this;
 	}
 
+	public Player _setShipsSet(final boolean state, final FieldSetDepth depth) {
+		if (state)
+			m_ships = m_ships != null ? m_ships : new java.util.ArrayList<Ship>();
+		else
+			m_ships = null;
+		if (depth == FieldSetDepth.DEEP)
+			Marker.setFieldSetDeep(getShips(), _ships_METADATA.typ());
+		return this;
+	}
+
 	public Player _setAllFieldsSet(final boolean state, final FieldSetDepth depth) { 
 		_setUuidSet(state, depth);
 		_setNameSet(state, depth);
 		_setTeamSet(state, depth);
 		_setShotsSet(state, depth);
+		_setShipsSet(state, depth);
 		return this;
 	}
 
@@ -359,7 +412,8 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 			return true;
 		} else {
 			return true
-				&& (!_isShotsSet(FieldSetDepth.SHALLOW) || _isShotsSet(FieldSetDepth.DEEP));
+				&& (!_isShotsSet(FieldSetDepth.SHALLOW) || _isShotsSet(FieldSetDepth.DEEP))
+				&& (!_isShipsSet(FieldSetDepth.SHALLOW) || _isShipsSet(FieldSetDepth.DEEP));
 		}
 	}
 
@@ -370,6 +424,7 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		out += _isNameSet(depth) ? 1 : 0;
 		out += _isTeamSet(depth) ? 1 : 0;
 		out += _isShotsSet(depth) ? 1 : 0;
+		out += _isShipsSet(depth) ? 1 : 0;
 		return out;
 	}
 
@@ -384,6 +439,8 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 				return _team_METADATA;
 			case (_shots_ID):
 				return _shots_METADATA;
+			case (_ships_ID):
+				return _ships_METADATA;
 			default:
 				return null;
 		}
@@ -400,6 +457,8 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 				return _team_METADATA;
 			case ("shots"):
 				return _shots_METADATA;
+			case ("ships"):
+				return _ships_METADATA;
 			default:
 				return null;
 		}
@@ -440,12 +499,14 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 	public static final Field _name_METADATA = new Field("se.yabs.aichallenge.battleship.Player", "name", se.culvertsoft.mgen.api.model.StringType.INSTANCE, null, (short)-28058);
 	public static final Field _team_METADATA = new Field("se.yabs.aichallenge.battleship.Player", "team", se.yabs.aichallenge.battleship.Team._TYPE, null, (short)-1585);
 	public static final Field _shots_METADATA = new Field("se.yabs.aichallenge.battleship.Player", "shots", new se.culvertsoft.mgen.api.model.ListType(new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Shot", 5723027387374372704L)), null, (short)890);
+	public static final Field _ships_METADATA = new Field("se.yabs.aichallenge.battleship.Player", "ships", new se.culvertsoft.mgen.api.model.ListType(new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Ship", 6060363830252660056L)), null, (short)32030);
 
 	public static final short _uuid_ID = (short)-11112;
 	public static final short _name_ID = (short)-28058;
 	public static final short _team_ID = (short)-1585;
 	public static final short _shots_ID = (short)890;
+	public static final short _ships_ID = (short)32030;
 
-	public static final Field[] _FIELDS = { _uuid_METADATA, _name_METADATA, _team_METADATA, _shots_METADATA };
+	public static final Field[] _FIELDS = { _uuid_METADATA, _name_METADATA, _team_METADATA, _shots_METADATA, _ships_METADATA };
 
 }

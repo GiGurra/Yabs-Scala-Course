@@ -1,18 +1,29 @@
 package se.yabs.aichallenge.battleship
 
-import se.yabs.aichallenge.host.ClientState
+import java.util.ArrayList
+import java.util.UUID
+
 import se.yabs.aichallenge.Game
 import se.yabs.aichallenge.GameChallengeFound
 import se.yabs.aichallenge.GameSelection
+import se.yabs.aichallenge.host.ClientState
 
 class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   println(s"A new battleship game ($this) is hosted")
 
-  var redPlayer: ClientState = null
-  var bluePlayer: ClientState = null
+  private var redClient: ClientState = null
+  private var blueClient: ClientState = null
+  private var nShots = 0
+
+  private val gameState = new GameState
+  private val bluePlayer = new Player
+  private val redPlayer = new Player
+
+  ///////////////////////////////////////////////////////////////////
+  /////   API 
 
   override def step() {
-    if (hasTwoPlayers) {
+    if (hasTwoClients) {
 
     }
   }
@@ -22,34 +33,64 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   }
 
   override def join(client: ClientState) {
-    
-    if (redPlayer == null) {
-      redPlayer = client
+
+    if (redClient == null) {
+      redClient = client
       println(s"${client} joined $this as red player ")
-    } else if (bluePlayer == null) {
-      bluePlayer = client
+    } else if (blueClient == null) {
+      blueClient = client
       println(s"${client} joined $this as blue player ")
     } else
       throw new RuntimeException("Tried to join full game")
-    
-    if (hasTwoPlayers) {
-      redPlayer.send(new GameChallengeFound(gameSelected, bluePlayer.name))
-      bluePlayer.send(new GameChallengeFound(gameSelected, redPlayer.name))
-      println(s"Challenge found, $redPlayer vs $bluePlayer")
+
+    if (hasTwoClients) {
+
+      initGameState()
+
+      redClient.send(new GameChallengeFound(gameSelected, blueClient.name))
+      blueClient.send(new GameChallengeFound(gameSelected, redClient.name))
+      println(s"Challenge found, $redClient vs $blueClient")
     }
-    
+
   }
 
   override def canJoin(client: ClientState): Boolean = {
-    !hasTwoPlayers
+    !hasTwoClients
   }
 
   override def isPlayer(client: ClientState): Boolean = {
-    client == redPlayer || client == bluePlayer
+    client == redClient || client == blueClient
   }
 
-  def hasTwoPlayers: Boolean = {
-    redPlayer != null && bluePlayer != null
+  ///////////////////////////////////////////////////////////////////
+  /////   PRIVATE 
+
+  private def curTeam: Team = {
+    if (!gameState.hasCurrentTeam)
+      gameState.setCurrentTeam(Team.RED)
+    gameState.getCurrentTeam
+  }
+
+  private def hasTwoClients: Boolean = {
+    redClient != null && blueClient != null
+  }
+
+  private def mkPlayer(client: ClientState, team: Team): Player = {
+    new Player()
+      .setName(client.name)
+      .setShots(new ArrayList[Shot])
+      .setTeam(team)
+      .setUuid(UUID.randomUUID().toString)
+      .setShips(new ArrayList)
+  }
+
+  private def initGameState() {
+    gameState.setBluePlayer(mkPlayer(blueClient, Team.BLUE))
+    gameState.setRedPlayer(mkPlayer(redClient, Team.RED))
+    gameState.setCurrentTeam(curTeam)
+    gameState.setObservers(new ArrayList)
+    gameState.setPhase(Phase.LOBBY)
+    gameState.setMapSize(new Vec2(10, 10))
   }
 
 }

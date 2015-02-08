@@ -15,7 +15,6 @@
 #include "se/yabs/aichallenge/GameChallengeFound.h"
 #include "se/yabs/aichallenge/battleship/Ship.h"
 #include "se/yabs/aichallenge/battleship/Segment.h"
-#include "se/yabs/aichallenge/battleship/Map.h"
 #include "se/yabs/aichallenge/battleship/Player.h"
 #include "se/yabs/aichallenge/battleship/GameState.h"
 #include "se/yabs/aichallenge/battleship/Vec2.h"
@@ -70,10 +69,6 @@ void Handler::handle(se::yabs::aichallenge::battleship::Ship& o) {
 }
 
 void Handler::handle(se::yabs::aichallenge::battleship::Segment& o) {
-	handleDiscard(o);
-}
-
-void Handler::handle(se::yabs::aichallenge::battleship::Map& o) {
 	handleDiscard(o);
 }
 

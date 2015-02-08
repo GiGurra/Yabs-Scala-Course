@@ -9,7 +9,6 @@ import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
 
-import se.yabs.aichallenge.battleship.BattleshipGame
 import se.yabs.aichallenge.Checkin
 import se.yabs.aichallenge.ErrorMessage
 import se.yabs.aichallenge.Game
@@ -18,7 +17,7 @@ import se.yabs.aichallenge.Message
 import se.yabs.aichallenge.PlayGame
 import se.yabs.aichallenge.Serializer
 import se.yabs.aichallenge.WelcomeMessage
-import se.yabs.aichallenge.client.GameClient
+import se.yabs.aichallenge.battleship.BattleshipGame
 import se.yabs.aichallenge.util.SimpleThread
 import se.yabs.aichallenge.util.ZmqSocket
 import se.yabs.aichallenge.util.ZmqUtil
@@ -56,21 +55,18 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
   }
 
   private def handleMsg(clientId: ClientId, msg: Message) {
-
     clients.get(clientId) match {
       case Some(client) =>
         msg match {
           case msg: PlayGame => handlePlayGame(client, msg.getGame)
-          case _             => throw new RuntimeException("Unsupported message type ")
+          case _             => throw new RuntimeException(s"Bad message type: ${msg.getClass}")
         }
       case None =>
         msg match {
           case msg: Checkin => handleNewClient(clientId, msg)
-          case _ =>
-            throw new RuntimeException("Unsupported message type ")
+          case _            => throw new RuntimeException(s"Bad message type: ${msg.getClass}")
         }
     }
-
   }
 
   private def handlePlayGame(client: ClientState, game: GameSelection) {
@@ -141,7 +137,7 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
   private def sendTo(id: ClientId, msg: Message) {
     Try {
       val zmqMsg = Serializer.write(msg)
-      socket.send(Seq(id.zmqId.toArray, Array[Byte](), zmqMsg))
+      socket.send(Seq(id.zmqId.toArray, Array.emptyByteArray, zmqMsg))
     } match {
       case Success(_) =>
       case Failure(e) =>
@@ -153,5 +149,4 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
 
 object GameHost {
   val DEFAULT_PORT = 12345
-  val DEFAULT_BIND_ADDR = s"tcp://*:$DEFAULT_PORT"
 }

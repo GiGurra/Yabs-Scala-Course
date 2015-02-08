@@ -50,10 +50,6 @@ public class Handler  {
 		handleDiscard(o);
 	}
 
-	protected void handle(se.yabs.aichallenge.battleship.Map o) {
-		handleDiscard(o);
-	}
-
 	protected void handle(se.yabs.aichallenge.battleship.Player o) {
 		handleDiscard(o);
 	}

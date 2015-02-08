@@ -31,7 +31,6 @@ class Handler  {
 	virtual void handle(se::yabs::aichallenge::GameChallengeFound& o);
 	virtual void handle(se::yabs::aichallenge::battleship::Ship& o);
 	virtual void handle(se::yabs::aichallenge::battleship::Segment& o);
-	virtual void handle(se::yabs::aichallenge::battleship::Map& o);
 	virtual void handle(se::yabs::aichallenge::battleship::Player& o);
 	virtual void handle(se::yabs::aichallenge::battleship::GameState& o);
 	virtual void handle(se::yabs::aichallenge::battleship::Vec2& o);

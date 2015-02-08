@@ -23,8 +23,7 @@ GameState::GameState() :
 		_m_redPlayer_isSet(false),
 		_m_bluePlayer_isSet(false),
 		_m_observers_isSet(false),
-		_m_redMap_isSet(false),
-		_m_blueMap_isSet(false),
+		_m_mapSize_isSet(false),
 		_m_phase_isSet(false),
 		_m_currentTeam_isSet(false) {
 }
@@ -32,22 +31,19 @@ GameState::GameState() :
 GameState::GameState(const Player& redPlayer, 
 			const Player& bluePlayer, 
 			const std::vector<Player> & observers, 
-			const Map& redMap, 
-			const Map& blueMap, 
+			const Vec2& mapSize, 
 			const Phase& phase, 
 			const Team& currentTeam) : 
 		m_redPlayer(redPlayer),
 		m_bluePlayer(bluePlayer),
 		m_observers(observers),
-		m_redMap(redMap),
-		m_blueMap(blueMap),
+		m_mapSize(mapSize),
 		m_phase(phase),
 		m_currentTeam(currentTeam),
 		_m_redPlayer_isSet(true),
 		_m_bluePlayer_isSet(true),
 		_m_observers_isSet(true),
-		_m_redMap_isSet(true),
-		_m_blueMap_isSet(true),
+		_m_mapSize_isSet(true),
 		_m_phase_isSet(true),
 		_m_currentTeam_isSet(true) {
 }
@@ -67,12 +63,8 @@ const std::vector<Player> & GameState::getObservers() const {
 	return m_observers;
 }
 
-const Map& GameState::getRedMap() const {
-	return m_redMap;
-}
-
-const Map& GameState::getBlueMap() const {
-	return m_blueMap;
+const Vec2& GameState::getMapSize() const {
+	return m_mapSize;
 }
 
 const Phase& GameState::getPhase() const {
@@ -98,14 +90,9 @@ std::vector<Player> & GameState::getObserversMutable() {
 	return m_observers;
 }
 
-Map& GameState::getRedMapMutable() {
-	_m_redMap_isSet = true;
-	return m_redMap;
-}
-
-Map& GameState::getBlueMapMutable() {
-	_m_blueMap_isSet = true;
-	return m_blueMap;
+Vec2& GameState::getMapSizeMutable() {
+	_m_mapSize_isSet = true;
+	return m_mapSize;
 }
 
 Phase& GameState::getPhaseMutable() {
@@ -136,15 +123,9 @@ GameState& GameState::setObservers(const std::vector<Player> & observers) {
 	return *this;
 }
 
-GameState& GameState::setRedMap(const Map& redMap) {
-	m_redMap = redMap;
-	_m_redMap_isSet = true;
-	return *this;
-}
-
-GameState& GameState::setBlueMap(const Map& blueMap) {
-	m_blueMap = blueMap;
-	_m_blueMap_isSet = true;
+GameState& GameState::setMapSize(const Vec2& mapSize) {
+	m_mapSize = mapSize;
+	_m_mapSize_isSet = true;
 	return *this;
 }
 
@@ -174,12 +155,8 @@ bool GameState::hasObservers() const {
 	return _isObserversSet(mgen::SHALLOW);
 }
 
-bool GameState::hasRedMap() const {
-	return _isRedMapSet(mgen::SHALLOW);
-}
-
-bool GameState::hasBlueMap() const {
-	return _isBlueMapSet(mgen::SHALLOW);
+bool GameState::hasMapSize() const {
+	return _isMapSizeSet(mgen::SHALLOW);
 }
 
 bool GameState::hasPhase() const {
@@ -205,13 +182,8 @@ GameState& GameState::unsetObservers() {
 	return *this;
 }
 
-GameState& GameState::unsetRedMap() {
-	_setRedMapSet(false, mgen::SHALLOW);
-	return *this;
-}
-
-GameState& GameState::unsetBlueMap() {
-	_setBlueMapSet(false, mgen::SHALLOW);
+GameState& GameState::unsetMapSize() {
+	_setMapSizeSet(false, mgen::SHALLOW);
 	return *this;
 }
 
@@ -230,15 +202,13 @@ bool GameState::operator==(const GameState& other) const {
 		 && _isRedPlayerSet(mgen::SHALLOW) == other._isRedPlayerSet(mgen::SHALLOW)
 		 && _isBluePlayerSet(mgen::SHALLOW) == other._isBluePlayerSet(mgen::SHALLOW)
 		 && _isObserversSet(mgen::SHALLOW) == other._isObserversSet(mgen::SHALLOW)
-		 && _isRedMapSet(mgen::SHALLOW) == other._isRedMapSet(mgen::SHALLOW)
-		 && _isBlueMapSet(mgen::SHALLOW) == other._isBlueMapSet(mgen::SHALLOW)
+		 && _isMapSizeSet(mgen::SHALLOW) == other._isMapSizeSet(mgen::SHALLOW)
 		 && _isPhaseSet(mgen::SHALLOW) == other._isPhaseSet(mgen::SHALLOW)
 		 && _isCurrentTeamSet(mgen::SHALLOW) == other._isCurrentTeamSet(mgen::SHALLOW)
 		 && getRedPlayer() == other.getRedPlayer()
 		 && getBluePlayer() == other.getBluePlayer()
 		 && getObservers() == other.getObservers()
-		 && getRedMap() == other.getRedMap()
-		 && getBlueMap() == other.getBlueMap()
+		 && getMapSize() == other.getMapSize()
 		 && getPhase() == other.getPhase()
 		 && getCurrentTeam() == other.getCurrentTeam();
 }
@@ -267,10 +237,8 @@ const mgen::Field * GameState::_fieldById(const short id) const {
 		return &_field_bluePlayer_metadata();
 	case _field_observers_id:
 		return &_field_observers_metadata();
-	case _field_redMap_id:
-		return &_field_redMap_metadata();
-	case _field_blueMap_id:
-		return &_field_blueMap_metadata();
+	case _field_mapSize_id:
+		return &_field_mapSize_metadata();
 	case _field_phase_id:
 		return &_field_phase_metadata();
 	case _field_currentTeam_id:
@@ -281,7 +249,7 @@ const mgen::Field * GameState::_fieldById(const short id) const {
 }
 
 const mgen::Field * GameState::_fieldByName(const std::string& name) const {
-	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("redPlayer", &GameState::_field_redPlayer_metadata())("bluePlayer", &GameState::_field_bluePlayer_metadata())("observers", &GameState::_field_observers_metadata())("redMap", &GameState::_field_redMap_metadata())("blueMap", &GameState::_field_blueMap_metadata())("phase", &GameState::_field_phase_metadata())("currentTeam", &GameState::_field_currentTeam_metadata());
+	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("redPlayer", &GameState::_field_redPlayer_metadata())("bluePlayer", &GameState::_field_bluePlayer_metadata())("observers", &GameState::_field_observers_metadata())("mapSize", &GameState::_field_mapSize_metadata())("phase", &GameState::_field_phase_metadata())("currentTeam", &GameState::_field_currentTeam_metadata());
 	const std::map<std::string, const mgen::Field*>::const_iterator it = name2meta.find(name);
 	return it != name2meta.end() ? it->second : 0;
 }
@@ -349,17 +317,10 @@ GameState& GameState::_setObserversSet(const bool state, const mgen::FieldSetDep
 	return *this;
 }
 
-GameState& GameState::_setRedMapSet(const bool state, const mgen::FieldSetDepth depth) {
+GameState& GameState::_setMapSizeSet(const bool state, const mgen::FieldSetDepth depth) {
 	if (depth == mgen::DEEP)
-		m_redMap._setAllFieldsSet(state, mgen::DEEP);
-	_m_redMap_isSet = state;
-	return *this;
-}
-
-GameState& GameState::_setBlueMapSet(const bool state, const mgen::FieldSetDepth depth) {
-	if (depth == mgen::DEEP)
-		m_blueMap._setAllFieldsSet(state, mgen::DEEP);
-	_m_blueMap_isSet = state;
+		m_mapSize._setAllFieldsSet(state, mgen::DEEP);
+	_m_mapSize_isSet = state;
 	return *this;
 }
 
@@ -381,8 +342,7 @@ GameState& GameState::_setAllFieldsSet(const bool state, const mgen::FieldSetDep
 	_setRedPlayerSet(state, depth);
 	_setBluePlayerSet(state, depth);
 	_setObserversSet(state, depth);
-	_setRedMapSet(state, depth);
-	_setBlueMapSet(state, depth);
+	_setMapSizeSet(state, depth);
 	_setPhaseSet(state, depth);
 	_setCurrentTeamSet(state, depth);
 	return *this;
@@ -393,8 +353,7 @@ int GameState::_numFieldsSet(const mgen::FieldSetDepth depth, const bool include
 	out += _isRedPlayerSet(depth) ? 1 : 0;
 	out += _isBluePlayerSet(depth) ? 1 : 0;
 	out += _isObserversSet(depth) ? 1 : 0;
-	out += _isRedMapSet(depth) ? 1 : 0;
-	out += _isBlueMapSet(depth) ? 1 : 0;
+	out += _isMapSizeSet(depth) ? 1 : 0;
 	out += _isPhaseSet(depth) ? 1 : 0;
 	out += _isCurrentTeamSet(depth) ? 1 : 0;
 	return out;
@@ -408,10 +367,8 @@ bool GameState::_isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth 
 			return _isBluePlayerSet(depth);
 		case (_field_observers_id):
 			return _isObserversSet(depth);
-		case (_field_redMap_id):
-			return _isRedMapSet(depth);
-		case (_field_blueMap_id):
-			return _isBlueMapSet(depth);
+		case (_field_mapSize_id):
+			return _isMapSizeSet(depth);
 		case (_field_phase_id):
 			return _isPhaseSet(depth);
 		case (_field_currentTeam_id):
@@ -445,19 +402,11 @@ bool GameState::_isObserversSet(const mgen::FieldSetDepth depth) const {
 	}
 }
 
-bool GameState::_isRedMapSet(const mgen::FieldSetDepth depth) const {
+bool GameState::_isMapSizeSet(const mgen::FieldSetDepth depth) const {
 	if (depth == mgen::SHALLOW) {
-		return _m_redMap_isSet;
+		return _m_mapSize_isSet;
 	} else {
-		return _m_redMap_isSet && mgen::validation::validateFieldDeep(getRedMap());
-	}
-}
-
-bool GameState::_isBlueMapSet(const mgen::FieldSetDepth depth) const {
-	if (depth == mgen::SHALLOW) {
-		return _m_blueMap_isSet;
-	} else {
-		return _m_blueMap_isSet && mgen::validation::validateFieldDeep(getBlueMap());
+		return _m_mapSize_isSet && mgen::validation::validateFieldDeep(getMapSize());
 	}
 }
 
@@ -477,8 +426,7 @@ bool GameState::_validate(const mgen::FieldSetDepth depth) const {
 				&& (!_isRedPlayerSet(mgen::SHALLOW) || _isRedPlayerSet(mgen::DEEP))
 				&& (!_isBluePlayerSet(mgen::SHALLOW) || _isBluePlayerSet(mgen::DEEP))
 				&& (!_isObserversSet(mgen::SHALLOW) || _isObserversSet(mgen::DEEP))
-				&& (!_isRedMapSet(mgen::SHALLOW) || _isRedMapSet(mgen::DEEP))
-				&& (!_isBlueMapSet(mgen::SHALLOW) || _isBlueMapSet(mgen::DEEP));
+				&& (!_isMapSizeSet(mgen::SHALLOW) || _isMapSizeSet(mgen::DEEP));
 	}
 }
 
@@ -542,7 +490,7 @@ const std::string& GameState::_type_id_16bit_base64() {
 }
 
 const std::vector<mgen::Field>& GameState::_field_metadatas() {
-	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_redPlayer_metadata() << _field_bluePlayer_metadata() << _field_observers_metadata() << _field_redMap_metadata() << _field_blueMap_metadata() << _field_phase_metadata() << _field_currentTeam_metadata();
+	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_redPlayer_metadata() << _field_bluePlayer_metadata() << _field_observers_metadata() << _field_mapSize_metadata() << _field_phase_metadata() << _field_currentTeam_metadata();
 	return out;
 }
 
@@ -561,13 +509,8 @@ const mgen::Field& GameState::_field_observers_metadata() {
 	return out;
 }
 
-const mgen::Field& GameState::_field_redMap_metadata() {
-	static const mgen::Field out(28692, "redMap");
-	return out;
-}
-
-const mgen::Field& GameState::_field_blueMap_metadata() {
-	static const mgen::Field out(-19206, "blueMap");
+const mgen::Field& GameState::_field_mapSize_metadata() {
+	static const mgen::Field out(-24724, "mapSize");
 	return out;
 }
 

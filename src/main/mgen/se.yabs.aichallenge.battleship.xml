@@ -28,22 +28,18 @@
 			<alive type="bool" />
 			<pos type="Vec2" />
 		</Segment>
-		<Map>
-			<ships type="list[Ship]" />
-			<size type="Vec2" />
-		</Map>
 		<Player>
 			<uuid type="string" />
 			<name type="string" />
 			<team type="Team" />
 			<shots type="list[Shot]" />
+			<ships type="list[Ship]" />
 		</Player>
 		<GameState>
 			<redPlayer type="Player" />
 			<bluePlayer type="Player" />
 			<observers type="list[Player]" />
-			<redMap type="Map" />
-			<blueMap type="Map" />
+			<mapSize type="Vec2" />
 			<phase type="Phase" />
 			<currentTeam type="Team" />
 		</GameState>

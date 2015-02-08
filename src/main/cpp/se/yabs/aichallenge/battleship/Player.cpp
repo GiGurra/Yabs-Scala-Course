@@ -22,21 +22,25 @@ Player::Player() :
 		_m_uuid_isSet(false),
 		_m_name_isSet(false),
 		_m_team_isSet(false),
-		_m_shots_isSet(false) {
+		_m_shots_isSet(false),
+		_m_ships_isSet(false) {
 }
 
 Player::Player(const std::string& uuid, 
 			const std::string& name, 
 			const Team& team, 
-			const std::vector<Shot> & shots) : 
+			const std::vector<Shot> & shots, 
+			const std::vector<Ship> & ships) : 
 		m_uuid(uuid),
 		m_name(name),
 		m_team(team),
 		m_shots(shots),
+		m_ships(ships),
 		_m_uuid_isSet(true),
 		_m_name_isSet(true),
 		_m_team_isSet(true),
-		_m_shots_isSet(true) {
+		_m_shots_isSet(true),
+		_m_ships_isSet(true) {
 }
 
 Player::~Player() {
@@ -58,6 +62,10 @@ const std::vector<Shot> & Player::getShots() const {
 	return m_shots;
 }
 
+const std::vector<Ship> & Player::getShips() const {
+	return m_ships;
+}
+
 std::string& Player::getUuidMutable() {
 	_m_uuid_isSet = true;
 	return m_uuid;
@@ -76,6 +84,11 @@ Team& Player::getTeamMutable() {
 std::vector<Shot> & Player::getShotsMutable() {
 	_m_shots_isSet = true;
 	return m_shots;
+}
+
+std::vector<Ship> & Player::getShipsMutable() {
+	_m_ships_isSet = true;
+	return m_ships;
 }
 
 Player& Player::setUuid(const std::string& uuid) {
@@ -102,6 +115,12 @@ Player& Player::setShots(const std::vector<Shot> & shots) {
 	return *this;
 }
 
+Player& Player::setShips(const std::vector<Ship> & ships) {
+	m_ships = ships;
+	_m_ships_isSet = true;
+	return *this;
+}
+
 /* custom_methods_begin *//* custom_methods_end */
 
 bool Player::hasUuid() const {
@@ -118,6 +137,10 @@ bool Player::hasTeam() const {
 
 bool Player::hasShots() const {
 	return _isShotsSet(mgen::SHALLOW);
+}
+
+bool Player::hasShips() const {
+	return _isShipsSet(mgen::SHALLOW);
 }
 
 Player& Player::unsetUuid() {
@@ -140,16 +163,23 @@ Player& Player::unsetShots() {
 	return *this;
 }
 
+Player& Player::unsetShips() {
+	_setShipsSet(false, mgen::SHALLOW);
+	return *this;
+}
+
 bool Player::operator==(const Player& other) const {
 	return true
 		 && _isUuidSet(mgen::SHALLOW) == other._isUuidSet(mgen::SHALLOW)
 		 && _isNameSet(mgen::SHALLOW) == other._isNameSet(mgen::SHALLOW)
 		 && _isTeamSet(mgen::SHALLOW) == other._isTeamSet(mgen::SHALLOW)
 		 && _isShotsSet(mgen::SHALLOW) == other._isShotsSet(mgen::SHALLOW)
+		 && _isShipsSet(mgen::SHALLOW) == other._isShipsSet(mgen::SHALLOW)
 		 && getUuid() == other.getUuid()
 		 && getName() == other.getName()
 		 && getTeam() == other.getTeam()
-		 && getShots() == other.getShots();
+		 && getShots() == other.getShots()
+		 && getShips() == other.getShips();
 }
 
 bool Player::operator!=(const Player& other) const {
@@ -178,13 +208,15 @@ const mgen::Field * Player::_fieldById(const short id) const {
 		return &_field_team_metadata();
 	case _field_shots_id:
 		return &_field_shots_metadata();
+	case _field_ships_id:
+		return &_field_ships_metadata();
 	default:
 		return 0;
 	}
 }
 
 const mgen::Field * Player::_fieldByName(const std::string& name) const {
-	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("uuid", &Player::_field_uuid_metadata())("name", &Player::_field_name_metadata())("team", &Player::_field_team_metadata())("shots", &Player::_field_shots_metadata());
+	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("uuid", &Player::_field_uuid_metadata())("name", &Player::_field_name_metadata())("team", &Player::_field_team_metadata())("shots", &Player::_field_shots_metadata())("ships", &Player::_field_ships_metadata());
 	const std::map<std::string, const mgen::Field*>::const_iterator it = name2meta.find(name);
 	return it != name2meta.end() ? it->second : 0;
 }
@@ -259,11 +291,21 @@ Player& Player::_setShotsSet(const bool state, const mgen::FieldSetDepth depth) 
 	return *this;
 }
 
+Player& Player::_setShipsSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (!state)
+		m_ships.clear();
+	else if (depth == mgen::DEEP)
+		mgen::validation::setFieldSetDeep(m_ships);
+	_m_ships_isSet = state;
+	return *this;
+}
+
 Player& Player::_setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth) { 
 	_setUuidSet(state, depth);
 	_setNameSet(state, depth);
 	_setTeamSet(state, depth);
 	_setShotsSet(state, depth);
+	_setShipsSet(state, depth);
 	return *this;
 }
 
@@ -273,6 +315,7 @@ int Player::_numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTra
 	out += _isNameSet(depth) ? 1 : 0;
 	out += _isTeamSet(depth) ? 1 : 0;
 	out += _isShotsSet(depth) ? 1 : 0;
+	out += _isShipsSet(depth) ? 1 : 0;
 	return out;
 }
 
@@ -286,6 +329,8 @@ bool Player::_isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth dep
 			return _isTeamSet(depth);
 		case (_field_shots_id):
 			return _isShotsSet(depth);
+		case (_field_ships_id):
+			return _isShipsSet(depth);
 		default:
 			return false;
 	}
@@ -311,12 +356,21 @@ bool Player::_isShotsSet(const mgen::FieldSetDepth depth) const {
 	}
 }
 
+bool Player::_isShipsSet(const mgen::FieldSetDepth depth) const {
+	if (depth == mgen::SHALLOW) {
+		return _m_ships_isSet;
+	} else {
+		return _m_ships_isSet && mgen::validation::validateFieldDeep(getShips());
+	}
+}
+
 bool Player::_validate(const mgen::FieldSetDepth depth) const { 
 	if (depth == mgen::SHALLOW) {
 		return true;
 	} else {
 		return true
-				&& (!_isShotsSet(mgen::SHALLOW) || _isShotsSet(mgen::DEEP));
+				&& (!_isShotsSet(mgen::SHALLOW) || _isShotsSet(mgen::DEEP))
+				&& (!_isShipsSet(mgen::SHALLOW) || _isShipsSet(mgen::DEEP));
 	}
 }
 
@@ -380,7 +434,7 @@ const std::string& Player::_type_id_16bit_base64() {
 }
 
 const std::vector<mgen::Field>& Player::_field_metadatas() {
-	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_uuid_metadata() << _field_name_metadata() << _field_team_metadata() << _field_shots_metadata();
+	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_uuid_metadata() << _field_name_metadata() << _field_team_metadata() << _field_shots_metadata() << _field_ships_metadata();
 	return out;
 }
 
@@ -401,6 +455,11 @@ const mgen::Field& Player::_field_team_metadata() {
 
 const mgen::Field& Player::_field_shots_metadata() {
 	static const mgen::Field out(890, "shots");
+	return out;
+}
+
+const mgen::Field& Player::_field_ships_metadata() {
+	static const mgen::Field out(32030, "ships");
 	return out;
 }
 

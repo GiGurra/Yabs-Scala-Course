@@ -19,7 +19,6 @@
 #include "se/yabs/aichallenge/GameChallengeFound.h"
 #include "se/yabs/aichallenge/battleship/Ship.h"
 #include "se/yabs/aichallenge/battleship/Segment.h"
-#include "se/yabs/aichallenge/battleship/Map.h"
 #include "se/yabs/aichallenge/battleship/Player.h"
 #include "se/yabs/aichallenge/battleship/GameState.h"
 #include "se/yabs/aichallenge/battleship/Vec2.h"
@@ -98,9 +97,6 @@ public:
 			case se::yabs::aichallenge::battleship::Segment::_type_id_16bit:
 				reader.readFields(static_cast<se::yabs::aichallenge::battleship::Segment&>(o), context);
 				break;
-			case se::yabs::aichallenge::battleship::Map::_type_id_16bit:
-				reader.readFields(static_cast<se::yabs::aichallenge::battleship::Map&>(o), context);
-				break;
 			case se::yabs::aichallenge::battleship::Player::_type_id_16bit:
 				reader.readFields(static_cast<se::yabs::aichallenge::battleship::Player&>(o), context);
 				break;
@@ -177,9 +173,6 @@ public:
 			case se::yabs::aichallenge::battleship::Segment::_type_id_16bit:
 				static_cast<se::yabs::aichallenge::battleship::Segment&>(o)._accept<VisitorType>(visitor, selection);
 				break;
-			case se::yabs::aichallenge::battleship::Map::_type_id_16bit:
-				static_cast<se::yabs::aichallenge::battleship::Map&>(o)._accept<VisitorType>(visitor, selection);
-				break;
 			case se::yabs::aichallenge::battleship::Player::_type_id_16bit:
 				static_cast<se::yabs::aichallenge::battleship::Player&>(o)._accept<VisitorType>(visitor, selection);
 				break;
@@ -255,9 +248,6 @@ public:
 				break;
 			case se::yabs::aichallenge::battleship::Segment::_type_id_16bit:
 				static_cast<const se::yabs::aichallenge::battleship::Segment&>(o)._accept<VisitorType>(visitor, selection);
-				break;
-			case se::yabs::aichallenge::battleship::Map::_type_id_16bit:
-				static_cast<const se::yabs::aichallenge::battleship::Map&>(o)._accept<VisitorType>(visitor, selection);
 				break;
 			case se::yabs::aichallenge::battleship::Player::_type_id_16bit:
 				static_cast<const se::yabs::aichallenge::battleship::Player&>(o)._accept<VisitorType>(visitor, selection);

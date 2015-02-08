@@ -34,7 +34,6 @@ namespace battleship {
 
 class Ship;
 class Segment;
-class Map;
 class Player;
 class GameState;
 class Vec2;

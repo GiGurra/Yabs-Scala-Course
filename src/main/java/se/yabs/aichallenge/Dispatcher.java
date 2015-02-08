@@ -72,9 +72,6 @@ public class Dispatcher  {
 			case se.yabs.aichallenge.battleship.Segment._TYPE_ID_16BIT:
 				handler.handle((se.yabs.aichallenge.battleship.Segment)o);
 				break;
-			case se.yabs.aichallenge.battleship.Map._TYPE_ID_16BIT:
-				handler.handle((se.yabs.aichallenge.battleship.Map)o);
-				break;
 			case se.yabs.aichallenge.battleship.Player._TYPE_ID_16BIT:
 				handler.handle((se.yabs.aichallenge.battleship.Player)o);
 				break;

@@ -68,9 +68,6 @@ void dispatch(mgen::MGenBase& object, se::yabs::aichallenge::Handler& handler) {
 		case se::yabs::aichallenge::battleship::Segment::_type_id_16bit:
 			handler.handle(static_cast<se::yabs::aichallenge::battleship::Segment&>(object));
 			break;
-		case se::yabs::aichallenge::battleship::Map::_type_id_16bit:
-			handler.handle(static_cast<se::yabs::aichallenge::battleship::Map&>(object));
-			break;
 		case se::yabs::aichallenge::battleship::Player::_type_id_16bit:
 			handler.handle(static_cast<se::yabs::aichallenge::battleship::Player&>(object));
 			break;

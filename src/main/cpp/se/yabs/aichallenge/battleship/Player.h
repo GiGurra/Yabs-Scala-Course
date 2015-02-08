@@ -11,6 +11,7 @@
 #define SE_YABS_AICHALLENGE_BATTLESHIP_PLAYER
 
 #include "mgen/classes/MGenBase.h"
+#include "se/yabs/aichallenge/battleship/Ship.h"
 #include "se/yabs/aichallenge/battleship/Shot.h"
 #include "se/yabs/aichallenge/battleship/Team.h"
 /* custom_includes_begin *//* custom_includes_end */
@@ -26,33 +27,39 @@ private:
 	std::string m_name;
 	Team m_team;
 	std::vector<Shot>  m_shots;
+	std::vector<Ship>  m_ships;
 	bool _m_uuid_isSet;
 	bool _m_name_isSet;
 	bool _m_team_isSet;
 	bool _m_shots_isSet;
+	bool _m_ships_isSet;
 
 public:
 	Player();
 	Player(const std::string& uuid,
 			const std::string& name,
 			const Team& team,
-			const std::vector<Shot> & shots);
+			const std::vector<Shot> & shots,
+			const std::vector<Ship> & ships);
 	virtual ~Player();
 
 	const std::string& getUuid() const;
 	const std::string& getName() const;
 	const Team& getTeam() const;
 	const std::vector<Shot> & getShots() const;
+	const std::vector<Ship> & getShips() const;
 
 	std::string& getUuidMutable();
 	std::string& getNameMutable();
 	Team& getTeamMutable();
 	std::vector<Shot> & getShotsMutable();
+	std::vector<Ship> & getShipsMutable();
 
 	Player& setUuid(const std::string& uuid);
 	Player& setName(const std::string& name);
 	Player& setTeam(const Team& team);
 	Player& setShots(const std::vector<Shot> & shots);
+	Player& setShips(const std::vector<Ship> & ships);
 
 	/* custom_methods_begin *//* custom_methods_end */
 
@@ -60,11 +67,13 @@ public:
 	bool hasName() const;
 	bool hasTeam() const;
 	bool hasShots() const;
+	bool hasShips() const;
 
 	Player& unsetUuid();
 	Player& unsetName();
 	Player& unsetTeam();
 	Player& unsetShots();
+	Player& unsetShips();
 
 	bool operator==(const Player& other) const;
 	bool operator!=(const Player& other) const;
@@ -97,6 +106,9 @@ public:
 		case _field_shots_id:
 			reader.readField(_field_shots_metadata(), context, getShotsMutable());
 			break;
+		case _field_ships_id:
+			reader.readField(_field_ships_metadata(), context, getShipsMutable());
+			break;
 		default:
 			reader.handleUnknownField(fieldId, context);
 			break;
@@ -107,11 +119,12 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) const {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 4);
+				visitor.beginVisit(*this, 5);
 				visitor.visit(getUuid(), _field_uuid_metadata());
 				visitor.visit(getName(), _field_name_metadata());
 				visitor.visit(getTeam(), _field_team_metadata());
 				visitor.visit(getShots(), _field_shots_metadata());
+				visitor.visit(getShips(), _field_ships_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -125,6 +138,8 @@ public:
 					visitor.visit(getTeam(), _field_team_metadata());
 				if (_isShotsSet(mgen::SHALLOW))
 					visitor.visit(getShots(), _field_shots_metadata());
+				if (_isShipsSet(mgen::SHALLOW))
+					visitor.visit(getShips(), _field_ships_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -135,11 +150,12 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 4);
+				visitor.beginVisit(*this, 5);
 				visitor.visit(getUuidMutable(), _field_uuid_metadata());
 				visitor.visit(getNameMutable(), _field_name_metadata());
 				visitor.visit(getTeamMutable(), _field_team_metadata());
 				visitor.visit(getShotsMutable(), _field_shots_metadata());
+				visitor.visit(getShipsMutable(), _field_ships_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -153,6 +169,8 @@ public:
 					visitor.visit(getTeamMutable(), _field_team_metadata());
 				if (_isShotsSet(mgen::SHALLOW))
 					visitor.visit(getShotsMutable(), _field_shots_metadata());
+				if (_isShipsSet(mgen::SHALLOW))
+					visitor.visit(getShipsMutable(), _field_ships_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -180,6 +198,7 @@ public:
 	Player& _setNameSet(const bool state, const mgen::FieldSetDepth depth);
 	Player& _setTeamSet(const bool state, const mgen::FieldSetDepth depth);
 	Player& _setShotsSet(const bool state, const mgen::FieldSetDepth depth);
+	Player& _setShipsSet(const bool state, const mgen::FieldSetDepth depth);
 
 	Player& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
 
@@ -189,6 +208,7 @@ public:
 	bool _isNameSet(const mgen::FieldSetDepth depth) const;
 	bool _isTeamSet(const mgen::FieldSetDepth depth) const;
 	bool _isShotsSet(const mgen::FieldSetDepth depth) const;
+	bool _isShipsSet(const mgen::FieldSetDepth depth) const;
 
 	bool _validate(const mgen::FieldSetDepth depth) const;
 
@@ -227,11 +247,13 @@ public:
 	static const mgen::Field& _field_name_metadata();
 	static const mgen::Field& _field_team_metadata();
 	static const mgen::Field& _field_shots_metadata();
+	static const mgen::Field& _field_ships_metadata();
 
 	static const short _field_uuid_id = -11112;
 	static const short _field_name_id = -28058;
 	static const short _field_team_id = -1585;
 	static const short _field_shots_id = 890;
+	static const short _field_ships_id = 32030;
 
 	static const std::vector<mgen::Field>& _field_metadatas();
 

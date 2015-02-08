@@ -22,7 +22,6 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 	public static ClassRegistryEntry se_yabs_aichallenge_GameChallengeFound = new ClassRegistryEntry(7479712952545752927L, se.yabs.aichallenge.GameChallengeFound._TYPE_IDS, "se.yabs.aichallenge.GameChallengeFound", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.GameChallengeFound(); } });
 	public static ClassRegistryEntry se_yabs_aichallenge_battleship_Ship = new ClassRegistryEntry(6060363830252660056L, se.yabs.aichallenge.battleship.Ship._TYPE_IDS, "se.yabs.aichallenge.battleship.Ship", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.Ship(); } });
 	public static ClassRegistryEntry se_yabs_aichallenge_battleship_Segment = new ClassRegistryEntry(9066045619354066259L, se.yabs.aichallenge.battleship.Segment._TYPE_IDS, "se.yabs.aichallenge.battleship.Segment", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.Segment(); } });
-	public static ClassRegistryEntry se_yabs_aichallenge_battleship_Map = new ClassRegistryEntry(6892640198302983990L, se.yabs.aichallenge.battleship.Map._TYPE_IDS, "se.yabs.aichallenge.battleship.Map", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.Map(); } });
 	public static ClassRegistryEntry se_yabs_aichallenge_battleship_Player = new ClassRegistryEntry(5600893473471973514L, se.yabs.aichallenge.battleship.Player._TYPE_IDS, "se.yabs.aichallenge.battleship.Player", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.Player(); } });
 	public static ClassRegistryEntry se_yabs_aichallenge_battleship_GameState = new ClassRegistryEntry(7830028132583391513L, se.yabs.aichallenge.battleship.GameState._TYPE_IDS, "se.yabs.aichallenge.battleship.GameState", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.GameState(); } });
 	public static ClassRegistryEntry se_yabs_aichallenge_battleship_Vec2 = new ClassRegistryEntry(5114268100851014382L, se.yabs.aichallenge.battleship.Vec2._TYPE_IDS, "se.yabs.aichallenge.battleship.Vec2", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.Vec2(); } });
@@ -43,7 +42,6 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 		add(se_yabs_aichallenge_GameChallengeFound);
 		add(se_yabs_aichallenge_battleship_Ship);
 		add(se_yabs_aichallenge_battleship_Segment);
-		add(se_yabs_aichallenge_battleship_Map);
 		add(se_yabs_aichallenge_battleship_Player);
 		add(se_yabs_aichallenge_battleship_GameState);
 		add(se_yabs_aichallenge_battleship_Vec2);
@@ -94,8 +92,6 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 				return se_yabs_aichallenge_battleship_Ship;
 			case se.yabs.aichallenge.battleship.Segment._TYPE_ID_16BIT:
 				return se_yabs_aichallenge_battleship_Segment;
-			case se.yabs.aichallenge.battleship.Map._TYPE_ID_16BIT:
-				return se_yabs_aichallenge_battleship_Map;
 			case se.yabs.aichallenge.battleship.Player._TYPE_ID_16BIT:
 				return se_yabs_aichallenge_battleship_Player;
 			case se.yabs.aichallenge.battleship.GameState._TYPE_ID_16BIT:
@@ -147,8 +143,6 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 				return se_yabs_aichallenge_battleship_Ship;
 			case se.yabs.aichallenge.battleship.Segment._TYPE_ID_16BIT_BASE64:
 				return se_yabs_aichallenge_battleship_Segment;
-			case se.yabs.aichallenge.battleship.Map._TYPE_ID_16BIT_BASE64:
-				return se_yabs_aichallenge_battleship_Map;
 			case se.yabs.aichallenge.battleship.Player._TYPE_ID_16BIT_BASE64:
 				return se_yabs_aichallenge_battleship_Player;
 			case se.yabs.aichallenge.battleship.GameState._TYPE_ID_16BIT_BASE64:

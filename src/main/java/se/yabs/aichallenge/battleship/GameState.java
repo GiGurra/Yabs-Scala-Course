@@ -25,8 +25,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 	private Player m_redPlayer;
 	private Player m_bluePlayer;
 	private java.util.ArrayList<Player> m_observers;
-	private Map m_redMap;
-	private Map m_blueMap;
+	private Vec2 m_mapSize;
 	private Phase m_phase;
 	private Team m_currentTeam;
 
@@ -35,8 +34,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		m_redPlayer = null;
 		m_bluePlayer = null;
 		m_observers = null;
-		m_redMap = null;
-		m_blueMap = null;
+		m_mapSize = null;
 		m_phase = null;
 		m_currentTeam = null;
 	}
@@ -44,15 +42,13 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 	public GameState(final Player redPlayer,
 				final Player bluePlayer,
 				final java.util.ArrayList<Player> observers,
-				final Map redMap,
-				final Map blueMap,
+				final Vec2 mapSize,
 				final Phase phase,
 				final Team currentTeam) {
 		m_redPlayer = redPlayer;
 		m_bluePlayer = bluePlayer;
 		m_observers = observers;
-		m_redMap = redMap;
-		m_blueMap = blueMap;
+		m_mapSize = mapSize;
 		m_phase = phase;
 		m_currentTeam = currentTeam;
 	}
@@ -69,12 +65,8 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		return m_observers;
 	}
 
-	public Map getRedMap() {
-		return m_redMap;
-	}
-
-	public Map getBlueMap() {
-		return m_blueMap;
+	public Vec2 getMapSize() {
+		return m_mapSize;
 	}
 
 	public Phase getPhase() {
@@ -97,12 +89,8 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		return _isObserversSet(FieldSetDepth.SHALLOW);
 	}
 
-	public boolean hasRedMap() {
-		return _isRedMapSet(FieldSetDepth.SHALLOW);
-	}
-
-	public boolean hasBlueMap() {
-		return _isBlueMapSet(FieldSetDepth.SHALLOW);
+	public boolean hasMapSize() {
+		return _isMapSizeSet(FieldSetDepth.SHALLOW);
 	}
 
 	public boolean hasPhase() {
@@ -128,13 +116,8 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		return this;
 	}
 
-	public GameState unsetRedMap() {
-		_setRedMapSet(false, FieldSetDepth.SHALLOW);
-		return this;
-	}
-
-	public GameState unsetBlueMap() {
-		_setBlueMapSet(false, FieldSetDepth.SHALLOW);
+	public GameState unsetMapSize() {
+		_setMapSizeSet(false, FieldSetDepth.SHALLOW);
 		return this;
 	}
 
@@ -163,13 +146,8 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		return this;
 	}
 
-	public GameState setRedMap(final Map redMap) {
-		m_redMap = redMap;
-		return this;
-	}
-
-	public GameState setBlueMap(final Map blueMap) {
-		m_blueMap = blueMap;
+	public GameState setMapSize(final Vec2 mapSize) {
+		m_mapSize = mapSize;
 		return this;
 	}
 
@@ -197,8 +175,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		result = _isRedPlayerSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getRedPlayer(), _redPlayer_METADATA.typ())) : result;
 		result = _isBluePlayerSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getBluePlayer(), _bluePlayer_METADATA.typ())) : result;
 		result = _isObserversSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getObservers(), _observers_METADATA.typ())) : result;
-		result = _isRedMapSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getRedMap(), _redMap_METADATA.typ())) : result;
-		result = _isBlueMapSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getBlueMap(), _blueMap_METADATA.typ())) : result;
+		result = _isMapSizeSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getMapSize(), _mapSize_METADATA.typ())) : result;
 		result = _isPhaseSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getPhase(), _phase_METADATA.typ())) : result;
 		result = _isCurrentTeamSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getCurrentTeam(), _currentTeam_METADATA.typ())) : result;
 		return result;
@@ -214,15 +191,13 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		  && hasRedPlayer() == o.hasRedPlayer()
 		  && hasBluePlayer() == o.hasBluePlayer()
 		  && hasObservers() == o.hasObservers()
-		  && hasRedMap() == o.hasRedMap()
-		  && hasBlueMap() == o.hasBlueMap()
+		  && hasMapSize() == o.hasMapSize()
 		  && hasPhase() == o.hasPhase()
 		  && hasCurrentTeam() == o.hasCurrentTeam()
 		  && EqualityTester.areEqual(getRedPlayer(), o.getRedPlayer(), _redPlayer_METADATA.typ())
 		  && EqualityTester.areEqual(getBluePlayer(), o.getBluePlayer(), _bluePlayer_METADATA.typ())
 		  && EqualityTester.areEqual(getObservers(), o.getObservers(), _observers_METADATA.typ())
-		  && EqualityTester.areEqual(getRedMap(), o.getRedMap(), _redMap_METADATA.typ())
-		  && EqualityTester.areEqual(getBlueMap(), o.getBlueMap(), _blueMap_METADATA.typ())
+		  && EqualityTester.areEqual(getMapSize(), o.getMapSize(), _mapSize_METADATA.typ())
 		  && getPhase() == o.getPhase()
 		  && getCurrentTeam() == o.getCurrentTeam();
 	}
@@ -233,8 +208,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 			DeepCopyer.deepCopy(getRedPlayer(), _redPlayer_METADATA.typ()),
 			DeepCopyer.deepCopy(getBluePlayer(), _bluePlayer_METADATA.typ()),
 			DeepCopyer.deepCopy(getObservers(), _observers_METADATA.typ()),
-			DeepCopyer.deepCopy(getRedMap(), _redMap_METADATA.typ()),
-			DeepCopyer.deepCopy(getBlueMap(), _blueMap_METADATA.typ()),
+			DeepCopyer.deepCopy(getMapSize(), _mapSize_METADATA.typ()),
 			getPhase(),
 			getCurrentTeam());
 		return out;
@@ -302,12 +276,11 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 	public void _accept(final FieldVisitor visitor, final FieldVisitSelection selection) throws java.io.IOException {
 		switch(selection) {
 			case ALL: {
-				visitor.beginVisit(this, 7);
+				visitor.beginVisit(this, 6);
 				visitor.visit(getRedPlayer(), _redPlayer_METADATA);
 				visitor.visit(getBluePlayer(), _bluePlayer_METADATA);
 				visitor.visit(getObservers(), _observers_METADATA);
-				visitor.visit(getRedMap(), _redMap_METADATA);
-				visitor.visit(getBlueMap(), _blueMap_METADATA);
+				visitor.visit(getMapSize(), _mapSize_METADATA);
 				visitor.visit(getPhase(), _phase_METADATA);
 				visitor.visit(getCurrentTeam(), _currentTeam_METADATA);
 				visitor.endVisit();
@@ -321,10 +294,8 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 					visitor.visit(getBluePlayer(), _bluePlayer_METADATA);
 				if (_isObserversSet(FieldSetDepth.SHALLOW))
 					visitor.visit(getObservers(), _observers_METADATA);
-				if (_isRedMapSet(FieldSetDepth.SHALLOW))
-					visitor.visit(getRedMap(), _redMap_METADATA);
-				if (_isBlueMapSet(FieldSetDepth.SHALLOW))
-					visitor.visit(getBlueMap(), _blueMap_METADATA);
+				if (_isMapSizeSet(FieldSetDepth.SHALLOW))
+					visitor.visit(getMapSize(), _mapSize_METADATA);
 				if (_isPhaseSet(FieldSetDepth.SHALLOW))
 					visitor.visit(getPhase(), _phase_METADATA);
 				if (_isCurrentTeamSet(FieldSetDepth.SHALLOW))
@@ -350,11 +321,8 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 			case (_observers_ID):
 				setObservers((java.util.ArrayList<Player>)reader.readListField(_observers_METADATA, context));
 				return true;
-			case (_redMap_ID):
-				setRedMap((Map)reader.readMgenObjectField(_redMap_METADATA, context));
-				return true;
-			case (_blueMap_ID):
-				setBlueMap((Map)reader.readMgenObjectField(_blueMap_METADATA, context));
+			case (_mapSize_ID):
+				setMapSize((Vec2)reader.readMgenObjectField(_mapSize_METADATA, context));
 				return true;
 			case (_phase_ID):
 				setPhase((Phase)reader.readEnumField(_phase_METADATA, context));
@@ -397,19 +365,11 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		}
 	}
 
-	public boolean _isRedMapSet(final FieldSetDepth fieldSetDepth) {
+	public boolean _isMapSizeSet(final FieldSetDepth fieldSetDepth) {
 		if (fieldSetDepth == FieldSetDepth.SHALLOW) {
-			return m_redMap != null;
+			return m_mapSize != null;
 		} else {
-			return m_redMap != null && Validator.validateFieldDeep(getRedMap(), _redMap_METADATA.typ());
-		}
-	}
-
-	public boolean _isBlueMapSet(final FieldSetDepth fieldSetDepth) {
-		if (fieldSetDepth == FieldSetDepth.SHALLOW) {
-			return m_blueMap != null;
-		} else {
-			return m_blueMap != null && Validator.validateFieldDeep(getBlueMap(), _blueMap_METADATA.typ());
+			return m_mapSize != null && Validator.validateFieldDeep(getMapSize(), _mapSize_METADATA.typ());
 		}
 	}
 
@@ -429,10 +389,8 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 				return _isBluePlayerSet(depth);
 			case (_observers_ID):
 				return _isObserversSet(depth);
-			case (_redMap_ID):
-				return _isRedMapSet(depth);
-			case (_blueMap_ID):
-				return _isBlueMapSet(depth);
+			case (_mapSize_ID):
+				return _isMapSizeSet(depth);
 			case (_phase_ID):
 				return _isPhaseSet(depth);
 			case (_currentTeam_ID):
@@ -472,23 +430,13 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		return this;
 	}
 
-	public GameState _setRedMapSet(final boolean state, final FieldSetDepth depth) {
+	public GameState _setMapSizeSet(final boolean state, final FieldSetDepth depth) {
 		if (state)
-			m_redMap = m_redMap != null ? m_redMap : new Map();
+			m_mapSize = m_mapSize != null ? m_mapSize : new Vec2();
 		else
-			m_redMap = null;
+			m_mapSize = null;
 		if (depth == FieldSetDepth.DEEP)
-			Marker.setFieldSetDeep(getRedMap(), _redMap_METADATA.typ());
-		return this;
-	}
-
-	public GameState _setBlueMapSet(final boolean state, final FieldSetDepth depth) {
-		if (state)
-			m_blueMap = m_blueMap != null ? m_blueMap : new Map();
-		else
-			m_blueMap = null;
-		if (depth == FieldSetDepth.DEEP)
-			Marker.setFieldSetDeep(getBlueMap(), _blueMap_METADATA.typ());
+			Marker.setFieldSetDeep(getMapSize(), _mapSize_METADATA.typ());
 		return this;
 	}
 
@@ -512,8 +460,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		_setRedPlayerSet(state, depth);
 		_setBluePlayerSet(state, depth);
 		_setObserversSet(state, depth);
-		_setRedMapSet(state, depth);
-		_setBlueMapSet(state, depth);
+		_setMapSizeSet(state, depth);
 		_setPhaseSet(state, depth);
 		_setCurrentTeamSet(state, depth);
 		return this;
@@ -527,8 +474,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 				&& (!_isRedPlayerSet(FieldSetDepth.SHALLOW) || _isRedPlayerSet(FieldSetDepth.DEEP))
 				&& (!_isBluePlayerSet(FieldSetDepth.SHALLOW) || _isBluePlayerSet(FieldSetDepth.DEEP))
 				&& (!_isObserversSet(FieldSetDepth.SHALLOW) || _isObserversSet(FieldSetDepth.DEEP))
-				&& (!_isRedMapSet(FieldSetDepth.SHALLOW) || _isRedMapSet(FieldSetDepth.DEEP))
-				&& (!_isBlueMapSet(FieldSetDepth.SHALLOW) || _isBlueMapSet(FieldSetDepth.DEEP));
+				&& (!_isMapSizeSet(FieldSetDepth.SHALLOW) || _isMapSizeSet(FieldSetDepth.DEEP));
 		}
 	}
 
@@ -538,8 +484,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		out += _isRedPlayerSet(depth) ? 1 : 0;
 		out += _isBluePlayerSet(depth) ? 1 : 0;
 		out += _isObserversSet(depth) ? 1 : 0;
-		out += _isRedMapSet(depth) ? 1 : 0;
-		out += _isBlueMapSet(depth) ? 1 : 0;
+		out += _isMapSizeSet(depth) ? 1 : 0;
 		out += _isPhaseSet(depth) ? 1 : 0;
 		out += _isCurrentTeamSet(depth) ? 1 : 0;
 		return out;
@@ -554,10 +499,8 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 				return _bluePlayer_METADATA;
 			case (_observers_ID):
 				return _observers_METADATA;
-			case (_redMap_ID):
-				return _redMap_METADATA;
-			case (_blueMap_ID):
-				return _blueMap_METADATA;
+			case (_mapSize_ID):
+				return _mapSize_METADATA;
 			case (_phase_ID):
 				return _phase_METADATA;
 			case (_currentTeam_ID):
@@ -576,10 +519,8 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 				return _bluePlayer_METADATA;
 			case ("observers"):
 				return _observers_METADATA;
-			case ("redMap"):
-				return _redMap_METADATA;
-			case ("blueMap"):
-				return _blueMap_METADATA;
+			case ("mapSize"):
+				return _mapSize_METADATA;
 			case ("phase"):
 				return _phase_METADATA;
 			case ("currentTeam"):
@@ -623,19 +564,17 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 	public static final Field _redPlayer_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "redPlayer", new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Player", 5600893473471973514L), null, (short)-7294);
 	public static final Field _bluePlayer_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "bluePlayer", new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Player", 5600893473471973514L), null, (short)10760);
 	public static final Field _observers_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "observers", new se.culvertsoft.mgen.api.model.ListType(new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Player", 5600893473471973514L)), null, (short)22106);
-	public static final Field _redMap_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "redMap", new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Map", 6892640198302983990L), null, (short)28692);
-	public static final Field _blueMap_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "blueMap", new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Map", 6892640198302983990L), null, (short)-19206);
+	public static final Field _mapSize_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "mapSize", new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Vec2", 5114268100851014382L), null, (short)-24724);
 	public static final Field _phase_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "phase", se.yabs.aichallenge.battleship.Phase._TYPE, null, (short)7625);
 	public static final Field _currentTeam_METADATA = new Field("se.yabs.aichallenge.battleship.GameState", "currentTeam", se.yabs.aichallenge.battleship.Team._TYPE, null, (short)-14726);
 
 	public static final short _redPlayer_ID = (short)-7294;
 	public static final short _bluePlayer_ID = (short)10760;
 	public static final short _observers_ID = (short)22106;
-	public static final short _redMap_ID = (short)28692;
-	public static final short _blueMap_ID = (short)-19206;
+	public static final short _mapSize_ID = (short)-24724;
 	public static final short _phase_ID = (short)7625;
 	public static final short _currentTeam_ID = (short)-14726;
 
-	public static final Field[] _FIELDS = { _redPlayer_METADATA, _bluePlayer_METADATA, _observers_METADATA, _redMap_METADATA, _blueMap_METADATA, _phase_METADATA, _currentTeam_METADATA };
+	public static final Field[] _FIELDS = { _redPlayer_METADATA, _bluePlayer_METADATA, _observers_METADATA, _mapSize_METADATA, _phase_METADATA, _currentTeam_METADATA };
 
 }

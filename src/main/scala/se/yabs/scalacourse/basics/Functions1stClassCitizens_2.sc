@@ -10,8 +10,6 @@ object Functions1stClassCitizens {
   ///////////////////////////////////////////////////////////////////////////
   // Remember the slides:
   // Function arguments can be data or other functions
-  // 'makeMagicTool' is a function that returns a new function,
-  // (Oh and btw, 'Unit' is scalas word for 'void')
 
   def calc(input: Long, f: () => Long): Long = {
     input * f()

@@ -32,6 +32,7 @@ class Battleship extends Game(GameSelection.BATTLESHIP) {
     if (hasTwoPlayers) {
       redPlayer.send(new GameChallengeFound(gameSelected, bluePlayer.name))
       bluePlayer.send(new GameChallengeFound(gameSelected, redPlayer.name))
+      println(s"Challenge found, $redPlayer vs $bluePlayer")
     }
     
   }

@@ -24,6 +24,12 @@
 #include "se/yabs/aichallenge/battleship/GameState.h"
 #include "se/yabs/aichallenge/battleship/Vec2.h"
 #include "se/yabs/aichallenge/battleship/Shot.h"
+#include "se/yabs/aichallenge/battleship/BattleshipMessage.h"
+#include "se/yabs/aichallenge/battleship/PlaceShipsRequest.h"
+#include "se/yabs/aichallenge/battleship/PlaceShips.h"
+#include "se/yabs/aichallenge/battleship/MakeShotRequest.h"
+#include "se/yabs/aichallenge/battleship/MakeShot.h"
+#include "se/yabs/aichallenge/battleship/GameOver.h"
 
 namespace se {
 namespace yabs {
@@ -58,6 +64,28 @@ public:
 						break;
 					case se::yabs::aichallenge::GameChallengeFound::_type_id_16bit:
 						reader.readFields(static_cast<se::yabs::aichallenge::GameChallengeFound&>(o), context);
+						break;
+					case se::yabs::aichallenge::battleship::BattleshipMessage::_type_id_16bit:
+						switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+							case se::yabs::aichallenge::battleship::PlaceShipsRequest::_type_id_16bit:
+								reader.readFields(static_cast<se::yabs::aichallenge::battleship::PlaceShipsRequest&>(o), context);
+								break;
+							case se::yabs::aichallenge::battleship::PlaceShips::_type_id_16bit:
+								reader.readFields(static_cast<se::yabs::aichallenge::battleship::PlaceShips&>(o), context);
+								break;
+							case se::yabs::aichallenge::battleship::MakeShotRequest::_type_id_16bit:
+								reader.readFields(static_cast<se::yabs::aichallenge::battleship::MakeShotRequest&>(o), context);
+								break;
+							case se::yabs::aichallenge::battleship::MakeShot::_type_id_16bit:
+								reader.readFields(static_cast<se::yabs::aichallenge::battleship::MakeShot&>(o), context);
+								break;
+							case se::yabs::aichallenge::battleship::GameOver::_type_id_16bit:
+								reader.readFields(static_cast<se::yabs::aichallenge::battleship::GameOver&>(o), context);
+								break;
+							default:
+								reader.readFields(static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o), context);
+								break;
+						}
 						break;
 					default:
 						reader.readFields(static_cast<se::yabs::aichallenge::Message&>(o), context);
@@ -116,6 +144,28 @@ public:
 					case se::yabs::aichallenge::GameChallengeFound::_type_id_16bit:
 						static_cast<se::yabs::aichallenge::GameChallengeFound&>(o)._accept<VisitorType>(visitor, selection);
 						break;
+					case se::yabs::aichallenge::battleship::BattleshipMessage::_type_id_16bit:
+						switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+							case se::yabs::aichallenge::battleship::PlaceShipsRequest::_type_id_16bit:
+								static_cast<se::yabs::aichallenge::battleship::PlaceShipsRequest&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+							case se::yabs::aichallenge::battleship::PlaceShips::_type_id_16bit:
+								static_cast<se::yabs::aichallenge::battleship::PlaceShips&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+							case se::yabs::aichallenge::battleship::MakeShotRequest::_type_id_16bit:
+								static_cast<se::yabs::aichallenge::battleship::MakeShotRequest&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+							case se::yabs::aichallenge::battleship::MakeShot::_type_id_16bit:
+								static_cast<se::yabs::aichallenge::battleship::MakeShot&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+							case se::yabs::aichallenge::battleship::GameOver::_type_id_16bit:
+								static_cast<se::yabs::aichallenge::battleship::GameOver&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+							default:
+								static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+						}
+						break;
 					default:
 						static_cast<se::yabs::aichallenge::Message&>(o)._accept<VisitorType>(visitor, selection);
 						break;
@@ -172,6 +222,28 @@ public:
 						break;
 					case se::yabs::aichallenge::GameChallengeFound::_type_id_16bit:
 						static_cast<const se::yabs::aichallenge::GameChallengeFound&>(o)._accept<VisitorType>(visitor, selection);
+						break;
+					case se::yabs::aichallenge::battleship::BattleshipMessage::_type_id_16bit:
+						switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+							case se::yabs::aichallenge::battleship::PlaceShipsRequest::_type_id_16bit:
+								static_cast<const se::yabs::aichallenge::battleship::PlaceShipsRequest&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+							case se::yabs::aichallenge::battleship::PlaceShips::_type_id_16bit:
+								static_cast<const se::yabs::aichallenge::battleship::PlaceShips&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+							case se::yabs::aichallenge::battleship::MakeShotRequest::_type_id_16bit:
+								static_cast<const se::yabs::aichallenge::battleship::MakeShotRequest&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+							case se::yabs::aichallenge::battleship::MakeShot::_type_id_16bit:
+								static_cast<const se::yabs::aichallenge::battleship::MakeShot&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+							case se::yabs::aichallenge::battleship::GameOver::_type_id_16bit:
+								static_cast<const se::yabs::aichallenge::battleship::GameOver&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+							default:
+								static_cast<const se::yabs::aichallenge::battleship::BattleshipMessage&>(o)._accept<VisitorType>(visitor, selection);
+								break;
+						}
 						break;
 					default:
 						static_cast<const se::yabs::aichallenge::Message&>(o)._accept<VisitorType>(visitor, selection);

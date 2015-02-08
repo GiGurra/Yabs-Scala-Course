@@ -36,6 +36,12 @@ class Handler  {
 	virtual void handle(se::yabs::aichallenge::battleship::GameState& o);
 	virtual void handle(se::yabs::aichallenge::battleship::Vec2& o);
 	virtual void handle(se::yabs::aichallenge::battleship::Shot& o);
+	virtual void handle(se::yabs::aichallenge::battleship::BattleshipMessage& o);
+	virtual void handle(se::yabs::aichallenge::battleship::PlaceShipsRequest& o);
+	virtual void handle(se::yabs::aichallenge::battleship::PlaceShips& o);
+	virtual void handle(se::yabs::aichallenge::battleship::MakeShotRequest& o);
+	virtual void handle(se::yabs::aichallenge::battleship::MakeShot& o);
+	virtual void handle(se::yabs::aichallenge::battleship::GameOver& o);
 
 }; // End class Handler
 

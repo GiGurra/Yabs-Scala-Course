@@ -1,49 +1,79 @@
 <Module>
-    <Enums>
-        <Team>
-            <RED/>
-            <BLUE/>
-            <OBSERVERS/>
-        </Team>
-        <Phase>
-            <LOBBY/>
-            <PLAYING/>
-        </Phase>
-    </Enums>
-    <Types>
-        <Ship>
-            <points type="list[Segment]"/>
-        </Ship>
-        <Segment>
-            <alive type="bool"/>
-            <pos type="Vec2"/>
-        </Segment>
-        <Map>
-            <ships type="list[Ship]"/>
-            <size type="Vec2"/>
-        </Map>
-        <Player>
-            <uuid type="string"/>
-            <name type="string"/>
-            <team type="Team"/>
-            <shots type="list[Shot]"/>
-        </Player>
-        <GameState>
-            <redPlayer type="Player"/>
-            <bluePlayer type="Player"/>
-            <observers type="list[Player]"/>
-            <redMap type="Map"/>
-            <blueMap type="Map"/>
-            <phase type="Phase"/>
-            <currentTeam type="Team"/>
-        </GameState>
-        <Vec2>
-            <x type="int32"/>
-            <y type="int32"/>
-        </Vec2>
-        <Shot>
-            <pos type="Vec2"/>
-            <isHit type="bool"/>
-        </Shot>
-    </Types>
+	<Enums>
+
+		<Team>
+			<RED />
+			<BLUE />
+			<OBSERVERS />
+		</Team>
+
+		<Phase>
+			<LOBBY />
+			<PLAYING />
+		</Phase>
+
+		<BattleshipResult>
+			<WIN />
+			<LOSS />
+		</BattleshipResult>
+
+	</Enums>
+	<Types>
+
+		<!-- ********** STATE ********** -->
+		<Ship>
+			<points type="list[Segment]" />
+		</Ship>
+		<Segment>
+			<alive type="bool" />
+			<pos type="Vec2" />
+		</Segment>
+		<Map>
+			<ships type="list[Ship]" />
+			<size type="Vec2" />
+		</Map>
+		<Player>
+			<uuid type="string" />
+			<name type="string" />
+			<team type="Team" />
+			<shots type="list[Shot]" />
+		</Player>
+		<GameState>
+			<redPlayer type="Player" />
+			<bluePlayer type="Player" />
+			<observers type="list[Player]" />
+			<redMap type="Map" />
+			<blueMap type="Map" />
+			<phase type="Phase" />
+			<currentTeam type="Team" />
+		</GameState>
+		<Vec2>
+			<x type="int32" />
+			<y type="int32" />
+		</Vec2>
+		<Shot>
+			<pos type="Vec2" />
+			<isHit type="bool" />
+		</Shot>
+
+
+		<!-- ********** MESSAGES ********** -->
+
+		<BattleshipMessage extends="se.yabs.aichallenge.Message" />
+
+		<PlaceShipsRequest extends="BattleshipMessage" />
+		<PlaceShips extends="BattleshipMessage">
+			<ships type="List[Ship]" />
+		</PlaceShips>
+
+		<MakeShotRequest extends="BattleshipMessage" />
+		<MakeShot extends="BattleshipMessage">
+			<shot type="Shot" />
+		</MakeShot>
+
+		<GameOver extends="BattleshipMessage">
+			<result type="BattleshipResult" />
+		</GameOver>
+
+	</Types>
 </Module>

@@ -7,49 +7,35 @@
  ********************************************************************************************************************
  ********************************************************************************************************************/
 
-#ifndef SE_YABS_AICHALLENGE_FORWARDDECLARE
-#define SE_YABS_AICHALLENGE_FORWARDDECLARE
+#ifndef SE_YABS_AICHALLENGE_BATTLESHIP_BATTLESHIPRESULT
+#define SE_YABS_AICHALLENGE_BATTLESHIP_BATTLESHIPRESULT
 
 #include "mgen/classes/MGenBase.h"
 
 namespace se {
 namespace yabs {
 namespace aichallenge {
-
-class Message;
-class WelcomeMessage;
-class ErrorMessage;
-class Checkin;
-class PlayGame;
-class GameChallengeFound;
-
-} // End namespace aichallenge
-} // End namespace yabs
-} // End namespace se
-
-namespace se {
-namespace yabs {
-namespace aichallenge {
 namespace battleship {
 
-class Ship;
-class Segment;
-class Map;
-class Player;
-class GameState;
-class Vec2;
-class Shot;
-class BattleshipMessage;
-class PlaceShipsRequest;
-class PlaceShips;
-class MakeShotRequest;
-class MakeShot;
-class GameOver;
+enum BattleshipResult {
+	BattleshipResult_WIN = 0,
+	BattleshipResult_LOSS = 1,
+	BattleshipResult_UNKNOWN = 2
+};
 
 } // End namespace battleship
 } // End namespace aichallenge
 } // End namespace yabs
 } // End namespace se
 
+namespace mgen {
+
+const std::vector<se::yabs::aichallenge::battleship::BattleshipResult>& get_enum_values(const se::yabs::aichallenge::battleship::BattleshipResult /* type_evidence */);
+se::yabs::aichallenge::battleship::BattleshipResult get_enum_value(const se::yabs::aichallenge::battleship::BattleshipResult /* type_evidence */, const std::string& enumName);
+
+const std::vector<std::string>& get_enum_names(const se::yabs::aichallenge::battleship::BattleshipResult /* type_evidence */);
+const std::string& get_enum_name(const se::yabs::aichallenge::battleship::BattleshipResult enumValue);
+
+} // End namespace mgen
 
 #endif

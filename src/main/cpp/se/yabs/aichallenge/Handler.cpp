@@ -20,6 +20,11 @@
 #include "se/yabs/aichallenge/battleship/GameState.h"
 #include "se/yabs/aichallenge/battleship/Vec2.h"
 #include "se/yabs/aichallenge/battleship/Shot.h"
+#include "se/yabs/aichallenge/battleship/PlaceShipsRequest.h"
+#include "se/yabs/aichallenge/battleship/PlaceShips.h"
+#include "se/yabs/aichallenge/battleship/MakeShotRequest.h"
+#include "se/yabs/aichallenge/battleship/MakeShot.h"
+#include "se/yabs/aichallenge/battleship/GameOver.h"
 
 namespace se {
 namespace yabs {
@@ -86,6 +91,30 @@ void Handler::handle(se::yabs::aichallenge::battleship::Vec2& o) {
 
 void Handler::handle(se::yabs::aichallenge::battleship::Shot& o) {
 	handleDiscard(o);
+}
+
+void Handler::handle(se::yabs::aichallenge::battleship::BattleshipMessage& o) {
+	handle(static_cast<se::yabs::aichallenge::Message&>(o));
+}
+
+void Handler::handle(se::yabs::aichallenge::battleship::PlaceShipsRequest& o) {
+	handle(static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o));
+}
+
+void Handler::handle(se::yabs::aichallenge::battleship::PlaceShips& o) {
+	handle(static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o));
+}
+
+void Handler::handle(se::yabs::aichallenge::battleship::MakeShotRequest& o) {
+	handle(static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o));
+}
+
+void Handler::handle(se::yabs::aichallenge::battleship::MakeShot& o) {
+	handle(static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o));
+}
+
+void Handler::handle(se::yabs::aichallenge::battleship::GameOver& o) {
+	handle(static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o));
 }
 
 

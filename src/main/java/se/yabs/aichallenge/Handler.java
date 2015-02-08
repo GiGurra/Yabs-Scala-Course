@@ -70,4 +70,28 @@ public class Handler  {
 		handleDiscard(o);
 	}
 
+	protected void handle(se.yabs.aichallenge.battleship.BattleshipMessage o) {
+		handle((se.yabs.aichallenge.Message)o);
+	}
+
+	protected void handle(se.yabs.aichallenge.battleship.PlaceShipsRequest o) {
+		handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
+	}
+
+	protected void handle(se.yabs.aichallenge.battleship.PlaceShips o) {
+		handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
+	}
+
+	protected void handle(se.yabs.aichallenge.battleship.MakeShotRequest o) {
+		handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
+	}
+
+	protected void handle(se.yabs.aichallenge.battleship.MakeShot o) {
+		handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
+	}
+
+	protected void handle(se.yabs.aichallenge.battleship.GameOver o) {
+		handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
+	}
+
 }

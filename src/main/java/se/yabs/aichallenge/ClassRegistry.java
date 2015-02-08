@@ -27,6 +27,12 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 	public static ClassRegistryEntry se_yabs_aichallenge_battleship_GameState = new ClassRegistryEntry(7830028132583391513L, se.yabs.aichallenge.battleship.GameState._TYPE_IDS, "se.yabs.aichallenge.battleship.GameState", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.GameState(); } });
 	public static ClassRegistryEntry se_yabs_aichallenge_battleship_Vec2 = new ClassRegistryEntry(5114268100851014382L, se.yabs.aichallenge.battleship.Vec2._TYPE_IDS, "se.yabs.aichallenge.battleship.Vec2", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.Vec2(); } });
 	public static ClassRegistryEntry se_yabs_aichallenge_battleship_Shot = new ClassRegistryEntry(5723027387374372704L, se.yabs.aichallenge.battleship.Shot._TYPE_IDS, "se.yabs.aichallenge.battleship.Shot", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.Shot(); } });
+	public static ClassRegistryEntry se_yabs_aichallenge_battleship_BattleshipMessage = new ClassRegistryEntry(2567022198048374295L, se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_IDS, "se.yabs.aichallenge.battleship.BattleshipMessage", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.BattleshipMessage(); } });
+	public static ClassRegistryEntry se_yabs_aichallenge_battleship_PlaceShipsRequest = new ClassRegistryEntry(1314895258813520762L, se.yabs.aichallenge.battleship.PlaceShipsRequest._TYPE_IDS, "se.yabs.aichallenge.battleship.PlaceShipsRequest", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.PlaceShipsRequest(); } });
+	public static ClassRegistryEntry se_yabs_aichallenge_battleship_PlaceShips = new ClassRegistryEntry(8926157015529298557L, se.yabs.aichallenge.battleship.PlaceShips._TYPE_IDS, "se.yabs.aichallenge.battleship.PlaceShips", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.PlaceShips(); } });
+	public static ClassRegistryEntry se_yabs_aichallenge_battleship_MakeShotRequest = new ClassRegistryEntry(6955157086289771592L, se.yabs.aichallenge.battleship.MakeShotRequest._TYPE_IDS, "se.yabs.aichallenge.battleship.MakeShotRequest", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.MakeShotRequest(); } });
+	public static ClassRegistryEntry se_yabs_aichallenge_battleship_MakeShot = new ClassRegistryEntry(3005587010339637453L, se.yabs.aichallenge.battleship.MakeShot._TYPE_IDS, "se.yabs.aichallenge.battleship.MakeShot", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.MakeShot(); } });
+	public static ClassRegistryEntry se_yabs_aichallenge_battleship_GameOver = new ClassRegistryEntry(1789310646936949934L, se.yabs.aichallenge.battleship.GameOver._TYPE_IDS, "se.yabs.aichallenge.battleship.GameOver", new Ctor() { public MGenBase create() { return new se.yabs.aichallenge.battleship.GameOver(); } });
 
 	public ClassRegistry() {
 		add(se_yabs_aichallenge_Message);
@@ -42,6 +48,12 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 		add(se_yabs_aichallenge_battleship_GameState);
 		add(se_yabs_aichallenge_battleship_Vec2);
 		add(se_yabs_aichallenge_battleship_Shot);
+		add(se_yabs_aichallenge_battleship_BattleshipMessage);
+		add(se_yabs_aichallenge_battleship_PlaceShipsRequest);
+		add(se_yabs_aichallenge_battleship_PlaceShips);
+		add(se_yabs_aichallenge_battleship_MakeShotRequest);
+		add(se_yabs_aichallenge_battleship_MakeShot);
+		add(se_yabs_aichallenge_battleship_GameOver);
 	}
 
 	@Override
@@ -60,6 +72,21 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 						return se_yabs_aichallenge_PlayGame;
 					case se.yabs.aichallenge.GameChallengeFound._TYPE_ID_16BIT:
 						return se_yabs_aichallenge_GameChallengeFound;
+					case se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT:
+						switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
+							case se.yabs.aichallenge.battleship.PlaceShipsRequest._TYPE_ID_16BIT:
+								return se_yabs_aichallenge_battleship_PlaceShipsRequest;
+							case se.yabs.aichallenge.battleship.PlaceShips._TYPE_ID_16BIT:
+								return se_yabs_aichallenge_battleship_PlaceShips;
+							case se.yabs.aichallenge.battleship.MakeShotRequest._TYPE_ID_16BIT:
+								return se_yabs_aichallenge_battleship_MakeShotRequest;
+							case se.yabs.aichallenge.battleship.MakeShot._TYPE_ID_16BIT:
+								return se_yabs_aichallenge_battleship_MakeShot;
+							case se.yabs.aichallenge.battleship.GameOver._TYPE_ID_16BIT:
+								return se_yabs_aichallenge_battleship_GameOver;
+							default:
+								return se_yabs_aichallenge_battleship_BattleshipMessage;
+						}
 					default:
 						return se_yabs_aichallenge_Message;
 				}
@@ -98,6 +125,21 @@ public class ClassRegistry extends se.culvertsoft.mgen.javapack.classes.ClassReg
 						return se_yabs_aichallenge_PlayGame;
 					case se.yabs.aichallenge.GameChallengeFound._TYPE_ID_16BIT_BASE64:
 						return se_yabs_aichallenge_GameChallengeFound;
+					case se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT_BASE64:
+						switch((i < ids.length ? ids[i++] : "0xFFFFFFFF")) {
+							case se.yabs.aichallenge.battleship.PlaceShipsRequest._TYPE_ID_16BIT_BASE64:
+								return se_yabs_aichallenge_battleship_PlaceShipsRequest;
+							case se.yabs.aichallenge.battleship.PlaceShips._TYPE_ID_16BIT_BASE64:
+								return se_yabs_aichallenge_battleship_PlaceShips;
+							case se.yabs.aichallenge.battleship.MakeShotRequest._TYPE_ID_16BIT_BASE64:
+								return se_yabs_aichallenge_battleship_MakeShotRequest;
+							case se.yabs.aichallenge.battleship.MakeShot._TYPE_ID_16BIT_BASE64:
+								return se_yabs_aichallenge_battleship_MakeShot;
+							case se.yabs.aichallenge.battleship.GameOver._TYPE_ID_16BIT_BASE64:
+								return se_yabs_aichallenge_battleship_GameOver;
+							default:
+								return se_yabs_aichallenge_battleship_BattleshipMessage;
+						}
 					default:
 						return se_yabs_aichallenge_Message;
 				}

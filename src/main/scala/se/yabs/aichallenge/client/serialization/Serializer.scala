@@ -1,10 +1,11 @@
-package se.yabs.aichallenge
+package se.yabs.aichallenge.client.serialization
 
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-
 import se.culvertsoft.mgen.javapack.serialization.JsonPrettyWriter
 import se.culvertsoft.mgen.javapack.serialization.JsonReader
+import se.yabs.aichallenge.ClassRegistry
+import se.yabs.aichallenge.Message
 
 object Serializer {
 

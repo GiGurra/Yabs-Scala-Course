@@ -4,7 +4,7 @@ import se.yabs.aichallenge.Checkin
 import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.Message
 import se.yabs.aichallenge.PlayGame
-import se.yabs.aichallenge.Serializer
+import se.yabs.aichallenge.client.serialization.Serializer
 import se.yabs.aichallenge.host.GameHost
 import se.yabs.aichallenge.util.ZmqSocket
 

@@ -9,11 +9,11 @@ import GamePhase.GAME_OVER
 import GamePhase.JOINING
 import GamePhase.PLACING_SHIPS
 import GamePhase.PLAYING
-import se.yabs.aichallenge.Game
 import se.yabs.aichallenge.GameChallengeFound
 import se.yabs.aichallenge.GameMessage
 import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.Message
+import se.yabs.aichallenge.host.Game
 import se.yabs.aichallenge.host.LoggedInUser
 
 object BattleshipGame {

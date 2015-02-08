@@ -1,6 +1,7 @@
-package se.yabs.aichallenge
+package se.yabs.aichallenge.host
 
-import se.yabs.aichallenge.host.LoggedInUser
+import se.yabs.aichallenge.GameMessage
+import se.yabs.aichallenge.GameSelection
 
 abstract class Game(val gameSelected: GameSelection) {
   def step(): Unit

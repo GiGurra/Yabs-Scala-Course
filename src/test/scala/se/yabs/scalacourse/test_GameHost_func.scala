@@ -1,13 +1,9 @@
 package se.yabs.scalacourse
 
-import scala.annotation.elidable
-import scala.annotation.elidable.ASSERTION
 import org.junit.Test
-import se.yabs.aichallenge.GameSelection
-import se.yabs.aichallenge.WelcomeMessage
-import se.yabs.aichallenge.client.GameClient
-import se.yabs.aichallenge.host.GameHost
+
 import se.yabs.aichallenge.battleship.BattleshipClient
+import se.yabs.aichallenge.host.GameHost
 
 class test_GameHost_func {
   /*

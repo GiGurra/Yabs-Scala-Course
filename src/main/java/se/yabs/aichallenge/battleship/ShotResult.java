@@ -6,7 +6,7 @@
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
-package se.yabs.aichallenge;
+package se.yabs.aichallenge.battleship;
 
 import se.culvertsoft.mgen.api.model.Field;
 import se.culvertsoft.mgen.javapack.metadata.FieldSetDepth;
@@ -14,59 +14,62 @@ import se.culvertsoft.mgen.javapack.metadata.FieldVisitSelection;
 import se.culvertsoft.mgen.javapack.serialization.FieldVisitor;
 import se.culvertsoft.mgen.javapack.serialization.Reader;
 import se.culvertsoft.mgen.javapack.util.FieldHasher;
+import se.culvertsoft.mgen.javapack.util.DeepCopyer;
 import se.culvertsoft.mgen.javapack.util.EqualityTester;
+import se.culvertsoft.mgen.javapack.util.Validator;
+import se.culvertsoft.mgen.javapack.util.Marker;
 /* custom_imports_begin *//* custom_imports_end */
 
-public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end */ {
+public class ShotResult extends BattleshipMessage /* custom_ifcs_begin *//* custom_ifcs_end */ {
 
-	private String m_name;
-	private String m_password;
+	private String m_shooterName;
+	private Shot m_shot;
 
-	public Checkin() {
+	public ShotResult() {
 		super();
-		m_name = null;
-		m_password = null;
+		m_shooterName = null;
+		m_shot = null;
 	}
 
-	public Checkin(final String name,
-				final String password) {
-		m_name = name;
-		m_password = password;
+	public ShotResult(final String shooterName,
+				final Shot shot) {
+		m_shooterName = shooterName;
+		m_shot = shot;
 	}
 
-	public String getName() {
-		return m_name;
+	public String getShooterName() {
+		return m_shooterName;
 	}
 
-	public String getPassword() {
-		return m_password;
+	public Shot getShot() {
+		return m_shot;
 	}
 
-	public boolean hasName() {
-		return _isNameSet(FieldSetDepth.SHALLOW);
+	public boolean hasShooterName() {
+		return _isShooterNameSet(FieldSetDepth.SHALLOW);
 	}
 
-	public boolean hasPassword() {
-		return _isPasswordSet(FieldSetDepth.SHALLOW);
+	public boolean hasShot() {
+		return _isShotSet(FieldSetDepth.SHALLOW);
 	}
 
-	public Checkin unsetName() {
-		_setNameSet(false, FieldSetDepth.SHALLOW);
+	public ShotResult unsetShooterName() {
+		_setShooterNameSet(false, FieldSetDepth.SHALLOW);
 		return this;
 	}
 
-	public Checkin unsetPassword() {
-		_setPasswordSet(false, FieldSetDepth.SHALLOW);
+	public ShotResult unsetShot() {
+		_setShotSet(false, FieldSetDepth.SHALLOW);
 		return this;
 	}
 
-	public Checkin setName(final String name) {
-		m_name = name;
+	public ShotResult setShooterName(final String shooterName) {
+		m_shooterName = shooterName;
 		return this;
 	}
 
-	public Checkin setPassword(final String password) {
-		m_password = password;
+	public ShotResult setShot(final Shot shot) {
+		m_shot = shot;
 		return this;
 	}
 
@@ -80,9 +83,9 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = -1736332703;
-		result = _isNameSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getName(), _name_METADATA.typ())) : result;
-		result = _isPasswordSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getPassword(), _password_METADATA.typ())) : result;
+		int result = 1943033445;
+		result = _isShooterNameSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getShooterName(), _shooterName_METADATA.typ())) : result;
+		result = _isShotSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getShot(), _shot_METADATA.typ())) : result;
 		return result;
 	}
 
@@ -90,20 +93,20 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 	public boolean equals(final Object other) {
 		if (other == null) return false;
 		if (other == this) return true;
-		if (Checkin.class != other.getClass()) return false;
-		final Checkin o = (Checkin)other;
+		if (ShotResult.class != other.getClass()) return false;
+		final ShotResult o = (ShotResult)other;
 		return true
-		  && hasName() == o.hasName()
-		  && hasPassword() == o.hasPassword()
-		  && EqualityTester.areEqual(getName(), o.getName(), _name_METADATA.typ())
-		  && EqualityTester.areEqual(getPassword(), o.getPassword(), _password_METADATA.typ());
+		  && hasShooterName() == o.hasShooterName()
+		  && hasShot() == o.hasShot()
+		  && EqualityTester.areEqual(getShooterName(), o.getShooterName(), _shooterName_METADATA.typ())
+		  && EqualityTester.areEqual(getShot(), o.getShot(), _shot_METADATA.typ());
 	}
 
 	@Override
-	public Checkin deepCopy() {
-		final Checkin out = new Checkin(
-			getName(),
-			getPassword());
+	public ShotResult deepCopy() {
+		final ShotResult out = new ShotResult(
+			getShooterName(),
+			DeepCopyer.deepCopy(getShot(), _shot_METADATA.typ()));
 		return out;
 	}
 
@@ -170,17 +173,17 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 		switch(selection) {
 			case ALL: {
 				visitor.beginVisit(this, 2);
-				visitor.visit(getName(), _name_METADATA);
-				visitor.visit(getPassword(), _password_METADATA);
+				visitor.visit(getShooterName(), _shooterName_METADATA);
+				visitor.visit(getShot(), _shot_METADATA);
 				visitor.endVisit();
 				break;
 			}
 			default /* case ALL_SET_NONTRANSIENT */ : {
 				visitor.beginVisit(this, _nFieldsSet(FieldSetDepth.SHALLOW, false));
-				if (_isNameSet(FieldSetDepth.SHALLOW))
-					visitor.visit(getName(), _name_METADATA);
-				if (_isPasswordSet(FieldSetDepth.SHALLOW))
-					visitor.visit(getPassword(), _password_METADATA);
+				if (_isShooterNameSet(FieldSetDepth.SHALLOW))
+					visitor.visit(getShooterName(), _shooterName_METADATA);
+				if (_isShotSet(FieldSetDepth.SHALLOW))
+					visitor.visit(getShot(), _shot_METADATA);
 				visitor.endVisit();
 				break;
 			}
@@ -192,11 +195,11 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 	                         final Object context,
 	                         final Reader reader) throws java.io.IOException {
 		switch(fieldId) {
-			case (_name_ID):
-				setName((String)reader.readStringField(_name_METADATA, context));
+			case (_shooterName_ID):
+				setShooterName((String)reader.readStringField(_shooterName_METADATA, context));
 				return true;
-			case (_password_ID):
-				setPassword((String)reader.readStringField(_password_METADATA, context));
+			case (_shot_ID):
+				setShot((Shot)reader.readMgenObjectField(_shot_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);
@@ -209,44 +212,50 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 		return _FIELDS;
 	}
 
-	public boolean _isNameSet(final FieldSetDepth fieldSetDepth) {
-		return m_name != null;
+	public boolean _isShooterNameSet(final FieldSetDepth fieldSetDepth) {
+		return m_shooterName != null;
 	}
 
-	public boolean _isPasswordSet(final FieldSetDepth fieldSetDepth) {
-		return m_password != null;
+	public boolean _isShotSet(final FieldSetDepth fieldSetDepth) {
+		if (fieldSetDepth == FieldSetDepth.SHALLOW) {
+			return m_shot != null;
+		} else {
+			return m_shot != null && Validator.validateFieldDeep(getShot(), _shot_METADATA.typ());
+		}
 	}
 
 	public boolean _isFieldSet(final Field field, final FieldSetDepth depth) {
 		switch(field.id()) {
-			case (_name_ID):
-				return _isNameSet(depth);
-			case (_password_ID):
-				return _isPasswordSet(depth);
+			case (_shooterName_ID):
+				return _isShooterNameSet(depth);
+			case (_shot_ID):
+				return _isShotSet(depth);
 			default:
 				return false;
 		}
 	}
 
-	public Checkin _setNameSet(final boolean state, final FieldSetDepth depth) {
+	public ShotResult _setShooterNameSet(final boolean state, final FieldSetDepth depth) {
 		if (state)
-			m_name = m_name != null ? m_name : "";
+			m_shooterName = m_shooterName != null ? m_shooterName : "";
 		else
-			m_name = null;
+			m_shooterName = null;
 		return this;
 	}
 
-	public Checkin _setPasswordSet(final boolean state, final FieldSetDepth depth) {
+	public ShotResult _setShotSet(final boolean state, final FieldSetDepth depth) {
 		if (state)
-			m_password = m_password != null ? m_password : "";
+			m_shot = m_shot != null ? m_shot : new Shot();
 		else
-			m_password = null;
+			m_shot = null;
+		if (depth == FieldSetDepth.DEEP)
+			Marker.setFieldSetDeep(getShot(), _shot_METADATA.typ());
 		return this;
 	}
 
-	public Checkin _setAllFieldsSet(final boolean state, final FieldSetDepth depth) { 
-		_setNameSet(state, depth);
-		_setPasswordSet(state, depth);
+	public ShotResult _setAllFieldsSet(final boolean state, final FieldSetDepth depth) { 
+		_setShooterNameSet(state, depth);
+		_setShotSet(state, depth);
 		return this;
 	}
 
@@ -254,25 +263,26 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 		if (fieldSetDepth == FieldSetDepth.SHALLOW) {
 			return true;
 		} else {
-			return true;
+			return true
+				&& (!_isShotSet(FieldSetDepth.SHALLOW) || _isShotSet(FieldSetDepth.DEEP));
 		}
 	}
 
 	@Override
 	public int _nFieldsSet(final FieldSetDepth depth, final boolean includeTransient) {
 		int out = 0;
-		out += _isNameSet(depth) ? 1 : 0;
-		out += _isPasswordSet(depth) ? 1 : 0;
+		out += _isShooterNameSet(depth) ? 1 : 0;
+		out += _isShotSet(depth) ? 1 : 0;
 		return out;
 	}
 
 	@Override
 	public Field _fieldById(final short fieldId) {
 		switch(fieldId) {
-			case (_name_ID):
-				return _name_METADATA;
-			case (_password_ID):
-				return _password_METADATA;
+			case (_shooterName_ID):
+				return _shooterName_METADATA;
+			case (_shot_ID):
+				return _shot_METADATA;
 			default:
 				return null;
 		}
@@ -281,10 +291,10 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 	@Override
 	public Field _fieldByName(final String fieldName) {
 		switch(fieldName) {
-			case ("name"):
-				return _name_METADATA;
-			case ("password"):
-				return _password_METADATA;
+			case ("shooterName"):
+				return _shooterName_METADATA;
+			case ("shot"):
+				return _shot_METADATA;
 			default:
 				return null;
 		}
@@ -303,30 +313,30 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
  ********************************************************************************************************************/	 		  
 		  
 
-	public static final long _TYPE_ID = 4589873252555491528L;
+	public static final long _TYPE_ID = 1236274293076590984L;
 
-	public static final long[] _TYPE_IDS = { se.yabs.aichallenge.Message._TYPE_ID, se.yabs.aichallenge.Checkin._TYPE_ID };
+	public static final long[] _TYPE_IDS = { se.yabs.aichallenge.Message._TYPE_ID, se.yabs.aichallenge.GameMessage._TYPE_ID, se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID, se.yabs.aichallenge.battleship.ShotResult._TYPE_ID };
 
-	public static final short _TYPE_ID_16BIT = 22716;
+	public static final short _TYPE_ID_16BIT = 20683;
 
-	public static final short[] _TYPE_IDS_16BIT = { se.yabs.aichallenge.Message._TYPE_ID_16BIT, se.yabs.aichallenge.Checkin._TYPE_ID_16BIT };
+	public static final short[] _TYPE_IDS_16BIT = { se.yabs.aichallenge.Message._TYPE_ID_16BIT, se.yabs.aichallenge.GameMessage._TYPE_ID_16BIT, se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT, se.yabs.aichallenge.battleship.ShotResult._TYPE_ID_16BIT };
 
-	public static final String _TYPE_ID_16BIT_BASE64 = "WLw";
+	public static final String _TYPE_ID_16BIT_BASE64 = "UMs";
 
-	public static final String[] _TYPE_IDS_16BIT_BASE64 = { se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64, se.yabs.aichallenge.Checkin._TYPE_ID_16BIT_BASE64 };
+	public static final String[] _TYPE_IDS_16BIT_BASE64 = { se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64, se.yabs.aichallenge.GameMessage._TYPE_ID_16BIT_BASE64, se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT_BASE64, se.yabs.aichallenge.battleship.ShotResult._TYPE_ID_16BIT_BASE64 };
 
-	public static final String _TYPE_IDS_16BIT_BASE64_STRING = se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64 + se.yabs.aichallenge.Checkin._TYPE_ID_16BIT_BASE64;
+	public static final String _TYPE_IDS_16BIT_BASE64_STRING = se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64 + se.yabs.aichallenge.GameMessage._TYPE_ID_16BIT_BASE64 + se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT_BASE64 + se.yabs.aichallenge.battleship.ShotResult._TYPE_ID_16BIT_BASE64;
 
-	public static final String _TYPE_NAME = "se.yabs.aichallenge.Checkin";
+	public static final String _TYPE_NAME = "se.yabs.aichallenge.battleship.ShotResult";
 
-	public static final String[] _TYPE_NAMES = { se.yabs.aichallenge.Message._TYPE_NAME, se.yabs.aichallenge.Checkin._TYPE_NAME };
+	public static final String[] _TYPE_NAMES = { se.yabs.aichallenge.Message._TYPE_NAME, se.yabs.aichallenge.GameMessage._TYPE_NAME, se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_NAME, se.yabs.aichallenge.battleship.ShotResult._TYPE_NAME };
 
-	public static final Field _name_METADATA = new Field("se.yabs.aichallenge.Checkin", "name", se.culvertsoft.mgen.api.model.StringType.INSTANCE, null, (short)-28058);
-	public static final Field _password_METADATA = new Field("se.yabs.aichallenge.Checkin", "password", se.culvertsoft.mgen.api.model.StringType.INSTANCE, null, (short)5242);
+	public static final Field _shooterName_METADATA = new Field("se.yabs.aichallenge.battleship.ShotResult", "shooterName", se.culvertsoft.mgen.api.model.StringType.INSTANCE, null, (short)867);
+	public static final Field _shot_METADATA = new Field("se.yabs.aichallenge.battleship.ShotResult", "shot", new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.battleship.Shot", 5723027387374372704L), null, (short)19108);
 
-	public static final short _name_ID = (short)-28058;
-	public static final short _password_ID = (short)5242;
+	public static final short _shooterName_ID = (short)867;
+	public static final short _shot_ID = (short)19108;
 
-	public static final Field[] _FIELDS = { _name_METADATA, _password_METADATA };
+	public static final Field[] _FIELDS = { _shooterName_METADATA, _shot_METADATA };
 
 }

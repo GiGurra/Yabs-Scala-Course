@@ -146,27 +146,27 @@ const std::string& PlaceShipsRequest::_type_name() {
 }
 
 const std::vector<long long>& PlaceShipsRequest::_type_ids() {
-	static const std::vector<long long> out = mgen::make_vector<long long>() << 6843908126517847773LL << 2246573734118294447LL << 2567022198048374295LL << 1314895258813520762LL;
+	static const std::vector<long long> out = mgen::make_vector<long long>() << 6843908126517847773LL << 2246573734118294447LL << 2567022198048374295LL << 4376863526841852150LL << 1314895258813520762LL;
 	return out;
 }
 
 const std::vector<short>& PlaceShipsRequest::_type_ids_16bit() {
-	static const std::vector<short> out = mgen::make_vector<short>() << -23638 << -25529 << 29355 << -11413;
+	static const std::vector<short> out = mgen::make_vector<short>() << -23638 << -25529 << 29355 << -1088 << -11413;
 	return out;
 }
 
 const std::vector<std::string>& PlaceShipsRequest::_type_names() {
-	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "se.yabs.aichallenge.Message" << "se.yabs.aichallenge.GameMessage" << "se.yabs.aichallenge.battleship.BattleshipMessage" << "se.yabs.aichallenge.battleship.PlaceShipsRequest";
+	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "se.yabs.aichallenge.Message" << "se.yabs.aichallenge.GameMessage" << "se.yabs.aichallenge.battleship.BattleshipMessage" << "se.yabs.aichallenge.battleship.RequestFromServer" << "se.yabs.aichallenge.battleship.PlaceShipsRequest";
 	return out;
 }
 
 const std::vector<std::string>& PlaceShipsRequest::_type_ids_16bit_base64() {
-	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "o6o" << "nEc" << "cqs" << "02s";
+	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "o6o" << "nEc" << "cqs" << "+8A" << "02s";
 	return out;
 }
 
 const std::string& PlaceShipsRequest::_type_ids_16bit_base64_string() {
-	static const std::string out("o6onEccqs02s");
+	static const std::string out("o6onEccqs+8A02s");
 	return out;
 }
 

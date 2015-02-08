@@ -7,10 +7,10 @@
  ********************************************************************************************************************
  ********************************************************************************************************************/
 
-#ifndef SE_YABS_AICHALLENGE_BATTLESHIP_PLACESHIPSREQUEST
-#define SE_YABS_AICHALLENGE_BATTLESHIP_PLACESHIPSREQUEST
+#ifndef SE_YABS_AICHALLENGE_BATTLESHIP_REQUESTFROMSERVER
+#define SE_YABS_AICHALLENGE_BATTLESHIP_REQUESTFROMSERVER
 
-#include "se/yabs/aichallenge/battleship/RequestFromServer.h"
+#include "se/yabs/aichallenge/battleship/BattleshipMessage.h"
 /* custom_includes_begin *//* custom_includes_end */
 
 namespace se {
@@ -18,16 +18,16 @@ namespace yabs {
 namespace aichallenge {
 namespace battleship {
 
-class PlaceShipsRequest : public RequestFromServer /* custom_ifcs_begin *//* custom_ifcs_end */ {
+class RequestFromServer : public BattleshipMessage /* custom_ifcs_begin *//* custom_ifcs_end */ {
 private:
 public:
-	PlaceShipsRequest();
-	virtual ~PlaceShipsRequest();
+	RequestFromServer();
+	virtual ~RequestFromServer();
 
 	/* custom_methods_begin *//* custom_methods_end */
 
-	bool operator==(const PlaceShipsRequest& other) const;
-	bool operator!=(const PlaceShipsRequest& other) const;
+	bool operator==(const RequestFromServer& other) const;
+	bool operator!=(const RequestFromServer& other) const;
 
 
 							
@@ -96,7 +96,7 @@ public:
 
 	bool _isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth depth) const;
 
-	PlaceShipsRequest& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
+	RequestFromServer& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
 
 	int _numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTransient) const;
 
@@ -104,7 +104,7 @@ public:
 
 	bool _equals(const mgen::MGenBase& other) const;
 
-	PlaceShipsRequest * _deepCopy() const;
+	RequestFromServer * _deepCopy() const;
 
 	static mgen::MGenBase * _newInstance();
 
@@ -119,10 +119,10 @@ public:
  ********************************************************************************************************************
  ********************************************************************************************************************/	 		  
 		  
-	static const long long _type_id = 1314895258813520762LL;
+	static const long long _type_id = 4376863526841852150LL;
 	static const std::vector<long long>& _type_ids();
 
-	static const short _type_id_16bit = -11413;
+	static const short _type_id_16bit = -1088;
 	static const std::vector<short>& _type_ids_16bit();
 
 	static const std::string& _type_id_16bit_base64();
@@ -137,7 +137,7 @@ public:
 
 	static const std::vector<mgen::Field>& _field_metadatas();
 
-}; // End class PlaceShipsRequest
+}; // End class RequestFromServer
 
 } // End namespace battleship
 } // End namespace aichallenge

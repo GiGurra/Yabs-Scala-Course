@@ -21,6 +21,7 @@
 
 		<Checkin extends="Message">
 			<name type="String" />
+			<password type="String" />
 		</Checkin>
 
 		<PlayGame extends="Message">
@@ -31,6 +32,22 @@
 			<game type="GameSelection" />
 			<opponent type="String" />
 		</GameChallengeFound>
+
+		<GamePlayed>
+			<gameType type="GameSelection" />
+			<players type="List[String]" />
+			<winners type="List[String]" />
+		</GamePlayed>
+
+		<User>
+			<name type="String" />
+			<password type="String" />
+			<gameHistory type="List[GamePlayed]" />
+		</User>
+
+		<UserDb>
+			<users type="map[String, User]">{}</users>
+		</UserDb>
 
 	</Types>
 </Module>

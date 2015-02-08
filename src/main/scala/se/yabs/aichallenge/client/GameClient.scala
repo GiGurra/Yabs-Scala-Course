@@ -9,9 +9,9 @@ import se.yabs.aichallenge.util.ZmqSocket
 import se.yabs.aichallenge.PlayGame
 import se.yabs.aichallenge.host.GameHost
 
-class GameClient(val name: String, val zmqAddr: String) {
-  def this(name: String, addr: String, port: Int) = this(name, s"tcp://$addr:$port")
-  def this(name: String, host: GameHost) = this(name, "127.0.0.1", host.port)
+class GameClient(val name: String, val password: String, val zmqAddr: String) {
+  def this(name: String, password: String, addr: String, port: Int) = this(name, password, s"tcp://$addr:$port")
+  def this(name: String, password: String, host: GameHost) = this(name, password, "127.0.0.1", host.port)
 
   private val socket = new ZmqSocket(zmqAddr, ZmqSocket.Type.CLIENT)
   checkin()
@@ -21,7 +21,7 @@ class GameClient(val name: String, val zmqAddr: String) {
   }
 
   def checkin() {
-    send(new Checkin(name));
+    send(new Checkin(name, password));
   }
 
   def playGame(gameSelection: GameSelection) {

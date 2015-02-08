@@ -24,17 +24,27 @@ void dispatch(mgen::MGenBase& object, se::yabs::aichallenge::Handler& handler) {
 					switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
 						case se::yabs::aichallenge::battleship::BattleshipMessage::_type_id_16bit:
 							switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
-								case se::yabs::aichallenge::battleship::PlaceShipsRequest::_type_id_16bit:
-									handler.handle(static_cast<se::yabs::aichallenge::battleship::PlaceShipsRequest&>(object));
+								case se::yabs::aichallenge::battleship::RequestFromServer::_type_id_16bit:
+									switch(i < ids.size() ? ids[i++] : mgen::ClassRegistryBase::INVALID_16BIT_ID) {
+										case se::yabs::aichallenge::battleship::PlaceShipsRequest::_type_id_16bit:
+											handler.handle(static_cast<se::yabs::aichallenge::battleship::PlaceShipsRequest&>(object));
+											break;
+										case se::yabs::aichallenge::battleship::MakeShotRequest::_type_id_16bit:
+											handler.handle(static_cast<se::yabs::aichallenge::battleship::MakeShotRequest&>(object));
+											break;
+										default:
+											handler.handle(static_cast<se::yabs::aichallenge::battleship::RequestFromServer&>(object));
+											break;
+									}
 									break;
 								case se::yabs::aichallenge::battleship::PlaceShips::_type_id_16bit:
 									handler.handle(static_cast<se::yabs::aichallenge::battleship::PlaceShips&>(object));
 									break;
-								case se::yabs::aichallenge::battleship::MakeShotRequest::_type_id_16bit:
-									handler.handle(static_cast<se::yabs::aichallenge::battleship::MakeShotRequest&>(object));
-									break;
 								case se::yabs::aichallenge::battleship::MakeShot::_type_id_16bit:
 									handler.handle(static_cast<se::yabs::aichallenge::battleship::MakeShot&>(object));
+									break;
+								case se::yabs::aichallenge::battleship::ShotResult::_type_id_16bit:
+									handler.handle(static_cast<se::yabs::aichallenge::battleship::ShotResult&>(object));
 									break;
 								case se::yabs::aichallenge::battleship::GameOver::_type_id_16bit:
 									handler.handle(static_cast<se::yabs::aichallenge::battleship::GameOver&>(object));
@@ -68,6 +78,15 @@ void dispatch(mgen::MGenBase& object, se::yabs::aichallenge::Handler& handler) {
 					handler.handle(static_cast<se::yabs::aichallenge::Message&>(object));
 					break;
 			}
+			break;
+		case se::yabs::aichallenge::GamePlayed::_type_id_16bit:
+			handler.handle(static_cast<se::yabs::aichallenge::GamePlayed&>(object));
+			break;
+		case se::yabs::aichallenge::User::_type_id_16bit:
+			handler.handle(static_cast<se::yabs::aichallenge::User&>(object));
+			break;
+		case se::yabs::aichallenge::UserDb::_type_id_16bit:
+			handler.handle(static_cast<se::yabs::aichallenge::UserDb&>(object));
 			break;
 		case se::yabs::aichallenge::battleship::Ship::_type_id_16bit:
 			handler.handle(static_cast<se::yabs::aichallenge::battleship::Ship&>(object));

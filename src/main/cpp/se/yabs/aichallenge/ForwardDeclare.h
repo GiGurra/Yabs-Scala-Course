@@ -23,6 +23,9 @@ class ErrorMessage;
 class Checkin;
 class PlayGame;
 class GameChallengeFound;
+class GamePlayed;
+class User;
+class UserDb;
 
 } // End namespace aichallenge
 } // End namespace yabs
@@ -40,10 +43,12 @@ class GameState;
 class Vec2;
 class Shot;
 class BattleshipMessage;
+class RequestFromServer;
 class PlaceShipsRequest;
 class PlaceShips;
 class MakeShotRequest;
 class MakeShot;
+class ShotResult;
 class GameOver;
 
 } // End namespace battleship

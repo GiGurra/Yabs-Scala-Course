@@ -7,7 +7,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************/
 
-#include "se/yabs/aichallenge/Checkin.h"
+#include "se/yabs/aichallenge/User.h"
 #include "mgen/util/validation.h"
 #include "mgen/util/stlLiteral.h"
 /* custom_includes_begin *//* custom_includes_end */
@@ -16,81 +16,111 @@ namespace se {
 namespace yabs {
 namespace aichallenge {
 
-Checkin::Checkin() : 
+User::User() : 
 		_m_name_isSet(false),
-		_m_password_isSet(false) {
+		_m_password_isSet(false),
+		_m_gameHistory_isSet(false) {
 }
 
-Checkin::Checkin(const std::string& name, 
-			const std::string& password) : 
+User::User(const std::string& name, 
+			const std::string& password, 
+			const std::vector<GamePlayed> & gameHistory) : 
 		m_name(name),
 		m_password(password),
+		m_gameHistory(gameHistory),
 		_m_name_isSet(true),
-		_m_password_isSet(true) {
+		_m_password_isSet(true),
+		_m_gameHistory_isSet(true) {
 }
 
-Checkin::~Checkin() {
+User::~User() {
 }
 
-const std::string& Checkin::getName() const {
+const std::string& User::getName() const {
 	return m_name;
 }
 
-const std::string& Checkin::getPassword() const {
+const std::string& User::getPassword() const {
 	return m_password;
 }
 
-std::string& Checkin::getNameMutable() {
+const std::vector<GamePlayed> & User::getGameHistory() const {
+	return m_gameHistory;
+}
+
+std::string& User::getNameMutable() {
 	_m_name_isSet = true;
 	return m_name;
 }
 
-std::string& Checkin::getPasswordMutable() {
+std::string& User::getPasswordMutable() {
 	_m_password_isSet = true;
 	return m_password;
 }
 
-Checkin& Checkin::setName(const std::string& name) {
+std::vector<GamePlayed> & User::getGameHistoryMutable() {
+	_m_gameHistory_isSet = true;
+	return m_gameHistory;
+}
+
+User& User::setName(const std::string& name) {
 	m_name = name;
 	_m_name_isSet = true;
 	return *this;
 }
 
-Checkin& Checkin::setPassword(const std::string& password) {
+User& User::setPassword(const std::string& password) {
 	m_password = password;
 	_m_password_isSet = true;
 	return *this;
 }
 
+User& User::setGameHistory(const std::vector<GamePlayed> & gameHistory) {
+	m_gameHistory = gameHistory;
+	_m_gameHistory_isSet = true;
+	return *this;
+}
+
 /* custom_methods_begin *//* custom_methods_end */
 
-bool Checkin::hasName() const {
+bool User::hasName() const {
 	return _isNameSet(mgen::SHALLOW);
 }
 
-bool Checkin::hasPassword() const {
+bool User::hasPassword() const {
 	return _isPasswordSet(mgen::SHALLOW);
 }
 
-Checkin& Checkin::unsetName() {
+bool User::hasGameHistory() const {
+	return _isGameHistorySet(mgen::SHALLOW);
+}
+
+User& User::unsetName() {
 	_setNameSet(false, mgen::SHALLOW);
 	return *this;
 }
 
-Checkin& Checkin::unsetPassword() {
+User& User::unsetPassword() {
 	_setPasswordSet(false, mgen::SHALLOW);
 	return *this;
 }
 
-bool Checkin::operator==(const Checkin& other) const {
+User& User::unsetGameHistory() {
+	_setGameHistorySet(false, mgen::SHALLOW);
+	return *this;
+}
+
+bool User::operator==(const User& other) const {
 	return true
 		 && _isNameSet(mgen::SHALLOW) == other._isNameSet(mgen::SHALLOW)
 		 && _isPasswordSet(mgen::SHALLOW) == other._isPasswordSet(mgen::SHALLOW)
+		 && _isGameHistorySet(mgen::SHALLOW) == other._isGameHistorySet(mgen::SHALLOW)
 		 && getName() == other.getName()
-		 && getPassword() == other.getPassword();
+		 && getPassword() == other.getPassword()
+		 && getGameHistory() == other.getGameHistory();
 }
 
-bool Checkin::operator!=(const Checkin& other) const {
+bool User::operator!=(const User& other) const {
 	return !(*this == other);
 }
 
@@ -106,127 +136,151 @@ bool Checkin::operator!=(const Checkin& other) const {
  ********************************************************************************************************************
  ********************************************************************************************************************/	 		  
 		  
-const mgen::Field * Checkin::_fieldById(const short id) const {
+const mgen::Field * User::_fieldById(const short id) const {
 	switch (id) {
 	case _field_name_id:
 		return &_field_name_metadata();
 	case _field_password_id:
 		return &_field_password_metadata();
+	case _field_gameHistory_id:
+		return &_field_gameHistory_metadata();
 	default:
 		return 0;
 	}
 }
 
-const mgen::Field * Checkin::_fieldByName(const std::string& name) const {
-	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("name", &Checkin::_field_name_metadata())("password", &Checkin::_field_password_metadata());
+const mgen::Field * User::_fieldByName(const std::string& name) const {
+	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("name", &User::_field_name_metadata())("password", &User::_field_password_metadata())("gameHistory", &User::_field_gameHistory_metadata());
 	const std::map<std::string, const mgen::Field*>::const_iterator it = name2meta.find(name);
 	return it != name2meta.end() ? it->second : 0;
 }
 
-const long long Checkin::_typeId() const {
+const long long User::_typeId() const {
 	return _type_id;
 }
 
-const std::string& Checkin::_typeName() const {
+const std::string& User::_typeName() const {
 	return _type_name();
 }
 
-const short Checkin::_typeId16Bit() const {
+const short User::_typeId16Bit() const {
 	return _type_id_16bit;
 }
 
-const std::vector<long long>& Checkin::_typeIds() const {
+const std::vector<long long>& User::_typeIds() const {
 	return _type_ids();
 }
 
-const std::vector<short>& Checkin::_typeIds16Bit() const {
+const std::vector<short>& User::_typeIds16Bit() const {
 	return _type_ids_16bit();
 }
 
-const std::string& Checkin::_typeId16BitBase64() const {
+const std::string& User::_typeId16BitBase64() const {
 	return _type_id_16bit_base64();
 }
 
-const std::vector<std::string>& Checkin::_typeNames() const {
+const std::vector<std::string>& User::_typeNames() const {
 	return _type_names();
 }
 
-const std::vector<std::string>& Checkin::_typeIds16BitBase64() const {
+const std::vector<std::string>& User::_typeIds16BitBase64() const {
 	return _type_ids_16bit_base64();
 }
 
-const std::string& Checkin::_typeIds16BitBase64String() const {
+const std::string& User::_typeIds16BitBase64String() const {
 	return _type_ids_16bit_base64_string();
 }
 
-const std::vector<mgen::Field>& Checkin::_fieldMetadatas() const {
+const std::vector<mgen::Field>& User::_fieldMetadatas() const {
 	return _field_metadatas();
 }
 
-Checkin& Checkin::_setNameSet(const bool state, const mgen::FieldSetDepth depth) {
+User& User::_setNameSet(const bool state, const mgen::FieldSetDepth depth) {
 	if (!state)
 		m_name = "";
 	_m_name_isSet = state;
 	return *this;
 }
 
-Checkin& Checkin::_setPasswordSet(const bool state, const mgen::FieldSetDepth depth) {
+User& User::_setPasswordSet(const bool state, const mgen::FieldSetDepth depth) {
 	if (!state)
 		m_password = "";
 	_m_password_isSet = state;
 	return *this;
 }
 
-Checkin& Checkin::_setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth) { 
-	_setNameSet(state, depth);
-	_setPasswordSet(state, depth);
+User& User::_setGameHistorySet(const bool state, const mgen::FieldSetDepth depth) {
+	if (!state)
+		m_gameHistory.clear();
+	else if (depth == mgen::DEEP)
+		mgen::validation::setFieldSetDeep(m_gameHistory);
+	_m_gameHistory_isSet = state;
 	return *this;
 }
 
-int Checkin::_numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTransient) const {
+User& User::_setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth) { 
+	_setNameSet(state, depth);
+	_setPasswordSet(state, depth);
+	_setGameHistorySet(state, depth);
+	return *this;
+}
+
+int User::_numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTransient) const {
 	int out = 0;
 	out += _isNameSet(depth) ? 1 : 0;
 	out += _isPasswordSet(depth) ? 1 : 0;
+	out += _isGameHistorySet(depth) ? 1 : 0;
 	return out;
 }
 
-bool Checkin::_isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth depth) const {
+bool User::_isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth depth) const {
 	switch(field.id()) {
 		case (_field_name_id):
 			return _isNameSet(depth);
 		case (_field_password_id):
 			return _isPasswordSet(depth);
+		case (_field_gameHistory_id):
+			return _isGameHistorySet(depth);
 		default:
 			return false;
 	}
 }
 
-bool Checkin::_isNameSet(const mgen::FieldSetDepth depth) const {
+bool User::_isNameSet(const mgen::FieldSetDepth depth) const {
 	return _m_name_isSet;
 }
 
-bool Checkin::_isPasswordSet(const mgen::FieldSetDepth depth) const {
+bool User::_isPasswordSet(const mgen::FieldSetDepth depth) const {
 	return _m_password_isSet;
 }
 
-bool Checkin::_validate(const mgen::FieldSetDepth depth) const { 
+bool User::_isGameHistorySet(const mgen::FieldSetDepth depth) const {
 	if (depth == mgen::SHALLOW) {
-		return true;
+		return _m_gameHistory_isSet;
 	} else {
-		return true;
+		return _m_gameHistory_isSet && mgen::validation::validateFieldDeep(getGameHistory());
 	}
 }
 
-bool Checkin::_equals(const mgen::MGenBase& other) const {
-	return _type_id == other._typeId() && static_cast<const Checkin&>(other) == *this;
+bool User::_validate(const mgen::FieldSetDepth depth) const { 
+	if (depth == mgen::SHALLOW) {
+		return true;
+	} else {
+		return true
+				&& (!_isGameHistorySet(mgen::SHALLOW) || _isGameHistorySet(mgen::DEEP));
+	}
 }
 
-Checkin * Checkin::_deepCopy() const {
-	return new Checkin(*this);
+bool User::_equals(const mgen::MGenBase& other) const {
+	return _type_id == other._typeId() && static_cast<const User&>(other) == *this;
 }
 
-mgen::MGenBase * Checkin::_newInstance() {
-	return new Checkin;
+User * User::_deepCopy() const {
+	return new User(*this);
+}
+
+mgen::MGenBase * User::_newInstance() {
+	return new User;
 }
 
 
@@ -241,53 +295,58 @@ mgen::MGenBase * Checkin::_newInstance() {
  ********************************************************************************************************************
  ********************************************************************************************************************/	 		  
 		  
-const std::string& Checkin::_type_name() {
-	static const std::string out("se.yabs.aichallenge.Checkin");
+const std::string& User::_type_name() {
+	static const std::string out("se.yabs.aichallenge.User");
 	return out;
 }
 
-const std::vector<long long>& Checkin::_type_ids() {
-	static const std::vector<long long> out = mgen::make_vector<long long>() << 6843908126517847773LL << 4589873252555491528LL;
+const std::vector<long long>& User::_type_ids() {
+	static const std::vector<long long> out = mgen::make_vector<long long>() << 5020658785704657625LL;
 	return out;
 }
 
-const std::vector<short>& Checkin::_type_ids_16bit() {
-	static const std::vector<short> out = mgen::make_vector<short>() << -23638 << 22716;
+const std::vector<short>& User::_type_ids_16bit() {
+	static const std::vector<short> out = mgen::make_vector<short>() << -29120;
 	return out;
 }
 
-const std::vector<std::string>& Checkin::_type_names() {
-	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "se.yabs.aichallenge.Message" << "se.yabs.aichallenge.Checkin";
+const std::vector<std::string>& User::_type_names() {
+	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "se.yabs.aichallenge.User";
 	return out;
 }
 
-const std::vector<std::string>& Checkin::_type_ids_16bit_base64() {
-	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "o6o" << "WLw";
+const std::vector<std::string>& User::_type_ids_16bit_base64() {
+	static const std::vector<std::string> out = mgen::make_vector<std::string>() << "jkA";
 	return out;
 }
 
-const std::string& Checkin::_type_ids_16bit_base64_string() {
-	static const std::string out("o6oWLw");
+const std::string& User::_type_ids_16bit_base64_string() {
+	static const std::string out("jkA");
 	return out;
 }
 
-const std::string& Checkin::_type_id_16bit_base64() {
-	static const std::string out("WLw");
+const std::string& User::_type_id_16bit_base64() {
+	static const std::string out("jkA");
 	return out;
 }
 
-const std::vector<mgen::Field>& Checkin::_field_metadatas() {
-	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_name_metadata() << _field_password_metadata();
+const std::vector<mgen::Field>& User::_field_metadatas() {
+	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_name_metadata() << _field_password_metadata() << _field_gameHistory_metadata();
 	return out;
 }
 
-const mgen::Field& Checkin::_field_name_metadata() {
+const mgen::Field& User::_field_name_metadata() {
 	static const mgen::Field out(-28058, "name");
 	return out;
 }
 
-const mgen::Field& Checkin::_field_password_metadata() {
+const mgen::Field& User::_field_password_metadata() {
 	static const mgen::Field out(5242, "password");
+	return out;
+}
+
+const mgen::Field& User::_field_gameHistory_metadata() {
+	static const mgen::Field out(16619, "gameHistory");
 	return out;
 }
 

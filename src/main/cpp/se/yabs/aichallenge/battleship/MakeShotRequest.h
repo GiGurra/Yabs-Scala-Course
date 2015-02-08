@@ -10,7 +10,7 @@
 #ifndef SE_YABS_AICHALLENGE_BATTLESHIP_MAKESHOTREQUEST
 #define SE_YABS_AICHALLENGE_BATTLESHIP_MAKESHOTREQUEST
 
-#include "se/yabs/aichallenge/battleship/BattleshipMessage.h"
+#include "se/yabs/aichallenge/battleship/RequestFromServer.h"
 /* custom_includes_begin *//* custom_includes_end */
 
 namespace se {
@@ -18,7 +18,7 @@ namespace yabs {
 namespace aichallenge {
 namespace battleship {
 
-class MakeShotRequest : public BattleshipMessage /* custom_ifcs_begin *//* custom_ifcs_end */ {
+class MakeShotRequest : public RequestFromServer /* custom_ifcs_begin *//* custom_ifcs_end */ {
 private:
 public:
 	MakeShotRequest();

@@ -37,7 +37,7 @@ class test_GameHost_func {
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
 
-    val client = new GameClient("TestName", host)
+    val client = new GameClient("TestName", "testPw", host)
 
     val msgs = client.getNewMessages(2000)
     assert(msgs.nonEmpty)
@@ -57,7 +57,7 @@ class test_GameHost_func {
 
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
-    val client = new GameClient("TestName", host)
+    val client = new GameClient("TestName", "testPw", host)
 
     val welcomeMsg = client.getNewMessages(2000)
 
@@ -77,8 +77,8 @@ class test_GameHost_func {
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
 
-    val clientA = new GameClient("a", host)
-    val clientB = new GameClient("b", host)
+    val clientA = new GameClient("a", "testPw", host)
+    val clientB = new GameClient("b", "testPw", host)
     val welcomeMsgA = clientA.getNewMessages(2000)
     val welcomeMsgB = clientB.getNewMessages(2000)
     assert(welcomeMsgA.nonEmpty)
@@ -107,8 +107,8 @@ class test_GameHost_func {
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
 
-    val clientA = new BattleshipClient("a", host)
-    val clientB = new BattleshipClient("b", host)
+    val clientA = new BattleshipClient("a", "testPw", host)
+    val clientB = new BattleshipClient("b", "testPw", host)
     val welcomeMsgA = clientA.getNewMessages(2000)
     val welcomeMsgB = clientB.getNewMessages(2000)
     assert(welcomeMsgA.nonEmpty)

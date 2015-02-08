@@ -14,63 +14,59 @@ import se.culvertsoft.mgen.javapack.metadata.FieldVisitSelection;
 import se.culvertsoft.mgen.javapack.serialization.FieldVisitor;
 import se.culvertsoft.mgen.javapack.serialization.Reader;
 import se.culvertsoft.mgen.javapack.util.FieldHasher;
+import se.culvertsoft.mgen.javapack.util.DeepCopyer;
 import se.culvertsoft.mgen.javapack.util.EqualityTester;
+import se.culvertsoft.mgen.javapack.util.Validator;
+import se.culvertsoft.mgen.javapack.util.Marker;
 /* custom_imports_begin *//* custom_imports_end */
 
-public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end */ {
+public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* custom_ifcs_begin *//* custom_ifcs_end */ {
 
-	private String m_name;
-	private String m_password;
+	private java.util.HashMap<String, User> m_users;
 
-	public Checkin() {
+	public UserDb() {
 		super();
-		m_name = null;
-		m_password = null;
+		m_users = new java.util.HashMap<String, User>();
 	}
 
-	public Checkin(final String name,
-				final String password) {
-		m_name = name;
-		m_password = password;
+	public UserDb(final java.util.HashMap<String, User> users) {
+		m_users = users;
 	}
 
-	public String getName() {
-		return m_name;
+	public java.util.HashMap<String, User> getUsers() {
+		return m_users;
 	}
 
-	public String getPassword() {
-		return m_password;
+	public boolean hasUsers() {
+		return _isUsersSet(FieldSetDepth.SHALLOW);
 	}
 
-	public boolean hasName() {
-		return _isNameSet(FieldSetDepth.SHALLOW);
-	}
-
-	public boolean hasPassword() {
-		return _isPasswordSet(FieldSetDepth.SHALLOW);
-	}
-
-	public Checkin unsetName() {
-		_setNameSet(false, FieldSetDepth.SHALLOW);
+	public UserDb unsetUsers() {
+		_setUsersSet(false, FieldSetDepth.SHALLOW);
 		return this;
 	}
 
-	public Checkin unsetPassword() {
-		_setPasswordSet(false, FieldSetDepth.SHALLOW);
+	public UserDb setUsers(final java.util.HashMap<String, User> users) {
+		m_users = users;
 		return this;
 	}
 
-	public Checkin setName(final String name) {
-		m_name = name;
-		return this;
+	/* custom_methods_begin */
+	
+	public boolean login(final String userName, final String password) {
+		if (m_users.containsKey(userName)) {
+			return m_users.get(userName).getPassword().equals(password);
+		} else {
+			final User user = new User();
+			user.setGameHistory(new java.util.ArrayList<GamePlayed>());
+			user.setName(userName);
+			user.setPassword(password);
+			m_users.put(userName, user);
+			return true;
+		}
 	}
-
-	public Checkin setPassword(final String password) {
-		m_password = password;
-		return this;
-	}
-
-	/* custom_methods_begin *//* custom_methods_end */
+	
+	/* custom_methods_end */
 
 	@Override
 	public String toString() {
@@ -80,9 +76,8 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = -1736332703;
-		result = _isNameSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getName(), _name_METADATA.typ())) : result;
-		result = _isPasswordSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getPassword(), _password_METADATA.typ())) : result;
+		int result = 1439317237;
+		result = _isUsersSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getUsers(), _users_METADATA.typ())) : result;
 		return result;
 	}
 
@@ -90,20 +85,17 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 	public boolean equals(final Object other) {
 		if (other == null) return false;
 		if (other == this) return true;
-		if (Checkin.class != other.getClass()) return false;
-		final Checkin o = (Checkin)other;
+		if (UserDb.class != other.getClass()) return false;
+		final UserDb o = (UserDb)other;
 		return true
-		  && hasName() == o.hasName()
-		  && hasPassword() == o.hasPassword()
-		  && EqualityTester.areEqual(getName(), o.getName(), _name_METADATA.typ())
-		  && EqualityTester.areEqual(getPassword(), o.getPassword(), _password_METADATA.typ());
+		  && hasUsers() == o.hasUsers()
+		  && EqualityTester.areEqual(getUsers(), o.getUsers(), _users_METADATA.typ());
 	}
 
 	@Override
-	public Checkin deepCopy() {
-		final Checkin out = new Checkin(
-			getName(),
-			getPassword());
+	public UserDb deepCopy() {
+		final UserDb out = new UserDb(
+			DeepCopyer.deepCopy(getUsers(), _users_METADATA.typ()));
 		return out;
 	}
 
@@ -169,34 +161,29 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 	public void _accept(final FieldVisitor visitor, final FieldVisitSelection selection) throws java.io.IOException {
 		switch(selection) {
 			case ALL: {
-				visitor.beginVisit(this, 2);
-				visitor.visit(getName(), _name_METADATA);
-				visitor.visit(getPassword(), _password_METADATA);
+				visitor.beginVisit(this, 1);
+				visitor.visit(getUsers(), _users_METADATA);
 				visitor.endVisit();
 				break;
 			}
 			default /* case ALL_SET_NONTRANSIENT */ : {
 				visitor.beginVisit(this, _nFieldsSet(FieldSetDepth.SHALLOW, false));
-				if (_isNameSet(FieldSetDepth.SHALLOW))
-					visitor.visit(getName(), _name_METADATA);
-				if (_isPasswordSet(FieldSetDepth.SHALLOW))
-					visitor.visit(getPassword(), _password_METADATA);
+				if (_isUsersSet(FieldSetDepth.SHALLOW))
+					visitor.visit(getUsers(), _users_METADATA);
 				visitor.endVisit();
 				break;
 			}
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean _readField(final short fieldId,
 	                         final Object context,
 	                         final Reader reader) throws java.io.IOException {
 		switch(fieldId) {
-			case (_name_ID):
-				setName((String)reader.readStringField(_name_METADATA, context));
-				return true;
-			case (_password_ID):
-				setPassword((String)reader.readStringField(_password_METADATA, context));
+			case (_users_ID):
+				setUsers((java.util.HashMap<String, User>)reader.readMapField(_users_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);
@@ -209,44 +196,35 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 		return _FIELDS;
 	}
 
-	public boolean _isNameSet(final FieldSetDepth fieldSetDepth) {
-		return m_name != null;
-	}
-
-	public boolean _isPasswordSet(final FieldSetDepth fieldSetDepth) {
-		return m_password != null;
+	public boolean _isUsersSet(final FieldSetDepth fieldSetDepth) {
+		if (fieldSetDepth == FieldSetDepth.SHALLOW) {
+			return m_users != null;
+		} else {
+			return m_users != null && Validator.validateFieldDeep(getUsers(), _users_METADATA.typ());
+		}
 	}
 
 	public boolean _isFieldSet(final Field field, final FieldSetDepth depth) {
 		switch(field.id()) {
-			case (_name_ID):
-				return _isNameSet(depth);
-			case (_password_ID):
-				return _isPasswordSet(depth);
+			case (_users_ID):
+				return _isUsersSet(depth);
 			default:
 				return false;
 		}
 	}
 
-	public Checkin _setNameSet(final boolean state, final FieldSetDepth depth) {
+	public UserDb _setUsersSet(final boolean state, final FieldSetDepth depth) {
 		if (state)
-			m_name = m_name != null ? m_name : "";
+			m_users = m_users != null ? m_users : new java.util.HashMap<String, User>();
 		else
-			m_name = null;
+			m_users = null;
+		if (depth == FieldSetDepth.DEEP)
+			Marker.setFieldSetDeep(getUsers(), _users_METADATA.typ());
 		return this;
 	}
 
-	public Checkin _setPasswordSet(final boolean state, final FieldSetDepth depth) {
-		if (state)
-			m_password = m_password != null ? m_password : "";
-		else
-			m_password = null;
-		return this;
-	}
-
-	public Checkin _setAllFieldsSet(final boolean state, final FieldSetDepth depth) { 
-		_setNameSet(state, depth);
-		_setPasswordSet(state, depth);
+	public UserDb _setAllFieldsSet(final boolean state, final FieldSetDepth depth) { 
+		_setUsersSet(state, depth);
 		return this;
 	}
 
@@ -254,25 +232,23 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 		if (fieldSetDepth == FieldSetDepth.SHALLOW) {
 			return true;
 		} else {
-			return true;
+			return true
+				&& (!_isUsersSet(FieldSetDepth.SHALLOW) || _isUsersSet(FieldSetDepth.DEEP));
 		}
 	}
 
 	@Override
 	public int _nFieldsSet(final FieldSetDepth depth, final boolean includeTransient) {
 		int out = 0;
-		out += _isNameSet(depth) ? 1 : 0;
-		out += _isPasswordSet(depth) ? 1 : 0;
+		out += _isUsersSet(depth) ? 1 : 0;
 		return out;
 	}
 
 	@Override
 	public Field _fieldById(final short fieldId) {
 		switch(fieldId) {
-			case (_name_ID):
-				return _name_METADATA;
-			case (_password_ID):
-				return _password_METADATA;
+			case (_users_ID):
+				return _users_METADATA;
 			default:
 				return null;
 		}
@@ -281,10 +257,8 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
 	@Override
 	public Field _fieldByName(final String fieldName) {
 		switch(fieldName) {
-			case ("name"):
-				return _name_METADATA;
-			case ("password"):
-				return _password_METADATA;
+			case ("users"):
+				return _users_METADATA;
 			default:
 				return null;
 		}
@@ -303,30 +277,28 @@ public class Checkin extends Message /* custom_ifcs_begin *//* custom_ifcs_end *
  ********************************************************************************************************************/	 		  
 		  
 
-	public static final long _TYPE_ID = 4589873252555491528L;
+	public static final long _TYPE_ID = 263403507581591043L;
 
-	public static final long[] _TYPE_IDS = { se.yabs.aichallenge.Message._TYPE_ID, se.yabs.aichallenge.Checkin._TYPE_ID };
+	public static final long[] _TYPE_IDS = { se.yabs.aichallenge.UserDb._TYPE_ID };
 
-	public static final short _TYPE_ID_16BIT = 22716;
+	public static final short _TYPE_ID_16BIT = -577;
 
-	public static final short[] _TYPE_IDS_16BIT = { se.yabs.aichallenge.Message._TYPE_ID_16BIT, se.yabs.aichallenge.Checkin._TYPE_ID_16BIT };
+	public static final short[] _TYPE_IDS_16BIT = { se.yabs.aichallenge.UserDb._TYPE_ID_16BIT };
 
-	public static final String _TYPE_ID_16BIT_BASE64 = "WLw";
+	public static final String _TYPE_ID_16BIT_BASE64 = "/b8";
 
-	public static final String[] _TYPE_IDS_16BIT_BASE64 = { se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64, se.yabs.aichallenge.Checkin._TYPE_ID_16BIT_BASE64 };
+	public static final String[] _TYPE_IDS_16BIT_BASE64 = { se.yabs.aichallenge.UserDb._TYPE_ID_16BIT_BASE64 };
 
-	public static final String _TYPE_IDS_16BIT_BASE64_STRING = se.yabs.aichallenge.Message._TYPE_ID_16BIT_BASE64 + se.yabs.aichallenge.Checkin._TYPE_ID_16BIT_BASE64;
+	public static final String _TYPE_IDS_16BIT_BASE64_STRING = se.yabs.aichallenge.UserDb._TYPE_ID_16BIT_BASE64;
 
-	public static final String _TYPE_NAME = "se.yabs.aichallenge.Checkin";
+	public static final String _TYPE_NAME = "se.yabs.aichallenge.UserDb";
 
-	public static final String[] _TYPE_NAMES = { se.yabs.aichallenge.Message._TYPE_NAME, se.yabs.aichallenge.Checkin._TYPE_NAME };
+	public static final String[] _TYPE_NAMES = { se.yabs.aichallenge.UserDb._TYPE_NAME };
 
-	public static final Field _name_METADATA = new Field("se.yabs.aichallenge.Checkin", "name", se.culvertsoft.mgen.api.model.StringType.INSTANCE, null, (short)-28058);
-	public static final Field _password_METADATA = new Field("se.yabs.aichallenge.Checkin", "password", se.culvertsoft.mgen.api.model.StringType.INSTANCE, null, (short)5242);
+	public static final Field _users_METADATA = new Field("se.yabs.aichallenge.UserDb", "users", new se.culvertsoft.mgen.api.model.MapType(se.culvertsoft.mgen.api.model.StringType.INSTANCE, new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.User", 5020658785704657625L)), null, (short)-23008);
 
-	public static final short _name_ID = (short)-28058;
-	public static final short _password_ID = (short)5242;
+	public static final short _users_ID = (short)-23008;
 
-	public static final Field[] _FIELDS = { _name_METADATA, _password_METADATA };
+	public static final Field[] _FIELDS = { _users_METADATA };
 
 }

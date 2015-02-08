@@ -46,6 +46,18 @@ public class Handler  {
 		handle((se.yabs.aichallenge.Message)o);
 	}
 
+	protected void handle(se.yabs.aichallenge.GamePlayed o) {
+		handleDiscard(o);
+	}
+
+	protected void handle(se.yabs.aichallenge.User o) {
+		handleDiscard(o);
+	}
+
+	protected void handle(se.yabs.aichallenge.UserDb o) {
+		handleDiscard(o);
+	}
+
 	protected void handle(se.yabs.aichallenge.battleship.Ship o) {
 		handleDiscard(o);
 	}
@@ -74,8 +86,12 @@ public class Handler  {
 		handle((se.yabs.aichallenge.GameMessage)o);
 	}
 
-	protected void handle(se.yabs.aichallenge.battleship.PlaceShipsRequest o) {
+	protected void handle(se.yabs.aichallenge.battleship.RequestFromServer o) {
 		handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
+	}
+
+	protected void handle(se.yabs.aichallenge.battleship.PlaceShipsRequest o) {
+		handle((se.yabs.aichallenge.battleship.RequestFromServer)o);
 	}
 
 	protected void handle(se.yabs.aichallenge.battleship.PlaceShips o) {
@@ -83,10 +99,14 @@ public class Handler  {
 	}
 
 	protected void handle(se.yabs.aichallenge.battleship.MakeShotRequest o) {
-		handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
+		handle((se.yabs.aichallenge.battleship.RequestFromServer)o);
 	}
 
 	protected void handle(se.yabs.aichallenge.battleship.MakeShot o) {
+		handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
+	}
+
+	protected void handle(se.yabs.aichallenge.battleship.ShotResult o) {
 		handle((se.yabs.aichallenge.battleship.BattleshipMessage)o);
 	}
 

@@ -37,6 +37,10 @@ object BattleshipUtil {
 
     return true
   }
+  
+  def fireAt(shooter: Player, opponent: Player, shot: Shot): ShotResult = {
+    ???
+  }
 
   def length(ship: Ship): Int = {
     val xs = ship.getPoints.map(_.getPos.getX)

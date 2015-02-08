@@ -13,6 +13,9 @@
 #include "se/yabs/aichallenge/Checkin.h"
 #include "se/yabs/aichallenge/PlayGame.h"
 #include "se/yabs/aichallenge/GameChallengeFound.h"
+#include "se/yabs/aichallenge/GamePlayed.h"
+#include "se/yabs/aichallenge/User.h"
+#include "se/yabs/aichallenge/UserDb.h"
 #include "se/yabs/aichallenge/battleship/Ship.h"
 #include "se/yabs/aichallenge/battleship/Segment.h"
 #include "se/yabs/aichallenge/battleship/Player.h"
@@ -23,6 +26,7 @@
 #include "se/yabs/aichallenge/battleship/PlaceShips.h"
 #include "se/yabs/aichallenge/battleship/MakeShotRequest.h"
 #include "se/yabs/aichallenge/battleship/MakeShot.h"
+#include "se/yabs/aichallenge/battleship/ShotResult.h"
 #include "se/yabs/aichallenge/battleship/GameOver.h"
 
 namespace se {
@@ -68,6 +72,18 @@ void Handler::handle(se::yabs::aichallenge::GameChallengeFound& o) {
 	handle(static_cast<se::yabs::aichallenge::Message&>(o));
 }
 
+void Handler::handle(se::yabs::aichallenge::GamePlayed& o) {
+	handleDiscard(o);
+}
+
+void Handler::handle(se::yabs::aichallenge::User& o) {
+	handleDiscard(o);
+}
+
+void Handler::handle(se::yabs::aichallenge::UserDb& o) {
+	handleDiscard(o);
+}
+
 void Handler::handle(se::yabs::aichallenge::battleship::Ship& o) {
 	handleDiscard(o);
 }
@@ -96,8 +112,12 @@ void Handler::handle(se::yabs::aichallenge::battleship::BattleshipMessage& o) {
 	handle(static_cast<se::yabs::aichallenge::GameMessage&>(o));
 }
 
-void Handler::handle(se::yabs::aichallenge::battleship::PlaceShipsRequest& o) {
+void Handler::handle(se::yabs::aichallenge::battleship::RequestFromServer& o) {
 	handle(static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o));
+}
+
+void Handler::handle(se::yabs::aichallenge::battleship::PlaceShipsRequest& o) {
+	handle(static_cast<se::yabs::aichallenge::battleship::RequestFromServer&>(o));
 }
 
 void Handler::handle(se::yabs::aichallenge::battleship::PlaceShips& o) {
@@ -105,10 +125,14 @@ void Handler::handle(se::yabs::aichallenge::battleship::PlaceShips& o) {
 }
 
 void Handler::handle(se::yabs::aichallenge::battleship::MakeShotRequest& o) {
-	handle(static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o));
+	handle(static_cast<se::yabs::aichallenge::battleship::RequestFromServer&>(o));
 }
 
 void Handler::handle(se::yabs::aichallenge::battleship::MakeShot& o) {
+	handle(static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o));
+}
+
+void Handler::handle(se::yabs::aichallenge::battleship::ShotResult& o) {
 	handle(static_cast<se::yabs::aichallenge::battleship::BattleshipMessage&>(o));
 }
 

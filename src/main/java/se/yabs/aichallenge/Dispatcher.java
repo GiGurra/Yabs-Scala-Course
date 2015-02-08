@@ -28,17 +28,27 @@ public class Dispatcher  {
 						switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
 							case se.yabs.aichallenge.battleship.BattleshipMessage._TYPE_ID_16BIT:
 								switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
-									case se.yabs.aichallenge.battleship.PlaceShipsRequest._TYPE_ID_16BIT:
-										handler.handle((se.yabs.aichallenge.battleship.PlaceShipsRequest)o);
+									case se.yabs.aichallenge.battleship.RequestFromServer._TYPE_ID_16BIT:
+										switch((i < ids.length ? (int)ids[i++] : 0xFFFFFFFF)) {
+											case se.yabs.aichallenge.battleship.PlaceShipsRequest._TYPE_ID_16BIT:
+												handler.handle((se.yabs.aichallenge.battleship.PlaceShipsRequest)o);
+												break;
+											case se.yabs.aichallenge.battleship.MakeShotRequest._TYPE_ID_16BIT:
+												handler.handle((se.yabs.aichallenge.battleship.MakeShotRequest)o);
+												break;
+											default:
+												handler.handle((se.yabs.aichallenge.battleship.RequestFromServer)o);
+												break;
+										}
 										break;
 									case se.yabs.aichallenge.battleship.PlaceShips._TYPE_ID_16BIT:
 										handler.handle((se.yabs.aichallenge.battleship.PlaceShips)o);
 										break;
-									case se.yabs.aichallenge.battleship.MakeShotRequest._TYPE_ID_16BIT:
-										handler.handle((se.yabs.aichallenge.battleship.MakeShotRequest)o);
-										break;
 									case se.yabs.aichallenge.battleship.MakeShot._TYPE_ID_16BIT:
 										handler.handle((se.yabs.aichallenge.battleship.MakeShot)o);
+										break;
+									case se.yabs.aichallenge.battleship.ShotResult._TYPE_ID_16BIT:
+										handler.handle((se.yabs.aichallenge.battleship.ShotResult)o);
 										break;
 									case se.yabs.aichallenge.battleship.GameOver._TYPE_ID_16BIT:
 										handler.handle((se.yabs.aichallenge.battleship.GameOver)o);
@@ -72,6 +82,15 @@ public class Dispatcher  {
 						handler.handle((se.yabs.aichallenge.Message)o);
 						break;
 				}
+				break;
+			case se.yabs.aichallenge.GamePlayed._TYPE_ID_16BIT:
+				handler.handle((se.yabs.aichallenge.GamePlayed)o);
+				break;
+			case se.yabs.aichallenge.User._TYPE_ID_16BIT:
+				handler.handle((se.yabs.aichallenge.User)o);
+				break;
+			case se.yabs.aichallenge.UserDb._TYPE_ID_16BIT:
+				handler.handle((se.yabs.aichallenge.UserDb)o);
 				break;
 			case se.yabs.aichallenge.battleship.Ship._TYPE_ID_16BIT:
 				handler.handle((se.yabs.aichallenge.battleship.Ship)o);

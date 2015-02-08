@@ -29,10 +29,10 @@
 			<pos type="Vec2" />
 		</Segment>
 		<Player>
-			<uuid type="string" />
 			<name type="string" />
 			<team type="Team" />
-			<shots type="list[Shot]" />
+			<shotsFired type="list[Shot]" />
+			<shotsReceived type="list[Shot]" />
 			<ships type="list[Ship]" />
 		</Player>
 		<GameState>
@@ -55,16 +55,22 @@
 		<!-- ********** MESSAGES ********** -->
 
 		<BattleshipMessage extends="se.yabs.aichallenge.GameMessage" />
+		<RequestFromServer extends="BattleshipMessage" />
 
-		<PlaceShipsRequest extends="BattleshipMessage" />
+		<PlaceShipsRequest extends="RequestFromServer" />
 		<PlaceShips extends="BattleshipMessage">
 			<ships type="List[Ship]" />
 		</PlaceShips>
 
-		<MakeShotRequest extends="BattleshipMessage" />
+		<MakeShotRequest extends="RequestFromServer" />
 		<MakeShot extends="BattleshipMessage">
 			<shot type="Shot" />
 		</MakeShot>
+
+		<ShotResult extends="BattleshipMessage">
+			<shooterName type="String" />
+			<shot type="Shot" />
+		</ShotResult>
 
 		<GameOver extends="BattleshipMessage">
 			<result type="BattleshipResult" />

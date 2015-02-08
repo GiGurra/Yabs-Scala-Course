@@ -20,24 +20,32 @@ namespace aichallenge {
 class Checkin : public Message /* custom_ifcs_begin *//* custom_ifcs_end */ {
 private:
 	std::string m_name;
+	std::string m_password;
 	bool _m_name_isSet;
+	bool _m_password_isSet;
 
 public:
 	Checkin();
-	Checkin(const std::string& name);
+	Checkin(const std::string& name,
+			const std::string& password);
 	virtual ~Checkin();
 
 	const std::string& getName() const;
+	const std::string& getPassword() const;
 
 	std::string& getNameMutable();
+	std::string& getPasswordMutable();
 
 	Checkin& setName(const std::string& name);
+	Checkin& setPassword(const std::string& password);
 
 	/* custom_methods_begin *//* custom_methods_end */
 
 	bool hasName() const;
+	bool hasPassword() const;
 
 	Checkin& unsetName();
+	Checkin& unsetPassword();
 
 	bool operator==(const Checkin& other) const;
 	bool operator!=(const Checkin& other) const;
@@ -61,6 +69,9 @@ public:
 		case _field_name_id:
 			reader.readField(_field_name_metadata(), context, getNameMutable());
 			break;
+		case _field_password_id:
+			reader.readField(_field_password_metadata(), context, getPasswordMutable());
+			break;
 		default:
 			reader.handleUnknownField(fieldId, context);
 			break;
@@ -71,8 +82,9 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) const {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 1);
+				visitor.beginVisit(*this, 2);
 				visitor.visit(getName(), _field_name_metadata());
+				visitor.visit(getPassword(), _field_password_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -80,6 +92,8 @@ public:
 				visitor.beginVisit(*this, _numFieldsSet(mgen::SHALLOW, false));
 				if (_isNameSet(mgen::SHALLOW))
 					visitor.visit(getName(), _field_name_metadata());
+				if (_isPasswordSet(mgen::SHALLOW))
+					visitor.visit(getPassword(), _field_password_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -90,8 +104,9 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 1);
+				visitor.beginVisit(*this, 2);
 				visitor.visit(getNameMutable(), _field_name_metadata());
+				visitor.visit(getPasswordMutable(), _field_password_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -99,6 +114,8 @@ public:
 				visitor.beginVisit(*this, _numFieldsSet(mgen::SHALLOW, false));
 				if (_isNameSet(mgen::SHALLOW))
 					visitor.visit(getNameMutable(), _field_name_metadata());
+				if (_isPasswordSet(mgen::SHALLOW))
+					visitor.visit(getPasswordMutable(), _field_password_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -123,12 +140,14 @@ public:
 	bool _isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth depth) const;
 
 	Checkin& _setNameSet(const bool state, const mgen::FieldSetDepth depth);
+	Checkin& _setPasswordSet(const bool state, const mgen::FieldSetDepth depth);
 
 	Checkin& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
 
 	int _numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTransient) const;
 
 	bool _isNameSet(const mgen::FieldSetDepth depth) const;
+	bool _isPasswordSet(const mgen::FieldSetDepth depth) const;
 
 	bool _validate(const mgen::FieldSetDepth depth) const;
 
@@ -164,8 +183,10 @@ public:
 	static const std::vector<std::string>& _type_names();
 
 	static const mgen::Field& _field_name_metadata();
+	static const mgen::Field& _field_password_metadata();
 
 	static const short _field_name_id = -28058;
+	static const short _field_password_id = 5242;
 
 	static const std::vector<mgen::Field>& _field_metadatas();
 

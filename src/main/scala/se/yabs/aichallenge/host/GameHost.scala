@@ -20,11 +20,14 @@ import se.yabs.aichallenge.util.SimpleThread
 import se.yabs.aichallenge.util.ZmqSocket
 import se.yabs.aichallenge.util.ZmqUtil
 import se.yabs.aichallenge.GameMessage
+import se.yabs.aichallenge.User
+import se.yabs.aichallenge.UserDb
 
 class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends SimpleThread[GameHost] {
   val bindAddr = ZmqUtil.mkAddr(ifc, port)
 
-  private val clients = new HashMap[ClientId, ClientState]
+  private val userDb = new UserDb
+  private val clients = new HashMap[ClientId, LoggedInUser]
   private val ongoingGames = new ArrayBuffer[Game]
   private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER) // Lazy to be initialized by internal thread
 
@@ -55,10 +58,10 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
 
   private def handleMsg(clientId: ClientId, msg: Message) {
     clients.get(clientId) match {
-      case Some(client) =>
+      case Some(user) =>
         msg match {
-          case msg: PlayGame    => handlePlayGame(client, msg.getGame)
-          case msg: GameMessage => handleGameMsg(client, msg)
+          case msg: PlayGame    => handlePlayGame(user, msg.getGame)
+          case msg: GameMessage => handleGameMsg(user, msg)
           case _                => throw new RuntimeException(s"Bad message type: ${msg.getClass}")
         }
       case None =>
@@ -69,58 +72,63 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
     }
   }
 
-  private def handleGameMsg(client: ClientState, msg: GameMessage) {
-    findGameOf(client) match {
-      case Some(game) =>
-        game.handleMessage.applyOrElse(msg, {
-          throw new RuntimeException(s"$client sent a ${msg.getClass}, but the game he is in ($game) doesn't know how to handle this message type")
-        })
-      case None => throw new RuntimeException(s"$client sent a GameMessage, but isn't playing any game")
+  private def handleGameMsg(user: LoggedInUser, msg: GameMessage) {
+    findGameOf(user) match {
+      case Some(game) => game.handleMessage(user, msg)
+      case None       => throw new RuntimeException(s"$user sent a GameMessage, but isn't playing any game")
     }
   }
 
-  private def findGameOf(client: ClientState): Option[Game] = {
+  private def findGameOf(client: LoggedInUser): Option[Game] = {
     ongoingGames.find(_.isPlayer(client))
   }
 
-  private def handlePlayGame(client: ClientState, game: GameSelection) {
+  private def handlePlayGame(user: LoggedInUser, game: GameSelection) {
 
-    println(s"Client '$client' wants to play '$game'")
+    println(s"$user wants to play '$game'")
 
-    if (isPlaying(client))
+    if (isPlaying(user))
       throw new RuntimeException("Your're already playing a game!")
 
-    findCompatibleGame(client, game) match {
-      case Some(game: Game) => game.join(client) // GameChallengeFound inside here
-      case None             => startNewGame(client, game)
+    findCompatibleGame(user, game) match {
+      case Some(game: Game) => game.join(user) // GameChallengeFound inside here
+      case None             => startNewGame(user, game)
     }
 
   }
 
-  private def findCompatibleGame(client: ClientState, selection: GameSelection): Option[Game] = {
-    ongoingGames.find(_.canJoin(client))
+  private def findCompatibleGame(user: LoggedInUser, selection: GameSelection): Option[Game] = {
+    ongoingGames.find(_.canJoin(user))
   }
 
-  private def startNewGame(client: ClientState, selection: GameSelection) {
+  private def startNewGame(user: LoggedInUser, selection: GameSelection) {
     selection match {
       case GameSelection.BATTLESHIP =>
         val game = new BattleshipGame
-        game.join(client)
+        game.join(user)
         ongoingGames += game
       case _ =>
         throw new RuntimeException(s"Unsupported game: $selection")
     }
   }
 
-  private def isPlaying(client: ClientState): Boolean = {
-    ongoingGames.exists(_.isPlayer(client))
+  private def isPlaying(user: LoggedInUser): Boolean = {
+    ongoingGames.exists(_.isPlayer(user))
+  }
+
+  private def tryLogin(msg: Checkin): Boolean = {
+    userDb.login(msg.getName, msg.getPassword)
   }
 
   private def handleNewClient(clientId: ClientId, msg: Checkin) {
-    sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", gamesAvail))
-    val newClient = new ClientState(clientId, msg.getName, sendTo(clientId, _))
-    println(s"Client '$newClient' checked in")
-    clients.put(clientId, newClient)
+    if (tryLogin(msg)) {
+      val user = new LoggedInUser(userDb.getUsers.get(msg.getName), sendTo(clientId, _))
+      sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", gamesAvail))
+      println(s"Client '$user' logged in")
+      clients.put(clientId, user)
+    } else {
+      throw new RuntimeException("Login failed")
+    }
   }
 
   private def gamesAvail = {

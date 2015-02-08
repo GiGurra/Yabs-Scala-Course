@@ -7,8 +7,10 @@ import se.yabs.aichallenge.Game
 import se.yabs.aichallenge.GameChallengeFound
 import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.Message
-import se.yabs.aichallenge.host.ClientState
 import se.yabs.aichallenge.GameMessage
+import scala.collection.JavaConversions._
+import se.yabs.aichallenge.host.LoggedInUser
+import se.yabs.aichallenge.host.LoggedInUser
 
 object BattleshipGame {
   val NUM_SHIPS = 5
@@ -19,8 +21,8 @@ object BattleshipGame {
 class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   println(s"A new battleship game ($this) is hosted")
 
-  private var redClient: ClientState = null
-  private var blueClient: ClientState = null
+  private var redUser: LoggedInUser = null
+  private var blueUser: LoggedInUser = null
   private var gameStarted = false
   private var nShots = 0
 
@@ -40,55 +42,126 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     gameStarted && !players.forall(BattleshipUtil.isAlive)
   }
 
-  override def join(client: ClientState) {
+  override def join(user: LoggedInUser) {
 
-    if (redClient == null) {
-      redClient = client
-      println(s"${client} joined $this as red player ")
-    } else if (blueClient == null) {
-      blueClient = client
-      println(s"${client} joined $this as blue player ")
+    if (redUser == null) {
+      redUser = user
+      println(s"$user joined $this as red player ")
+    } else if (blueUser == null) {
+      blueUser = user
+      println(s"$user joined $this as blue player ")
     } else
       throw new RuntimeException("Tried to join full game")
 
-    if (hasTwoClients) {
+    if (hasTwoUsers) {
 
       initGameState()
 
       broadCast(p => new GameChallengeFound(gameSelected, p.getName))
       broadCast(new PlaceShipsRequest())
-      println(s"Challenge found, $redClient vs $blueClient")
+      println(s"Challenge found, $redUser vs $blueUser")
     }
 
   }
 
-  override def canJoin(client: ClientState): Boolean = {
-    !hasTwoClients
+  override def canJoin(client: LoggedInUser): Boolean = {
+    !hasTwoUsers
   }
 
-  override def isPlayer(client: ClientState): Boolean = {
-    client == redClient || client == blueClient
+  override def isPlayer(user: LoggedInUser): Boolean = {
+    (user eq redUser) || (user eq blueUser)
   }
 
-  override def handleMessage = {
-    case msg: BattleshipMessage =>
+  override def handleMessage(client: LoggedInUser, msg: GameMessage) {
+    msg match {
+      case msg: BattleshipMessage => msg match {
+        case msg: PlaceShips => handlePlaceShips(client, msg)
+        case msg: MakeShot   => handleMakeShot(client, msg)
+      }
+      case _ => throw new RuntimeException(s"Bad msg received by BattleshipGame: ${msg.getClass}")
+    }
   }
 
   ///////////////////////////////////////////////////////////////////
   /////   PRIVATE 
 
+  private def handlePlaceShips(user: LoggedInUser, msg: PlaceShips) {
+
+    if (isGameOver)
+      throw new RuntimeException("Cannot place ships, game is over!")
+
+    if (gameStarted)
+      throw new RuntimeException("Cannot place ships, game has already started!")
+
+    if (!BattleshipUtil.areValid(msg.getShips))
+      throw new RuntimeException("Ship placement not valid!")
+
+    playerOf(user).setShips(msg.getShips)
+
+  }
+
+  private def handleMakeShot(user: LoggedInUser, msg: MakeShot) {
+
+    if (isGameOver)
+      throw new RuntimeException("Cannot make shot, game is over!")
+
+    if (!gameStarted)
+      throw new RuntimeException("Cannot make shot, game has not yet started!")
+
+    val player = playerOf(user)
+    if (player.getTeam != curTeam)
+      throw new RuntimeException("Cannot make shot, it's not yet your turn!")
+
+    if (!BattleshipUtil.isInsideMap(msg.getShot.getPos))
+      throw new RuntimeException("Cannot make shot, tried to fire outside the map!")
+
+    val opponent = opponentOf(player)
+
+    val result = BattleshipUtil.fireAt(player, opponent, msg.getShot)
+
+    player.getShotsFired.add(result.getShot)
+    opponent.getShotsReceived.add(result.getShot)
+
+    broadCast(result)
+
+    stepTeam()
+  }
+
+  private def stepTeam() {
+    val newTeam =
+      curTeam match {
+        case Team.BLUE => Team.RED
+        case Team.RED  => Team.BLUE
+      }
+    gameState.setCurrentTeam(newTeam)
+  }
+
+  private def playerOf(user: LoggedInUser): Player = {
+    user match {
+      case redUser  => redPlayer
+      case blueUser => bluePlayer
+      case _        => throw new RuntimeException(s"$user is not in game $this")
+    }
+  }
+
+  private def opponentOf(player: Player): Player = {
+    player.getTeam match {
+      case Team.RED  => bluePlayer
+      case Team.BLUE => redPlayer
+    }
+  }
+
   private def broadCast(msg: Message) {
-    if (redClient != null) redClient.send(msg)
-    if (blueClient != null) blueClient.send(msg)
+    users.foreach(_.send(msg))
   }
 
   private def broadCast(fMsg: Player => Message) {
-    if (redClient != null) redClient.send(fMsg(redPlayer))
-    if (blueClient != null) blueClient.send(fMsg(bluePlayer))
+    players.foreach(fMsg)
   }
 
   private def bluePlayer = gameState.getBluePlayer
   private def redPlayer = gameState.getRedPlayer
+  private def users = Seq(redUser, blueUser).filter(_ != null)
   private def players = Seq(redPlayer, bluePlayer)
 
   private def curTeam: Team = {
@@ -102,22 +175,22 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     gameState.getCurrentTeam
   }
 
-  private def hasTwoClients: Boolean = {
-    redClient != null && blueClient != null
+  private def hasTwoUsers: Boolean = {
+    users.size == 2
   }
 
-  private def mkPlayer(client: ClientState, team: Team): Player = {
+  private def mkPlayer(user: LoggedInUser, team: Team): Player = {
     new Player()
-      .setName(client.name)
-      .setShots(new ArrayList[Shot])
+      .setName(user.name)
+      .setShotsFired(new ArrayList)
+      .setShotsReceived(new ArrayList)
       .setTeam(team)
-      .setUuid(UUID.randomUUID().toString)
       .setShips(new ArrayList)
   }
 
   private def initGameState() {
-    gameState.setBluePlayer(mkPlayer(blueClient, Team.BLUE))
-    gameState.setRedPlayer(mkPlayer(redClient, Team.RED))
+    gameState.setBluePlayer(mkPlayer(blueUser, Team.BLUE))
+    gameState.setRedPlayer(mkPlayer(redUser, Team.RED))
     gameState.setCurrentTeam(curTeam)
     gameState.setObservers(new ArrayList)
     gameState.setPhase(Phase.LOBBY)

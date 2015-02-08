@@ -1,30 +1,40 @@
 package se.yabs.aichallenge.battleship
 
 import java.util.ArrayList
-import java.util.UUID
+
+import scala.collection.JavaConversions.asScalaBuffer
 import scala.util.Random
+
 import se.yabs.aichallenge.Game
 import se.yabs.aichallenge.GameChallengeFound
+import se.yabs.aichallenge.GameMessage
 import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.Message
-import se.yabs.aichallenge.GameMessage
-import scala.collection.JavaConversions._
-import se.yabs.aichallenge.host.LoggedInUser
 import se.yabs.aichallenge.host.LoggedInUser
 
 object BattleshipGame {
   val NUM_SHIPS = 5
   val SHIP_LENGTHS = Seq(2, 3, 4, 5, 6)
   val MAX_LEN = SHIP_LENGTHS.max
+
+  abstract class GamePhase
+  case object JOINING extends GamePhase
+  case object PLACING_SHIPS extends GamePhase
+  case object PLAYING extends GamePhase
+  case object GAME_OVER extends GamePhase
+
 }
 
 class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
+  import BattleshipGame._
+
   println(s"A new battleship game ($this) is hosted")
 
   private var redUser: LoggedInUser = null
   private var blueUser: LoggedInUser = null
-  private var gameStarted = false
-  private var nShots = 0
+  private var phase: GamePhase = JOINING
+  private var tLastMove: Double = 0.0
+  private var tStartedSelectingShips: Double = 0.0
 
   private val randomizer = new Random(System.nanoTime)
   private val gameState = new GameState
@@ -33,13 +43,20 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   /////   API 
 
   override def step() {
-    if (gameStarted) {
-
+    phase match {
+      case PLACING_SHIPS =>
+        if (timeSinceLastMove > 3.0)
+          gameOver(opponentOf(curTeam), "Place ships timeout")
+      case PLAYING =>
+        if (timeSinceLastMove > 3.0)
+          gameOver(opponentOf(curTeam), "Make shot timeout")
+      case _ =>
     }
+
   }
 
   override def isGameOver(): Boolean = {
-    gameStarted && !players.forall(BattleshipUtil.isAlive)
+    phase == GAME_OVER
   }
 
   override def join(user: LoggedInUser) {
@@ -60,6 +77,9 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
       broadCast(p => new GameChallengeFound(gameSelected, p.getName))
       broadCast(new PlaceShipsRequest())
       println(s"Challenge found, $redUser vs $blueUser")
+      phase = PLACING_SHIPS
+      tStartedSelectingShips = time()
+
     }
 
   }
@@ -87,26 +107,25 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
 
   private def handlePlaceShips(user: LoggedInUser, msg: PlaceShips) {
 
-    if (isGameOver)
-      throw new RuntimeException("Cannot place ships, game is over!")
-
-    if (gameStarted)
-      throw new RuntimeException("Cannot place ships, game has already started!")
+    if (phase != PLACING_SHIPS)
+      throw new RuntimeException(s"Cannot place ships, game is in phase $phase!")
 
     if (!BattleshipUtil.areValid(msg.getShips))
       throw new RuntimeException("Ship placement not valid!")
 
     playerOf(user).setShips(msg.getShips)
 
+    if (players.forall(_.getShips.nonEmpty)) {
+      phase = PLAYING
+      startGame()
+    }
+
   }
 
   private def handleMakeShot(user: LoggedInUser, msg: MakeShot) {
 
-    if (isGameOver)
-      throw new RuntimeException("Cannot make shot, game is over!")
-
-    if (!gameStarted)
-      throw new RuntimeException("Cannot make shot, game has not yet started!")
+    if (phase != PLAYING)
+      throw new RuntimeException(s"Cannot make shot, game is int phase $phase!")
 
     val player = playerOf(user)
     if (player.getTeam != curTeam)
@@ -124,6 +143,11 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
 
     broadCast(result)
 
+    // Check alive
+    if (!BattleshipUtil.isAlive(opponent)) {
+      gameOver(user, "no ships alive")
+    }
+
     stepTeam()
   }
 
@@ -132,15 +156,53 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
       curTeam match {
         case Team.BLUE => Team.RED
         case Team.RED  => Team.BLUE
+        case _         => throw new RuntimeException(s"Bad team: $curTeam")
       }
     gameState.setCurrentTeam(newTeam)
+
+    userOf(newTeam).send(new MakeShotRequest)
+
+    tLastMove = time()
+
   }
 
+  private def time() = System.nanoTime() / 1e9
+  private def timeSinceLastMove() = time - tLastMove
+
   private def playerOf(user: LoggedInUser): Player = {
-    user match {
-      case redUser  => redPlayer
-      case blueUser => bluePlayer
-      case _        => throw new RuntimeException(s"$user is not in game $this")
+    if (user == redUser) redPlayer
+    else if (user == blueUser) bluePlayer
+    else throw new RuntimeException(s"$user is not in game $this")
+  }
+
+  private def playerOf(team: Team): Player = {
+    team match {
+      case Team.RED  => redPlayer
+      case Team.BLUE => bluePlayer
+      case _         => throw new RuntimeException(s"Bad team: $curTeam")
+    }
+  }
+
+  private def opponentOf(team: Team): LoggedInUser = {
+    team match {
+      case Team.RED  => blueUser
+      case Team.BLUE => redUser
+      case _         => throw new RuntimeException(s"Bad team: $curTeam")
+    }
+  }
+
+  private def gameOver(winner: LoggedInUser, reason: String) {
+    val player = playerOf(winner)
+    val opponent = opponentOf(player)
+    phase = GAME_OVER
+    broadCast(new GameOver(player.getName, opponent.getName, "no ships alive"))
+  }
+
+  private def userOf(team: Team): LoggedInUser = {
+    team match {
+      case Team.RED  => redUser
+      case Team.BLUE => blueUser
+      case _         => throw new RuntimeException(s"Bad team: $curTeam")
     }
   }
 
@@ -148,16 +210,12 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     player.getTeam match {
       case Team.RED  => bluePlayer
       case Team.BLUE => redPlayer
+      case _         => throw new RuntimeException(s"Bad team: $curTeam")
     }
   }
 
-  private def broadCast(msg: Message) {
-    users.foreach(_.send(msg))
-  }
-
-  private def broadCast(fMsg: Player => Message) {
-    players.foreach(fMsg)
-  }
+  private def broadCast(msg: Message) { users.foreach(_.send(msg)) }
+  private def broadCast(fMsg: Player => Message) { players.foreach(fMsg) }
 
   private def bluePlayer = gameState.getBluePlayer
   private def redPlayer = gameState.getRedPlayer
@@ -194,6 +252,10 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     gameState.setCurrentTeam(curTeam)
     gameState.setObservers(new ArrayList)
     gameState.setPhase(Phase.LOBBY)
+  }
+
+  private def startGame() {
+    stepTeam()
   }
 
 }

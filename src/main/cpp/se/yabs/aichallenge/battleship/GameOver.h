@@ -11,7 +11,6 @@
 #define SE_YABS_AICHALLENGE_BATTLESHIP_GAMEOVER
 
 #include "se/yabs/aichallenge/battleship/BattleshipMessage.h"
-#include "se/yabs/aichallenge/battleship/BattleshipResult.h"
 /* custom_includes_begin *//* custom_includes_end */
 
 namespace se {
@@ -21,25 +20,41 @@ namespace battleship {
 
 class GameOver : public BattleshipMessage /* custom_ifcs_begin *//* custom_ifcs_end */ {
 private:
-	BattleshipResult m_result;
-	bool _m_result_isSet;
+	std::string m_reason;
+	std::string m_winner;
+	std::string m_loser;
+	bool _m_reason_isSet;
+	bool _m_winner_isSet;
+	bool _m_loser_isSet;
 
 public:
 	GameOver();
-	GameOver(const BattleshipResult& result);
+	GameOver(const std::string& reason,
+			const std::string& winner,
+			const std::string& loser);
 	virtual ~GameOver();
 
-	const BattleshipResult& getResult() const;
+	const std::string& getReason() const;
+	const std::string& getWinner() const;
+	const std::string& getLoser() const;
 
-	BattleshipResult& getResultMutable();
+	std::string& getReasonMutable();
+	std::string& getWinnerMutable();
+	std::string& getLoserMutable();
 
-	GameOver& setResult(const BattleshipResult& result);
+	GameOver& setReason(const std::string& reason);
+	GameOver& setWinner(const std::string& winner);
+	GameOver& setLoser(const std::string& loser);
 
 	/* custom_methods_begin *//* custom_methods_end */
 
-	bool hasResult() const;
+	bool hasReason() const;
+	bool hasWinner() const;
+	bool hasLoser() const;
 
-	GameOver& unsetResult();
+	GameOver& unsetReason();
+	GameOver& unsetWinner();
+	GameOver& unsetLoser();
 
 	bool operator==(const GameOver& other) const;
 	bool operator!=(const GameOver& other) const;
@@ -60,8 +75,14 @@ public:
 	template<typename ReaderType, typename ReadContextType>
 	void _readField(const short fieldId, ReadContextType& context, ReaderType& reader) {
 		switch (fieldId) {
-		case _field_result_id:
-			reader.readField(_field_result_metadata(), context, getResultMutable());
+		case _field_reason_id:
+			reader.readField(_field_reason_metadata(), context, getReasonMutable());
+			break;
+		case _field_winner_id:
+			reader.readField(_field_winner_metadata(), context, getWinnerMutable());
+			break;
+		case _field_loser_id:
+			reader.readField(_field_loser_metadata(), context, getLoserMutable());
 			break;
 		default:
 			reader.handleUnknownField(fieldId, context);
@@ -73,15 +94,21 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) const {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 1);
-				visitor.visit(getResult(), _field_result_metadata());
+				visitor.beginVisit(*this, 3);
+				visitor.visit(getReason(), _field_reason_metadata());
+				visitor.visit(getWinner(), _field_winner_metadata());
+				visitor.visit(getLoser(), _field_loser_metadata());
 				visitor.endVisit();
 				break;
 			}
 			default /* case mgen::ALL_SET_NONTRANSIENT */ : {
 				visitor.beginVisit(*this, _numFieldsSet(mgen::SHALLOW, false));
-				if (_isResultSet(mgen::SHALLOW))
-					visitor.visit(getResult(), _field_result_metadata());
+				if (_isReasonSet(mgen::SHALLOW))
+					visitor.visit(getReason(), _field_reason_metadata());
+				if (_isWinnerSet(mgen::SHALLOW))
+					visitor.visit(getWinner(), _field_winner_metadata());
+				if (_isLoserSet(mgen::SHALLOW))
+					visitor.visit(getLoser(), _field_loser_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -92,15 +119,21 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 1);
-				visitor.visit(getResultMutable(), _field_result_metadata());
+				visitor.beginVisit(*this, 3);
+				visitor.visit(getReasonMutable(), _field_reason_metadata());
+				visitor.visit(getWinnerMutable(), _field_winner_metadata());
+				visitor.visit(getLoserMutable(), _field_loser_metadata());
 				visitor.endVisit();
 				break;
 			}
 			default /* case mgen::ALL_SET_NONTRANSIENT */ : {
 				visitor.beginVisit(*this, _numFieldsSet(mgen::SHALLOW, false));
-				if (_isResultSet(mgen::SHALLOW))
-					visitor.visit(getResultMutable(), _field_result_metadata());
+				if (_isReasonSet(mgen::SHALLOW))
+					visitor.visit(getReasonMutable(), _field_reason_metadata());
+				if (_isWinnerSet(mgen::SHALLOW))
+					visitor.visit(getWinnerMutable(), _field_winner_metadata());
+				if (_isLoserSet(mgen::SHALLOW))
+					visitor.visit(getLoserMutable(), _field_loser_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -124,13 +157,17 @@ public:
 
 	bool _isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth depth) const;
 
-	GameOver& _setResultSet(const bool state, const mgen::FieldSetDepth depth);
+	GameOver& _setReasonSet(const bool state, const mgen::FieldSetDepth depth);
+	GameOver& _setWinnerSet(const bool state, const mgen::FieldSetDepth depth);
+	GameOver& _setLoserSet(const bool state, const mgen::FieldSetDepth depth);
 
 	GameOver& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
 
 	int _numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTransient) const;
 
-	bool _isResultSet(const mgen::FieldSetDepth depth) const;
+	bool _isReasonSet(const mgen::FieldSetDepth depth) const;
+	bool _isWinnerSet(const mgen::FieldSetDepth depth) const;
+	bool _isLoserSet(const mgen::FieldSetDepth depth) const;
 
 	bool _validate(const mgen::FieldSetDepth depth) const;
 
@@ -165,9 +202,13 @@ public:
 	static const std::string& _type_name();
 	static const std::vector<std::string>& _type_names();
 
-	static const mgen::Field& _field_result_metadata();
+	static const mgen::Field& _field_reason_metadata();
+	static const mgen::Field& _field_winner_metadata();
+	static const mgen::Field& _field_loser_metadata();
 
-	static const short _field_result_id = 24642;
+	static const short _field_reason_id = -15867;
+	static const short _field_winner_id = -7291;
+	static const short _field_loser_id = 9621;
 
 	static const std::vector<mgen::Field>& _field_metadatas();
 

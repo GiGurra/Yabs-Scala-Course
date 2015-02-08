@@ -18,48 +18,107 @@ namespace aichallenge {
 namespace battleship {
 
 GameOver::GameOver() : 
-		m_result(BattleshipResult_UNKNOWN),
-		_m_result_isSet(false) {
+		_m_reason_isSet(false),
+		_m_winner_isSet(false),
+		_m_loser_isSet(false) {
 }
 
-GameOver::GameOver(const BattleshipResult& result) : 
-		m_result(result),
-		_m_result_isSet(true) {
+GameOver::GameOver(const std::string& reason, 
+			const std::string& winner, 
+			const std::string& loser) : 
+		m_reason(reason),
+		m_winner(winner),
+		m_loser(loser),
+		_m_reason_isSet(true),
+		_m_winner_isSet(true),
+		_m_loser_isSet(true) {
 }
 
 GameOver::~GameOver() {
 }
 
-const BattleshipResult& GameOver::getResult() const {
-	return m_result;
+const std::string& GameOver::getReason() const {
+	return m_reason;
 }
 
-BattleshipResult& GameOver::getResultMutable() {
-	_m_result_isSet = true;
-	return m_result;
+const std::string& GameOver::getWinner() const {
+	return m_winner;
 }
 
-GameOver& GameOver::setResult(const BattleshipResult& result) {
-	m_result = result;
-	_m_result_isSet = true;
+const std::string& GameOver::getLoser() const {
+	return m_loser;
+}
+
+std::string& GameOver::getReasonMutable() {
+	_m_reason_isSet = true;
+	return m_reason;
+}
+
+std::string& GameOver::getWinnerMutable() {
+	_m_winner_isSet = true;
+	return m_winner;
+}
+
+std::string& GameOver::getLoserMutable() {
+	_m_loser_isSet = true;
+	return m_loser;
+}
+
+GameOver& GameOver::setReason(const std::string& reason) {
+	m_reason = reason;
+	_m_reason_isSet = true;
+	return *this;
+}
+
+GameOver& GameOver::setWinner(const std::string& winner) {
+	m_winner = winner;
+	_m_winner_isSet = true;
+	return *this;
+}
+
+GameOver& GameOver::setLoser(const std::string& loser) {
+	m_loser = loser;
+	_m_loser_isSet = true;
 	return *this;
 }
 
 /* custom_methods_begin *//* custom_methods_end */
 
-bool GameOver::hasResult() const {
-	return _isResultSet(mgen::SHALLOW);
+bool GameOver::hasReason() const {
+	return _isReasonSet(mgen::SHALLOW);
 }
 
-GameOver& GameOver::unsetResult() {
-	_setResultSet(false, mgen::SHALLOW);
+bool GameOver::hasWinner() const {
+	return _isWinnerSet(mgen::SHALLOW);
+}
+
+bool GameOver::hasLoser() const {
+	return _isLoserSet(mgen::SHALLOW);
+}
+
+GameOver& GameOver::unsetReason() {
+	_setReasonSet(false, mgen::SHALLOW);
+	return *this;
+}
+
+GameOver& GameOver::unsetWinner() {
+	_setWinnerSet(false, mgen::SHALLOW);
+	return *this;
+}
+
+GameOver& GameOver::unsetLoser() {
+	_setLoserSet(false, mgen::SHALLOW);
 	return *this;
 }
 
 bool GameOver::operator==(const GameOver& other) const {
 	return true
-		 && _isResultSet(mgen::SHALLOW) == other._isResultSet(mgen::SHALLOW)
-		 && getResult() == other.getResult();
+		 && _isReasonSet(mgen::SHALLOW) == other._isReasonSet(mgen::SHALLOW)
+		 && _isWinnerSet(mgen::SHALLOW) == other._isWinnerSet(mgen::SHALLOW)
+		 && _isLoserSet(mgen::SHALLOW) == other._isLoserSet(mgen::SHALLOW)
+		 && getReason() == other.getReason()
+		 && getWinner() == other.getWinner()
+		 && getLoser() == other.getLoser();
 }
 
 bool GameOver::operator!=(const GameOver& other) const {
@@ -80,15 +139,19 @@ bool GameOver::operator!=(const GameOver& other) const {
 		  
 const mgen::Field * GameOver::_fieldById(const short id) const {
 	switch (id) {
-	case _field_result_id:
-		return &_field_result_metadata();
+	case _field_reason_id:
+		return &_field_reason_metadata();
+	case _field_winner_id:
+		return &_field_winner_metadata();
+	case _field_loser_id:
+		return &_field_loser_metadata();
 	default:
 		return 0;
 	}
 }
 
 const mgen::Field * GameOver::_fieldByName(const std::string& name) const {
-	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("result", &GameOver::_field_result_metadata());
+	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("reason", &GameOver::_field_reason_metadata())("winner", &GameOver::_field_winner_metadata())("loser", &GameOver::_field_loser_metadata());
 	const std::map<std::string, const mgen::Field*>::const_iterator it = name2meta.find(name);
 	return it != name2meta.end() ? it->second : 0;
 }
@@ -133,35 +196,65 @@ const std::vector<mgen::Field>& GameOver::_fieldMetadatas() const {
 	return _field_metadatas();
 }
 
-GameOver& GameOver::_setResultSet(const bool state, const mgen::FieldSetDepth depth) {
+GameOver& GameOver::_setReasonSet(const bool state, const mgen::FieldSetDepth depth) {
 	if (!state)
-		m_result = BattleshipResult_UNKNOWN;
-	_m_result_isSet = state;
+		m_reason = "";
+	_m_reason_isSet = state;
+	return *this;
+}
+
+GameOver& GameOver::_setWinnerSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (!state)
+		m_winner = "";
+	_m_winner_isSet = state;
+	return *this;
+}
+
+GameOver& GameOver::_setLoserSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (!state)
+		m_loser = "";
+	_m_loser_isSet = state;
 	return *this;
 }
 
 GameOver& GameOver::_setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth) { 
-	_setResultSet(state, depth);
+	_setReasonSet(state, depth);
+	_setWinnerSet(state, depth);
+	_setLoserSet(state, depth);
 	return *this;
 }
 
 int GameOver::_numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTransient) const {
 	int out = 0;
-	out += _isResultSet(depth) ? 1 : 0;
+	out += _isReasonSet(depth) ? 1 : 0;
+	out += _isWinnerSet(depth) ? 1 : 0;
+	out += _isLoserSet(depth) ? 1 : 0;
 	return out;
 }
 
 bool GameOver::_isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth depth) const {
 	switch(field.id()) {
-		case (_field_result_id):
-			return _isResultSet(depth);
+		case (_field_reason_id):
+			return _isReasonSet(depth);
+		case (_field_winner_id):
+			return _isWinnerSet(depth);
+		case (_field_loser_id):
+			return _isLoserSet(depth);
 		default:
 			return false;
 	}
 }
 
-bool GameOver::_isResultSet(const mgen::FieldSetDepth depth) const {
-	return _m_result_isSet;
+bool GameOver::_isReasonSet(const mgen::FieldSetDepth depth) const {
+	return _m_reason_isSet;
+}
+
+bool GameOver::_isWinnerSet(const mgen::FieldSetDepth depth) const {
+	return _m_winner_isSet;
+}
+
+bool GameOver::_isLoserSet(const mgen::FieldSetDepth depth) const {
+	return _m_loser_isSet;
 }
 
 bool GameOver::_validate(const mgen::FieldSetDepth depth) const { 
@@ -232,12 +325,22 @@ const std::string& GameOver::_type_id_16bit_base64() {
 }
 
 const std::vector<mgen::Field>& GameOver::_field_metadatas() {
-	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_result_metadata();
+	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_reason_metadata() << _field_winner_metadata() << _field_loser_metadata();
 	return out;
 }
 
-const mgen::Field& GameOver::_field_result_metadata() {
-	static const mgen::Field out(24642, "result");
+const mgen::Field& GameOver::_field_reason_metadata() {
+	static const mgen::Field out(-15867, "reason");
+	return out;
+}
+
+const mgen::Field& GameOver::_field_winner_metadata() {
+	static const mgen::Field out(-7291, "winner");
+	return out;
+}
+
+const mgen::Field& GameOver::_field_loser_metadata() {
+	static const mgen::Field out(9621, "loser");
 	return out;
 }
 

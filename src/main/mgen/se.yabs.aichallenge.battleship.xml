@@ -12,11 +12,6 @@
 			<PLAYING />
 		</Phase>
 
-		<BattleshipResult>
-			<WIN />
-			<LOSS />
-		</BattleshipResult>
-
 	</Enums>
 	<Types>
 
@@ -73,7 +68,9 @@
 		</ShotResult>
 
 		<GameOver extends="BattleshipMessage">
-			<result type="BattleshipResult" />
+			<reason type="String" />
+			<winner type="String" />
+			<loser type="String" />
 		</GameOver>
 
 	</Types>

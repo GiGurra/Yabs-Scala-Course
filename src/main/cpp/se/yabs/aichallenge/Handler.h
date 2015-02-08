@@ -27,6 +27,7 @@ class Handler  {
 	virtual void handle(se::yabs::aichallenge::WelcomeMessage& o);
 	virtual void handle(se::yabs::aichallenge::ErrorMessage& o);
 	virtual void handle(se::yabs::aichallenge::Checkin& o);
+	virtual void handle(se::yabs::aichallenge::PlayGame& o);
 	virtual void handle(se::yabs::aichallenge::GameChallengeFound& o);
 	virtual void handle(se::yabs::aichallenge::battleship::Ship& o);
 	virtual void handle(se::yabs::aichallenge::battleship::Segment& o);

@@ -20,6 +20,7 @@ class Message;
 class WelcomeMessage;
 class ErrorMessage;
 class Checkin;
+class PlayGame;
 class GameChallengeFound;
 
 } // End namespace aichallenge

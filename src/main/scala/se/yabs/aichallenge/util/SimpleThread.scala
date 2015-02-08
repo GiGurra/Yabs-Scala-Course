@@ -1,6 +1,7 @@
 package se.yabs.aichallenge.util
 
-trait SimpleThread {
+trait SimpleThread[T <: SimpleThread[T]] {
+  self: T =>
 
   @volatile private var stopSignal = false
   private val thread = new Thread {
@@ -17,16 +18,19 @@ trait SimpleThread {
   def step(): Unit = {}
   def finish(): Unit = {}
 
-  def signalStop() {
+  def signalStop(): T = {
     stopSignal = true
+    this
   }
 
-  def start() {
+  def start(): T = {
     thread.start()
+    this
   }
 
-  def join() {
+  def join(): T = {
     thread.join()
+    this
   }
 
   def isRunning = {

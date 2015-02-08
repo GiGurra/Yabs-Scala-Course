@@ -6,18 +6,24 @@ import se.yabs.aichallenge.Message
 import se.yabs.aichallenge.Serializer
 import se.yabs.aichallenge.util.SimpleThread
 import se.yabs.aichallenge.util.ZmqSocket
+import se.yabs.aichallenge.PlayGame
 
-class GameClient(val name: String, val zmqAddr: String) extends SimpleThread {
+class GameClient(val name: String, val zmqAddr: String) extends SimpleThread[GameClient] {
   def this(name: String, addr: String, port: Int) = this(name, s"tcp://$addr:$port")
 
   private val socket = new ZmqSocket(zmqAddr, ZmqSocket.Type.CLIENT)
+  checkin()
 
-  def getNewMessages(pollTimeMillis: Int = 100): Seq[Message] = {
+  def getNewMessages(pollTimeMillis: Int = 2000): Seq[Message] = {
     socket.getNewMessages(pollTimeMillis) map (parts => Serializer.read(parts.last))
   }
 
+  def checkin() {
+    send(new Checkin(name));
+  }
+
   def playGame(gameSelection: GameSelection) {
-    send(new Checkin(name, gameSelection));
+    send(new PlayGame(gameSelection))
   }
 
   def close() {

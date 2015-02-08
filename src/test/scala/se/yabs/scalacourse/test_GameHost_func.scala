@@ -5,45 +5,71 @@ import se.yabs.aichallenge.host.GameHost
 import se.yabs.aichallenge.client.GameClient
 import se.yabs.aichallenge.Checkin
 import se.yabs.aichallenge.GameSelection
+import se.yabs.aichallenge.WelcomeMessage
 
 class test_GameHost_func {
 
   @Test
   def init() {
-    val host = new GameHost
-    host.join()
+    val port = TestPorts.getAndIncrement
+    val host = new GameHost(port).join()
   }
 
   @Test
   def joinThread() {
-    val host = new GameHost
-    host.start()
+
+    val port = TestPorts.getAndIncrement
+    val host = new GameHost(port).start()
 
     assert(host.isRunning)
 
-    host.signalStop()
-    host.join()
+    host.signalStop().join()
 
     assert(!host.isRunning)
+
   }
 
   @Test
-  def connectToServer() {
-    val host = new GameHost
-    host.start()
+  def getsWelcomeMessage() {
 
-    val client = new GameClient("Gurra", "127.0.0.1", GameHost.DEFAULT_PORT)
-    client.playGame(GameSelection.BATTLESHIP)
-    
-    val replies = client.getNewMessages(1000)
-    assert(replies.nonEmpty)
+    val port = TestPorts.getAndIncrement
+    val host = new GameHost(port).start()
+
+    val client = host.connectTo()
+
+    val msgs = client.getNewMessages()
+    assert(msgs.nonEmpty)
+    assert(msgs.head.isInstanceOf[WelcomeMessage])
 
     client.close()
-    
+
     host.signalStop()
     host.join()
 
     assert(!host.isRunning)
+
   }
 
+  @Test
+  def selectgame() {
+
+    val port = TestPorts.getAndIncrement
+    val host = new GameHost(port).start()
+
+    val client = host.connectTo()
+
+    val msgs = client.getNewMessages()
+    
+    assert(msgs.nonEmpty)
+    assert(msgs.head.isInstanceOf[WelcomeMessage])
+
+    client.close()
+
+    host.signalStop()
+    host.join()
+
+    assert(!host.isRunning)
+
+  }
+  
 }

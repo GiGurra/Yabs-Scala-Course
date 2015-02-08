@@ -11,6 +11,7 @@
 #include "se/yabs/aichallenge/WelcomeMessage.h"
 #include "se/yabs/aichallenge/ErrorMessage.h"
 #include "se/yabs/aichallenge/Checkin.h"
+#include "se/yabs/aichallenge/PlayGame.h"
 #include "se/yabs/aichallenge/GameChallengeFound.h"
 #include "se/yabs/aichallenge/battleship/Ship.h"
 #include "se/yabs/aichallenge/battleship/Segment.h"
@@ -48,6 +49,10 @@ void Handler::handle(se::yabs::aichallenge::ErrorMessage& o) {
 }
 
 void Handler::handle(se::yabs::aichallenge::Checkin& o) {
+	handle(static_cast<se::yabs::aichallenge::Message&>(o));
+}
+
+void Handler::handle(se::yabs::aichallenge::PlayGame& o) {
 	handle(static_cast<se::yabs::aichallenge::Message&>(o));
 }
 

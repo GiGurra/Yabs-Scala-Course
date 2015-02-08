@@ -1,5 +1,8 @@
 package se.yabs.aichallenge.host
 
+import java.util.ArrayList
+
+import scala.collection.JavaConversions.seqAsJavaList
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.HashMap
 import scala.util.Failure
@@ -9,14 +12,18 @@ import scala.util.Try
 import se.yabs.aichallenge.Checkin
 import se.yabs.aichallenge.ErrorMessage
 import se.yabs.aichallenge.Game
+import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.Message
 import se.yabs.aichallenge.Serializer
 import se.yabs.aichallenge.WelcomeMessage
+import se.yabs.aichallenge.client.GameClient
 import se.yabs.aichallenge.util.SimpleThread
 import se.yabs.aichallenge.util.ZmqSocket
+import se.yabs.aichallenge.util.ZmqUtil
 
-class GameHost(val bindAddr: String = GameHost.DEFAULT_BIND_ADDR) extends SimpleThread {
+class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends SimpleThread[GameHost] {
 
+  val bindAddr = ZmqUtil.mkAddr(ifc, port)
   private val clients = new HashMap[ClientId, ClientState]
   private val ongoingGames = new ArrayBuffer[Game]
 
@@ -25,10 +32,7 @@ class GameHost(val bindAddr: String = GameHost.DEFAULT_BIND_ADDR) extends Simple
 
   override def step() {
     
-    println("Server step")
-
     for (zmqMsgParts <- socket.getNewMessages(100)) {
-      println("Server received msg")
       Try(handleMsg(zmqMsgParts)) match {
         case Success(_) =>
         case Failure(e) =>
@@ -48,6 +52,10 @@ class GameHost(val bindAddr: String = GameHost.DEFAULT_BIND_ADDR) extends Simple
     socket.close()
   }
 
+  def connectTo(name: String = "TestClient"): GameClient = {
+    new GameClient(name, "127.0.0.1", port)
+  }
+
   private def stepGames() {
     ongoingGames.foreach(_.step())
   }
@@ -63,13 +71,17 @@ class GameHost(val bindAddr: String = GameHost.DEFAULT_BIND_ADDR) extends Simple
       msg match {
         case msg: Checkin =>
           println(s"Client '${msg.getName}' checked in ($clientId)")
-          sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server"))
+          sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", gamesAvail))
           clients.put(clientId, new ClientState(clientId, msg.getName))
         case _ =>
           throw new RuntimeException("Unsupported message type ")
       }
     }
 
+  }
+
+  private def gamesAvail = {
+    new ArrayList(Seq(GameSelection.BATTLESHIP))
   }
 
   private def handleFinishedGames() {

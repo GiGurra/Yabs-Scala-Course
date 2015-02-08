@@ -14,28 +14,41 @@ import se.culvertsoft.mgen.javapack.metadata.FieldVisitSelection;
 import se.culvertsoft.mgen.javapack.serialization.FieldVisitor;
 import se.culvertsoft.mgen.javapack.serialization.Reader;
 import se.culvertsoft.mgen.javapack.util.FieldHasher;
+import se.culvertsoft.mgen.javapack.util.DeepCopyer;
 import se.culvertsoft.mgen.javapack.util.EqualityTester;
 /* custom_imports_begin *//* custom_imports_end */
 
 public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifcs_end */ {
 
 	private String m_msg;
+	private java.util.ArrayList<GameSelection> m_availableGames;
 
 	public WelcomeMessage() {
 		super();
 		m_msg = null;
+		m_availableGames = null;
 	}
 
-	public WelcomeMessage(final String msg) {
+	public WelcomeMessage(final String msg,
+				final java.util.ArrayList<GameSelection> availableGames) {
 		m_msg = msg;
+		m_availableGames = availableGames;
 	}
 
 	public String getMsg() {
 		return m_msg;
 	}
 
+	public java.util.ArrayList<GameSelection> getAvailableGames() {
+		return m_availableGames;
+	}
+
 	public boolean hasMsg() {
 		return _isMsgSet(FieldSetDepth.SHALLOW);
+	}
+
+	public boolean hasAvailableGames() {
+		return _isAvailableGamesSet(FieldSetDepth.SHALLOW);
 	}
 
 	public WelcomeMessage unsetMsg() {
@@ -43,8 +56,18 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 		return this;
 	}
 
+	public WelcomeMessage unsetAvailableGames() {
+		_setAvailableGamesSet(false, FieldSetDepth.SHALLOW);
+		return this;
+	}
+
 	public WelcomeMessage setMsg(final String msg) {
 		m_msg = msg;
+		return this;
+	}
+
+	public WelcomeMessage setAvailableGames(final java.util.ArrayList<GameSelection> availableGames) {
+		m_availableGames = availableGames;
 		return this;
 	}
 
@@ -60,6 +83,7 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 		final int prime = 31;
 		int result = 261344657;
 		result = _isMsgSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getMsg(), _msg_METADATA.typ())) : result;
+		result = _isAvailableGamesSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getAvailableGames(), _availableGames_METADATA.typ())) : result;
 		return result;
 	}
 
@@ -71,13 +95,16 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 		final WelcomeMessage o = (WelcomeMessage)other;
 		return true
 		  && hasMsg() == o.hasMsg()
-		  && EqualityTester.areEqual(getMsg(), o.getMsg(), _msg_METADATA.typ());
+		  && hasAvailableGames() == o.hasAvailableGames()
+		  && EqualityTester.areEqual(getMsg(), o.getMsg(), _msg_METADATA.typ())
+		  && EqualityTester.areEqual(getAvailableGames(), o.getAvailableGames(), _availableGames_METADATA.typ());
 	}
 
 	@Override
 	public WelcomeMessage deepCopy() {
 		final WelcomeMessage out = new WelcomeMessage(
-			getMsg());
+			getMsg(),
+			DeepCopyer.deepCopy(getAvailableGames(), _availableGames_METADATA.typ()));
 		return out;
 	}
 
@@ -143,8 +170,9 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 	public void _accept(final FieldVisitor visitor, final FieldVisitSelection selection) throws java.io.IOException {
 		switch(selection) {
 			case ALL: {
-				visitor.beginVisit(this, 1);
+				visitor.beginVisit(this, 2);
 				visitor.visit(getMsg(), _msg_METADATA);
+				visitor.visit(getAvailableGames(), _availableGames_METADATA);
 				visitor.endVisit();
 				break;
 			}
@@ -152,12 +180,15 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 				visitor.beginVisit(this, _nFieldsSet(FieldSetDepth.SHALLOW, false));
 				if (_isMsgSet(FieldSetDepth.SHALLOW))
 					visitor.visit(getMsg(), _msg_METADATA);
+				if (_isAvailableGamesSet(FieldSetDepth.SHALLOW))
+					visitor.visit(getAvailableGames(), _availableGames_METADATA);
 				visitor.endVisit();
 				break;
 			}
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean _readField(final short fieldId,
 	                         final Object context,
@@ -165,6 +196,9 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 		switch(fieldId) {
 			case (_msg_ID):
 				setMsg((String)reader.readStringField(_msg_METADATA, context));
+				return true;
+			case (_availableGames_ID):
+				setAvailableGames((java.util.ArrayList<GameSelection>)reader.readListField(_availableGames_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);
@@ -181,10 +215,16 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 		return m_msg != null;
 	}
 
+	public boolean _isAvailableGamesSet(final FieldSetDepth fieldSetDepth) {
+		return m_availableGames != null;
+	}
+
 	public boolean _isFieldSet(final Field field, final FieldSetDepth depth) {
 		switch(field.id()) {
 			case (_msg_ID):
 				return _isMsgSet(depth);
+			case (_availableGames_ID):
+				return _isAvailableGamesSet(depth);
 			default:
 				return false;
 		}
@@ -198,8 +238,17 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 		return this;
 	}
 
+	public WelcomeMessage _setAvailableGamesSet(final boolean state, final FieldSetDepth depth) {
+		if (state)
+			m_availableGames = m_availableGames != null ? m_availableGames : new java.util.ArrayList<GameSelection>();
+		else
+			m_availableGames = null;
+		return this;
+	}
+
 	public WelcomeMessage _setAllFieldsSet(final boolean state, final FieldSetDepth depth) { 
 		_setMsgSet(state, depth);
+		_setAvailableGamesSet(state, depth);
 		return this;
 	}
 
@@ -215,6 +264,7 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 	public int _nFieldsSet(final FieldSetDepth depth, final boolean includeTransient) {
 		int out = 0;
 		out += _isMsgSet(depth) ? 1 : 0;
+		out += _isAvailableGamesSet(depth) ? 1 : 0;
 		return out;
 	}
 
@@ -223,6 +273,8 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 		switch(fieldId) {
 			case (_msg_ID):
 				return _msg_METADATA;
+			case (_availableGames_ID):
+				return _availableGames_METADATA;
 			default:
 				return null;
 		}
@@ -233,6 +285,8 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 		switch(fieldName) {
 			case ("msg"):
 				return _msg_METADATA;
+			case ("availableGames"):
+				return _availableGames_METADATA;
 			default:
 				return null;
 		}
@@ -270,9 +324,11 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 	public static final String[] _TYPE_NAMES = { se.yabs.aichallenge.Message._TYPE_NAME, se.yabs.aichallenge.WelcomeMessage._TYPE_NAME };
 
 	public static final Field _msg_METADATA = new Field("se.yabs.aichallenge.WelcomeMessage", "msg", se.culvertsoft.mgen.api.model.StringType.INSTANCE, null, (short)21741);
+	public static final Field _availableGames_METADATA = new Field("se.yabs.aichallenge.WelcomeMessage", "availableGames", new se.culvertsoft.mgen.api.model.ListType(se.yabs.aichallenge.GameSelection._TYPE), null, (short)-11213);
 
 	public static final short _msg_ID = (short)21741;
+	public static final short _availableGames_ID = (short)-11213;
 
-	public static final Field[] _FIELDS = { _msg_METADATA };
+	public static final Field[] _FIELDS = { _msg_METADATA, _availableGames_METADATA };
 
 }

@@ -12,6 +12,7 @@
 #include "se/yabs/aichallenge/WelcomeMessage.cpp"
 #include "se/yabs/aichallenge/ErrorMessage.cpp"
 #include "se/yabs/aichallenge/Checkin.cpp"
+#include "se/yabs/aichallenge/PlayGame.cpp"
 #include "se/yabs/aichallenge/GameChallengeFound.cpp"
 #include "se/yabs/aichallenge/battleship/Ship.cpp"
 #include "se/yabs/aichallenge/battleship/Segment.cpp"
@@ -35,6 +36,7 @@ ClassRegistry::ClassRegistry() {
 	add<se::yabs::aichallenge::WelcomeMessage>();
 	add<se::yabs::aichallenge::ErrorMessage>();
 	add<se::yabs::aichallenge::Checkin>();
+	add<se::yabs::aichallenge::PlayGame>();
 	add<se::yabs::aichallenge::GameChallengeFound>();
 	add<se::yabs::aichallenge::battleship::Ship>();
 	add<se::yabs::aichallenge::battleship::Segment>();
@@ -53,6 +55,7 @@ const mgen::ClassRegistryEntry * se::yabs::aichallenge::ClassRegistry::getByIds(
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_WelcomeMessage(se::yabs::aichallenge::WelcomeMessage::_type_ids(), se::yabs::aichallenge::WelcomeMessage::_type_name(), se::yabs::aichallenge::WelcomeMessage::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_ErrorMessage(se::yabs::aichallenge::ErrorMessage::_type_ids(), se::yabs::aichallenge::ErrorMessage::_type_name(), se::yabs::aichallenge::ErrorMessage::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_Checkin(se::yabs::aichallenge::Checkin::_type_ids(), se::yabs::aichallenge::Checkin::_type_name(), se::yabs::aichallenge::Checkin::_newInstance);
+	static const mgen::ClassRegistryEntry se_yabs_aichallenge_PlayGame(se::yabs::aichallenge::PlayGame::_type_ids(), se::yabs::aichallenge::PlayGame::_type_name(), se::yabs::aichallenge::PlayGame::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_GameChallengeFound(se::yabs::aichallenge::GameChallengeFound::_type_ids(), se::yabs::aichallenge::GameChallengeFound::_type_name(), se::yabs::aichallenge::GameChallengeFound::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_battleship_Ship(se::yabs::aichallenge::battleship::Ship::_type_ids(), se::yabs::aichallenge::battleship::Ship::_type_name(), se::yabs::aichallenge::battleship::Ship::_newInstance);
 	static const mgen::ClassRegistryEntry se_yabs_aichallenge_battleship_Segment(se::yabs::aichallenge::battleship::Segment::_type_ids(), se::yabs::aichallenge::battleship::Segment::_type_name(), se::yabs::aichallenge::battleship::Segment::_newInstance);
@@ -74,6 +77,9 @@ const mgen::ClassRegistryEntry * se::yabs::aichallenge::ClassRegistry::getByIds(
 					break;
 				case se::yabs::aichallenge::Checkin::_type_id_16bit:
 					return &se_yabs_aichallenge_Checkin;
+					break;
+				case se::yabs::aichallenge::PlayGame::_type_id_16bit:
+					return &se_yabs_aichallenge_PlayGame;
 					break;
 				case se::yabs::aichallenge::GameChallengeFound::_type_id_16bit:
 					return &se_yabs_aichallenge_GameChallengeFound;

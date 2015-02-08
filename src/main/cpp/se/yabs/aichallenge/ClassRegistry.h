@@ -15,6 +15,7 @@
 #include "se/yabs/aichallenge/WelcomeMessage.h"
 #include "se/yabs/aichallenge/ErrorMessage.h"
 #include "se/yabs/aichallenge/Checkin.h"
+#include "se/yabs/aichallenge/PlayGame.h"
 #include "se/yabs/aichallenge/GameChallengeFound.h"
 #include "se/yabs/aichallenge/battleship/Ship.h"
 #include "se/yabs/aichallenge/battleship/Segment.h"
@@ -51,6 +52,9 @@ public:
 						break;
 					case se::yabs::aichallenge::Checkin::_type_id_16bit:
 						reader.readFields(static_cast<se::yabs::aichallenge::Checkin&>(o), context);
+						break;
+					case se::yabs::aichallenge::PlayGame::_type_id_16bit:
+						reader.readFields(static_cast<se::yabs::aichallenge::PlayGame&>(o), context);
 						break;
 					case se::yabs::aichallenge::GameChallengeFound::_type_id_16bit:
 						reader.readFields(static_cast<se::yabs::aichallenge::GameChallengeFound&>(o), context);
@@ -106,6 +110,9 @@ public:
 					case se::yabs::aichallenge::Checkin::_type_id_16bit:
 						static_cast<se::yabs::aichallenge::Checkin&>(o)._accept<VisitorType>(visitor, selection);
 						break;
+					case se::yabs::aichallenge::PlayGame::_type_id_16bit:
+						static_cast<se::yabs::aichallenge::PlayGame&>(o)._accept<VisitorType>(visitor, selection);
+						break;
 					case se::yabs::aichallenge::GameChallengeFound::_type_id_16bit:
 						static_cast<se::yabs::aichallenge::GameChallengeFound&>(o)._accept<VisitorType>(visitor, selection);
 						break;
@@ -159,6 +166,9 @@ public:
 						break;
 					case se::yabs::aichallenge::Checkin::_type_id_16bit:
 						static_cast<const se::yabs::aichallenge::Checkin&>(o)._accept<VisitorType>(visitor, selection);
+						break;
+					case se::yabs::aichallenge::PlayGame::_type_id_16bit:
+						static_cast<const se::yabs::aichallenge::PlayGame&>(o)._accept<VisitorType>(visitor, selection);
 						break;
 					case se::yabs::aichallenge::GameChallengeFound::_type_id_16bit:
 						static_cast<const se::yabs::aichallenge::GameChallengeFound&>(o)._accept<VisitorType>(visitor, selection);

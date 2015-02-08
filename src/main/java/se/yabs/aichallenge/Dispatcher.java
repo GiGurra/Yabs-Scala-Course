@@ -33,6 +33,9 @@ public class Dispatcher  {
 					case se.yabs.aichallenge.Checkin._TYPE_ID_16BIT:
 						handler.handle((se.yabs.aichallenge.Checkin)o);
 						break;
+					case se.yabs.aichallenge.PlayGame._TYPE_ID_16BIT:
+						handler.handle((se.yabs.aichallenge.PlayGame)o);
+						break;
 					case se.yabs.aichallenge.GameChallengeFound._TYPE_ID_16BIT:
 						handler.handle((se.yabs.aichallenge.GameChallengeFound)o);
 						break;

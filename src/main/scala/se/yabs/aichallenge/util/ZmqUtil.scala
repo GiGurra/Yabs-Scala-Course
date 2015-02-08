@@ -29,4 +29,12 @@ object ZmqUtil {
         socket.send(piece)
     }
   }
+
+  def mkAddr(port: Int): String = {
+    "tcp:/" + s"/*:$port"
+  }
+
+  def mkAddr(addr: String, port: Int): String = {
+    "tcp:/" + s"/$addr:$port"
+  }
 }

@@ -29,6 +29,9 @@ void dispatch(mgen::MGenBase& object, se::yabs::aichallenge::Handler& handler) {
 				case se::yabs::aichallenge::Checkin::_type_id_16bit:
 					handler.handle(static_cast<se::yabs::aichallenge::Checkin&>(object));
 					break;
+				case se::yabs::aichallenge::PlayGame::_type_id_16bit:
+					handler.handle(static_cast<se::yabs::aichallenge::PlayGame&>(object));
+					break;
 				case se::yabs::aichallenge::GameChallengeFound::_type_id_16bit:
 					handler.handle(static_cast<se::yabs::aichallenge::GameChallengeFound&>(object));
 					break;

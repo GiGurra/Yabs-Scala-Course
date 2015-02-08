@@ -10,6 +10,7 @@
 #ifndef SE_YABS_AICHALLENGE_WELCOMEMESSAGE
 #define SE_YABS_AICHALLENGE_WELCOMEMESSAGE
 
+#include "se/yabs/aichallenge/GameSelection.h"
 #include "se/yabs/aichallenge/Message.h"
 /* custom_includes_begin *//* custom_includes_end */
 
@@ -20,24 +21,32 @@ namespace aichallenge {
 class WelcomeMessage : public Message /* custom_ifcs_begin *//* custom_ifcs_end */ {
 private:
 	std::string m_msg;
+	std::vector<GameSelection>  m_availableGames;
 	bool _m_msg_isSet;
+	bool _m_availableGames_isSet;
 
 public:
 	WelcomeMessage();
-	WelcomeMessage(const std::string& msg);
+	WelcomeMessage(const std::string& msg,
+			const std::vector<GameSelection> & availableGames);
 	virtual ~WelcomeMessage();
 
 	const std::string& getMsg() const;
+	const std::vector<GameSelection> & getAvailableGames() const;
 
 	std::string& getMsgMutable();
+	std::vector<GameSelection> & getAvailableGamesMutable();
 
 	WelcomeMessage& setMsg(const std::string& msg);
+	WelcomeMessage& setAvailableGames(const std::vector<GameSelection> & availableGames);
 
 	/* custom_methods_begin *//* custom_methods_end */
 
 	bool hasMsg() const;
+	bool hasAvailableGames() const;
 
 	WelcomeMessage& unsetMsg();
+	WelcomeMessage& unsetAvailableGames();
 
 	bool operator==(const WelcomeMessage& other) const;
 	bool operator!=(const WelcomeMessage& other) const;
@@ -61,6 +70,9 @@ public:
 		case _field_msg_id:
 			reader.readField(_field_msg_metadata(), context, getMsgMutable());
 			break;
+		case _field_availableGames_id:
+			reader.readField(_field_availableGames_metadata(), context, getAvailableGamesMutable());
+			break;
 		default:
 			reader.handleUnknownField(fieldId, context);
 			break;
@@ -71,8 +83,9 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) const {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 1);
+				visitor.beginVisit(*this, 2);
 				visitor.visit(getMsg(), _field_msg_metadata());
+				visitor.visit(getAvailableGames(), _field_availableGames_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -80,6 +93,8 @@ public:
 				visitor.beginVisit(*this, _numFieldsSet(mgen::SHALLOW, false));
 				if (_isMsgSet(mgen::SHALLOW))
 					visitor.visit(getMsg(), _field_msg_metadata());
+				if (_isAvailableGamesSet(mgen::SHALLOW))
+					visitor.visit(getAvailableGames(), _field_availableGames_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -90,8 +105,9 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 1);
+				visitor.beginVisit(*this, 2);
 				visitor.visit(getMsgMutable(), _field_msg_metadata());
+				visitor.visit(getAvailableGamesMutable(), _field_availableGames_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -99,6 +115,8 @@ public:
 				visitor.beginVisit(*this, _numFieldsSet(mgen::SHALLOW, false));
 				if (_isMsgSet(mgen::SHALLOW))
 					visitor.visit(getMsgMutable(), _field_msg_metadata());
+				if (_isAvailableGamesSet(mgen::SHALLOW))
+					visitor.visit(getAvailableGamesMutable(), _field_availableGames_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -123,12 +141,14 @@ public:
 	bool _isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth depth) const;
 
 	WelcomeMessage& _setMsgSet(const bool state, const mgen::FieldSetDepth depth);
+	WelcomeMessage& _setAvailableGamesSet(const bool state, const mgen::FieldSetDepth depth);
 
 	WelcomeMessage& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
 
 	int _numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTransient) const;
 
 	bool _isMsgSet(const mgen::FieldSetDepth depth) const;
+	bool _isAvailableGamesSet(const mgen::FieldSetDepth depth) const;
 
 	bool _validate(const mgen::FieldSetDepth depth) const;
 
@@ -164,8 +184,10 @@ public:
 	static const std::vector<std::string>& _type_names();
 
 	static const mgen::Field& _field_msg_metadata();
+	static const mgen::Field& _field_availableGames_metadata();
 
 	static const short _field_msg_id = 21741;
+	static const short _field_availableGames_id = -11213;
 
 	static const std::vector<mgen::Field>& _field_metadatas();
 

@@ -17,12 +17,16 @@ namespace yabs {
 namespace aichallenge {
 
 WelcomeMessage::WelcomeMessage() : 
-		_m_msg_isSet(false) {
+		_m_msg_isSet(false),
+		_m_availableGames_isSet(false) {
 }
 
-WelcomeMessage::WelcomeMessage(const std::string& msg) : 
+WelcomeMessage::WelcomeMessage(const std::string& msg, 
+			const std::vector<GameSelection> & availableGames) : 
 		m_msg(msg),
-		_m_msg_isSet(true) {
+		m_availableGames(availableGames),
+		_m_msg_isSet(true),
+		_m_availableGames_isSet(true) {
 }
 
 WelcomeMessage::~WelcomeMessage() {
@@ -32,14 +36,29 @@ const std::string& WelcomeMessage::getMsg() const {
 	return m_msg;
 }
 
+const std::vector<GameSelection> & WelcomeMessage::getAvailableGames() const {
+	return m_availableGames;
+}
+
 std::string& WelcomeMessage::getMsgMutable() {
 	_m_msg_isSet = true;
 	return m_msg;
 }
 
+std::vector<GameSelection> & WelcomeMessage::getAvailableGamesMutable() {
+	_m_availableGames_isSet = true;
+	return m_availableGames;
+}
+
 WelcomeMessage& WelcomeMessage::setMsg(const std::string& msg) {
 	m_msg = msg;
 	_m_msg_isSet = true;
+	return *this;
+}
+
+WelcomeMessage& WelcomeMessage::setAvailableGames(const std::vector<GameSelection> & availableGames) {
+	m_availableGames = availableGames;
+	_m_availableGames_isSet = true;
 	return *this;
 }
 
@@ -49,15 +68,26 @@ bool WelcomeMessage::hasMsg() const {
 	return _isMsgSet(mgen::SHALLOW);
 }
 
+bool WelcomeMessage::hasAvailableGames() const {
+	return _isAvailableGamesSet(mgen::SHALLOW);
+}
+
 WelcomeMessage& WelcomeMessage::unsetMsg() {
 	_setMsgSet(false, mgen::SHALLOW);
+	return *this;
+}
+
+WelcomeMessage& WelcomeMessage::unsetAvailableGames() {
+	_setAvailableGamesSet(false, mgen::SHALLOW);
 	return *this;
 }
 
 bool WelcomeMessage::operator==(const WelcomeMessage& other) const {
 	return true
 		 && _isMsgSet(mgen::SHALLOW) == other._isMsgSet(mgen::SHALLOW)
-		 && getMsg() == other.getMsg();
+		 && _isAvailableGamesSet(mgen::SHALLOW) == other._isAvailableGamesSet(mgen::SHALLOW)
+		 && getMsg() == other.getMsg()
+		 && getAvailableGames() == other.getAvailableGames();
 }
 
 bool WelcomeMessage::operator!=(const WelcomeMessage& other) const {
@@ -80,13 +110,15 @@ const mgen::Field * WelcomeMessage::_fieldById(const short id) const {
 	switch (id) {
 	case _field_msg_id:
 		return &_field_msg_metadata();
+	case _field_availableGames_id:
+		return &_field_availableGames_metadata();
 	default:
 		return 0;
 	}
 }
 
 const mgen::Field * WelcomeMessage::_fieldByName(const std::string& name) const {
-	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("msg", &WelcomeMessage::_field_msg_metadata());
+	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("msg", &WelcomeMessage::_field_msg_metadata())("availableGames", &WelcomeMessage::_field_availableGames_metadata());
 	const std::map<std::string, const mgen::Field*>::const_iterator it = name2meta.find(name);
 	return it != name2meta.end() ? it->second : 0;
 }
@@ -138,14 +170,25 @@ WelcomeMessage& WelcomeMessage::_setMsgSet(const bool state, const mgen::FieldSe
 	return *this;
 }
 
+WelcomeMessage& WelcomeMessage::_setAvailableGamesSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (!state)
+		m_availableGames.clear();
+	else if (depth == mgen::DEEP)
+		mgen::validation::setFieldSetDeep(m_availableGames);
+	_m_availableGames_isSet = state;
+	return *this;
+}
+
 WelcomeMessage& WelcomeMessage::_setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth) { 
 	_setMsgSet(state, depth);
+	_setAvailableGamesSet(state, depth);
 	return *this;
 }
 
 int WelcomeMessage::_numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTransient) const {
 	int out = 0;
 	out += _isMsgSet(depth) ? 1 : 0;
+	out += _isAvailableGamesSet(depth) ? 1 : 0;
 	return out;
 }
 
@@ -153,6 +196,8 @@ bool WelcomeMessage::_isFieldSet(const mgen::Field& field, const mgen::FieldSetD
 	switch(field.id()) {
 		case (_field_msg_id):
 			return _isMsgSet(depth);
+		case (_field_availableGames_id):
+			return _isAvailableGamesSet(depth);
 		default:
 			return false;
 	}
@@ -160,6 +205,10 @@ bool WelcomeMessage::_isFieldSet(const mgen::Field& field, const mgen::FieldSetD
 
 bool WelcomeMessage::_isMsgSet(const mgen::FieldSetDepth depth) const {
 	return _m_msg_isSet;
+}
+
+bool WelcomeMessage::_isAvailableGamesSet(const mgen::FieldSetDepth depth) const {
+	return _m_availableGames_isSet;
 }
 
 bool WelcomeMessage::_validate(const mgen::FieldSetDepth depth) const { 
@@ -230,12 +279,17 @@ const std::string& WelcomeMessage::_type_id_16bit_base64() {
 }
 
 const std::vector<mgen::Field>& WelcomeMessage::_field_metadatas() {
-	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_msg_metadata();
+	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_msg_metadata() << _field_availableGames_metadata();
 	return out;
 }
 
 const mgen::Field& WelcomeMessage::_field_msg_metadata() {
 	static const mgen::Field out(21741, "msg");
+	return out;
+}
+
+const mgen::Field& WelcomeMessage::_field_availableGames_metadata() {
+	static const mgen::Field out(-11213, "availableGames");
 	return out;
 }
 

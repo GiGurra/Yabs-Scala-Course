@@ -5,61 +5,47 @@ import scala.collection.mutable.HashMap
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
-import org.zeromq.ZContext
-import org.zeromq.ZMQ.Poller
+
 import se.yabs.aichallenge.Checkin
 import se.yabs.aichallenge.ErrorMessage
 import se.yabs.aichallenge.Game
 import se.yabs.aichallenge.Message
 import se.yabs.aichallenge.Serializer
-import se.yabs.aichallenge.util.ZmqUtil
-import zmq.ZMQ
 import se.yabs.aichallenge.WelcomeMessage
+import se.yabs.aichallenge.util.SimpleThread
+import se.yabs.aichallenge.util.ZmqSocket
 
-class GameHost(val bindAddr: String = GameHost.DEFAULT_BIND_ADDR) extends Thread {
+class GameHost(val bindAddr: String = GameHost.DEFAULT_BIND_ADDR) extends SimpleThread {
 
   private val clients = new HashMap[ClientId, ClientState]
   private val ongoingGames = new ArrayBuffer[Game]
 
-  @volatile private var stopSignal = false
-
   // Lazy to be initialized by internal thread
-  private lazy val zmqContext = new ZContext
-  private lazy val socket = zmqContext.createSocket(ZMQ.ZMQ_ROUTER)
+  private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER)
 
-  override def run() {
+  override def step() {
+    
+    println("Server step")
 
-    socket.bind(bindAddr)
-
-    val poller = new Poller(2)
-    poller.register(socket, Poller.POLLIN)
-
-    while (!stopSignal) {
-
-      if (poller.pollin(100)) {
-        val zmqMsgParts = ZmqUtil.recvAll(socket)
-        Try(handleMsg(zmqMsgParts)) match {
-          case Success(_) =>
-          case Failure(e) =>
-            sendTo(
-              getClientId(zmqMsgParts),
-              new ErrorMessage(s"Failed to handle your message, error: ${e.getMessage}. Check server stdErr for stack trace"))
-            e.printStackTrace()
-        }
+    for (zmqMsgParts <- socket.getNewMessages(100)) {
+      println("Server received msg")
+      Try(handleMsg(zmqMsgParts)) match {
+        case Success(_) =>
+        case Failure(e) =>
+          sendTo(
+            getClientId(zmqMsgParts),
+            new ErrorMessage(s"Failed to handle your message, error: ${e.getMessage}. Check server stdErr for stack trace"))
+          e.printStackTrace()
       }
-
-      stepGames()
-
-      handleFinishedGames()
-
     }
 
-    zmqContext.close()
+    stepGames()
 
+    handleFinishedGames()
   }
 
-  def signalStop() {
-    stopSignal = true
+  override def finish() {
+    socket.close()
   }
 
   private def stepGames() {
@@ -71,7 +57,8 @@ class GameHost(val bindAddr: String = GameHost.DEFAULT_BIND_ADDR) extends Thread
     if (clients.contains(clientId)) {
       msg match {
         case msg: Checkin =>
-          println(s"Client '$msg.getName' checked in (zmqId: ${})")
+          println(msg.getName)
+          println(s"Client '${msg.getName}' checked in ($clientId)")
           clients.put(clientId, new ClientState(clientId, msg.getName))
         case _ =>
           throw new RuntimeException("Unsupported message type ")
@@ -96,7 +83,8 @@ class GameHost(val bindAddr: String = GameHost.DEFAULT_BIND_ADDR) extends Thread
   }
 
   private def handleMsg(zmqMsgParts: Seq[Array[Byte]]) {
-    parse(zmqMsgParts)
+    val (clientId, msg) = parse(zmqMsgParts)
+    handleMsg(clientId, msg)
   }
 
   private def parse(zmqMsgParts: Seq[Array[Byte]]): (ClientId, Message) = {
@@ -111,9 +99,8 @@ class GameHost(val bindAddr: String = GameHost.DEFAULT_BIND_ADDR) extends Thread
 
   private def sendTo(id: ClientId, msg: Message) {
     Try {
-      socket.sendMore(id.zmqId.toArray)
-      socket.sendMore(Array[Byte]())
-      socket.send(Serializer.write(msg))
+      val zmqMsg = Serializer.write(msg)
+      socket.send(Seq(id.zmqId.toArray, Array[Byte](), zmqMsg))
     } match {
       case Success(_) =>
       case Failure(e) =>

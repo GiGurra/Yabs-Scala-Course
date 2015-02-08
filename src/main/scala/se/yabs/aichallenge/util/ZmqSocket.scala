@@ -13,11 +13,14 @@ class ZmqSocket(val endPoint: String, val typ: ZmqSocket.SocketType) {
 
   private val context = new ZContext
   private val socket = context.createSocket(zmqSockType)
+  private val poller = new Poller(1)
 
   typ match {
     case ZmqSocket.Type.SERVER => socket.bind(endPoint)
     case ZmqSocket.Type.CLIENT => socket.connect(endPoint)
   }
+
+  poller.register(socket, ZMQ.ZMQ_POLLIN)
 
   def send(msg: ZmqMessage) {
     for (part <- msg) {
@@ -30,12 +33,10 @@ class ZmqSocket(val endPoint: String, val typ: ZmqSocket.SocketType) {
   }
 
   def getNewMessages(pollTimeMillis: Int): Seq[ZmqMessage] = {
-    socket.setReceiveTimeOut(pollTimeMillis)
-    val firstMsg = ZmqUtil.recvParts(socket)
-    if (firstMsg.nonEmpty) {
-      // TODO: Implement better flush
+    if (poller.poll(pollTimeMillis) != 0) {
       val out = new ArrayBuffer[ZmqMessage]
-      out += firstMsg
+      while (poller.poll(0) != 0)
+        out += ZmqUtil.recvParts(socket)
       out
     } else {
       Nil

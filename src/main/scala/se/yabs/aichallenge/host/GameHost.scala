@@ -56,17 +56,13 @@ class GameHost(val bindAddr: String = GameHost.DEFAULT_BIND_ADDR) extends Simple
 
     if (clients.contains(clientId)) {
       msg match {
-        case msg: Checkin =>
-          println(msg.getName)
-          println(s"Client '${msg.getName}' checked in ($clientId)")
-          clients.put(clientId, new ClientState(clientId, msg.getName))
         case _ =>
           throw new RuntimeException("Unsupported message type ")
       }
     } else {
       msg match {
         case msg: Checkin =>
-          println(s"Client '$msg.getName' checked in (zmqId: ${})")
+          println(s"Client '${msg.getName}' checked in ($clientId)")
           sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server"))
           clients.put(clientId, new ClientState(clientId, msg.getName))
         case _ =>

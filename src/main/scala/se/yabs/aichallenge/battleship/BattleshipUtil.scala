@@ -1,6 +1,6 @@
 package se.yabs.aichallenge.battleship
 
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConversions._
 
 object BattleshipUtil {
 
@@ -32,14 +32,30 @@ object BattleshipUtil {
       return false
 
     // Check that their lengths are valid
-    if (BattleshipGame.SHIP_LENGTHS.contains(length(ship)))
+    if (!BattleshipGame.SHIP_LENGTHS.contains(length(ship)))
       return false
 
     return true
   }
-  
+
   def fireAt(shooter: Player, opponent: Player, shot: Shot): ShotResult = {
-    ???
+    for (
+      ship <- opponent.getShips;
+      pt <- ship.getPoints
+    ) {
+      if (pt.getPos == shot.getPos) {
+        shot.setIsHit(true)
+        pt.setAlive(false)
+      }
+    }
+
+    val result = new ShotResult
+    result.setShooterName(shooter.getName)
+    result.setShot(shot)
+    shooter.getShotsFired.add(shot)
+    opponent.getShotsReceived.add(shot)
+    result
+
   }
 
   def length(ship: Ship): Int = {
@@ -47,7 +63,7 @@ object BattleshipUtil {
     val ys = ship.getPoints.map(_.getPos.getY)
     val xl = xs.max - xs.min
     val yl = ys.max - ys.min
-    math.max(xl, yl)
+    math.max(xl, yl) + 1
   }
 
   def areValid(ships: Seq[Ship]): Boolean = {

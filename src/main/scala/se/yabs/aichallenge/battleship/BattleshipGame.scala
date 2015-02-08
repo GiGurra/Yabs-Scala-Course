@@ -45,7 +45,7 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   override def step() {
     phase match {
       case PLACING_SHIPS =>
-        if (timeSinceLastMove > 3.0)
+        if (timeSinceStartedPlacingShips > 3.0)
           gameOver(opponentOf(curTeam), "Place ships timeout")
       case PLAYING =>
         if (timeSinceLastMove > 3.0)
@@ -144,14 +144,14 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     broadCast(result)
 
     // Check alive
-    if (!BattleshipUtil.isAlive(opponent)) {
+    if (BattleshipUtil.isAlive(opponent)) {
+      nextTurn()
+    } else {
       gameOver(user, "no ships alive")
     }
-
-    stepTeam()
   }
 
-  private def stepTeam() {
+  private def nextTurn() {
     val newTeam =
       curTeam match {
         case Team.BLUE => Team.RED
@@ -168,6 +168,7 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
 
   private def time() = System.nanoTime() / 1e9
   private def timeSinceLastMove() = time - tLastMove
+  private def timeSinceStartedPlacingShips() = time - tStartedSelectingShips
 
   private def playerOf(user: LoggedInUser): Player = {
     if (user == redUser) redPlayer
@@ -195,6 +196,7 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     val player = playerOf(winner)
     val opponent = opponentOf(player)
     phase = GAME_OVER
+    println(s"Game over [$redUser vs $blueUser]: $winner won!")
     broadCast(new GameOver(player.getName, opponent.getName, "no ships alive"))
   }
 
@@ -255,7 +257,7 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   }
 
   private def startGame() {
-    stepTeam()
+    nextTurn()
   }
 
 }

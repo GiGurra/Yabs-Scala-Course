@@ -29,16 +29,18 @@ class DumbAi extends BattleshipAi {
     out
   }
 
-  private var ix = 0
-  private var iy = 0
+  private var iShot = 0
   def makeShot(): Shot = {
+    val ix = iShot % 10
+    val iy = iShot / 10
     val out = new Shot().setPos(new Vec2(ix, iy))
-    ix += 1
-    if (ix == 10) {
-      ix = 0
-      iy += 1
-    }
+    iShot += 1
     out
+  }
+  
+  
+  def shotFired(shooter: String, pos: Vec2, isHit: Boolean) {
+    // Ignored, this AI is dumb, remember :)
   }
 
 }

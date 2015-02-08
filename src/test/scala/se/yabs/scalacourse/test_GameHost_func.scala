@@ -120,6 +120,7 @@ class test_GameHost_func {
     assert(!host.isRunning)
 
   }
+  
 /*
   @Test
   def placeShips() {

@@ -79,8 +79,8 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
     }
   }
 
-  private def findGameOf(client: LoggedInUser): Option[Game] = {
-    ongoingGames.find(_.isPlayer(client))
+  private def findGameOf(user: LoggedInUser): Option[Game] = {
+    ongoingGames.find(_.isPlayer(user))
   }
 
   private def handlePlayGame(user: LoggedInUser, game: GameSelection) {

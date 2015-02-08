@@ -42,11 +42,12 @@ class BattleshipClient(name: String, pw: String, zmqAddr: String) {
   private def poll(ai: BattleshipAi): Option[GameOver] = {
     for (msg <- getNewMessages(100)) {
       msg match {
-        case msg: GameChallengeFound => println("Playing against " + msg.getOpponent)
-        case msg: WelcomeMessage     => println(msg.getMsg); gameClient.playGame(GameSelection.BATTLESHIP)
+        case msg: GameChallengeFound =>
+        case msg: WelcomeMessage     => gameClient.playGame(GameSelection.BATTLESHIP)
         case msg: PlaceShipsRequest  => gameClient.send(new PlaceShips(new ArrayList(ai.placeShips())))
         case msg: MakeShotRequest    => gameClient.send(new MakeShot(ai.makeShot()))
         case msg: GameOver           => return Some(msg)
+        case msg: ShotResult         => ai.shotFired(msg.getShooterName, msg.getShot.getPos, msg.getShot.getIsHit)
         case msg: ErrorMessage       => throw new RuntimeException(s"ErrorMessage received from server: ${msg.getMsg}")
       }
     }
@@ -61,18 +62,18 @@ class BattleshipClient(name: String, pw: String, zmqAddr: String) {
 
 object BattleshipClient {
   def playGame(
-      clientA: BattleshipClient, aiA: BattleshipAi,
-      clientB: BattleshipClient, aiB: BattleshipAi): GameOver = {
-    
+    clientA: BattleshipClient, aiA: BattleshipAi,
+    clientB: BattleshipClient, aiB: BattleshipAi): GameOver = {
+
     while (true) {
       val optGameOverA = clientA.poll(aiA)
       val optGameOverB = clientB.poll(aiB)
-      
+
       if (optGameOverA.isDefined) {
         return optGameOverA.get
       }
     }
-    
+
     ???
   }
 }

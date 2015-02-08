@@ -14,7 +14,6 @@ class GameClient(val name: String, val password: String, val zmqAddr: String) {
   def this(name: String, password: String, host: GameHost) = this(name, password, "127.0.0.1", host.port)
 
   private val socket = new ZmqSocket(zmqAddr, ZmqSocket.Type.CLIENT)
-  checkin()
 
   def getNewMessages(pollTimeMillis: Int): Seq[Message] = {
     socket.getNewMessages(pollTimeMillis) map (parts => Serializer.read(parts.last))
@@ -32,7 +31,7 @@ class GameClient(val name: String, val password: String, val zmqAddr: String) {
     socket.close()
   }
 
-  private def send(msg: Message) {
+  def send(msg: Message) {
     socket.send(List(Serializer.write(msg)))
   }
 

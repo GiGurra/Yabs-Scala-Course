@@ -20,7 +20,7 @@
 			<points type="list[Segment]" />
 		</Ship>
 		<Segment>
-			<alive type="bool" />
+			<alive type="bool" >true</alive>
 			<pos type="Vec2" />
 		</Segment>
 		<Player>

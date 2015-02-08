@@ -10,7 +10,7 @@ import se.yabs.aichallenge.host.GameHost
 import se.yabs.aichallenge.battleship.BattleshipClient
 
 class test_GameHost_func {
-
+/*
   @Test
   def init() {
     val port = TestPorts.getAndIncrement
@@ -98,11 +98,31 @@ class test_GameHost_func {
 
     assert(!host.isRunning)
 
-  }
+  }*/
 
 
   @Test
-  def twoPlayersJoin2() {
+  def dumbAiGame() {
+
+    val port = TestPorts.getAndIncrement
+    val host = new GameHost(port).start()
+
+    val clientA = new BattleshipClient("a", "testPw", host)
+    val clientB = new BattleshipClient("b", "testPw", host)
+
+    BattleshipClient.playGame(clientA, new DumbAi, clientB, new DumbAi)
+    
+    clientA.close()
+    clientB.close()
+    host.signalStop()
+    host.join()
+
+    assert(!host.isRunning)
+
+  }
+/*
+  @Test
+  def placeShips() {
 
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
@@ -114,8 +134,11 @@ class test_GameHost_func {
     assert(welcomeMsgA.nonEmpty)
     assert(welcomeMsgB.nonEmpty)
 
-    clientA.playGame()
-    clientB.playGame()
+    clientA.playGame(new DumbAi)
+    clientB.playGame(new DumbAi)
+    
+    Thread.sleep(100)
+    
     val challangeA = clientA.getNewMessages(2000)
     val challangeB = clientB.getNewMessages(2000)
     assert(challangeA.nonEmpty)
@@ -128,6 +151,6 @@ class test_GameHost_func {
 
     assert(!host.isRunning)
 
-  }
+  }*/
 
 }

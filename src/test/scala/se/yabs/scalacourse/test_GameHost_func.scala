@@ -126,18 +126,14 @@ class test_GameHost_func {
   @Test
   def dumbAiGames() {
 
-    val port = TestPorts.getAndIncrement
-    val host = new GameHost(port).start()
+    val host = new GameHost(TestPorts.getAndIncrement()).start()
+    val clients = ('a' to 'f').map(new BattleshipClient(_, "pw", host, new DumbAi))
 
-    val clients = ('a' to 'f').map(c => new BattleshipClient(c.toString, "testPw", host, new DumbAi))
-
-    for (i <- 0 until 100) {
+    for (i <- 0 until 100)
       TestUtil.await5sec(clients.map(c => async { c.playGame() }))
-    }
 
     clients.foreach(_.close())
-    host.signalStop()
-    host.join()
+    host.signalStop().join()
 
     assert(!host.isRunning)
 

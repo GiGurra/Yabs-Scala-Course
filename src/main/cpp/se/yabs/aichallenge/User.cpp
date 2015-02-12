@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-05 13:12:21 +0100)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -18,19 +18,15 @@ namespace aichallenge {
 
 User::User() : 
 		_m_name_isSet(false),
-		_m_password_isSet(false),
-		_m_gameHistory_isSet(false) {
+		_m_password_isSet(false) {
 }
 
 User::User(const std::string& name, 
-			const std::string& password, 
-			const std::vector<GamePlayed> & gameHistory) : 
+			const std::string& password) : 
 		m_name(name),
 		m_password(password),
-		m_gameHistory(gameHistory),
 		_m_name_isSet(true),
-		_m_password_isSet(true),
-		_m_gameHistory_isSet(true) {
+		_m_password_isSet(true) {
 }
 
 User::~User() {
@@ -44,10 +40,6 @@ const std::string& User::getPassword() const {
 	return m_password;
 }
 
-const std::vector<GamePlayed> & User::getGameHistory() const {
-	return m_gameHistory;
-}
-
 std::string& User::getNameMutable() {
 	_m_name_isSet = true;
 	return m_name;
@@ -56,11 +48,6 @@ std::string& User::getNameMutable() {
 std::string& User::getPasswordMutable() {
 	_m_password_isSet = true;
 	return m_password;
-}
-
-std::vector<GamePlayed> & User::getGameHistoryMutable() {
-	_m_gameHistory_isSet = true;
-	return m_gameHistory;
 }
 
 User& User::setName(const std::string& name) {
@@ -75,12 +62,6 @@ User& User::setPassword(const std::string& password) {
 	return *this;
 }
 
-User& User::setGameHistory(const std::vector<GamePlayed> & gameHistory) {
-	m_gameHistory = gameHistory;
-	_m_gameHistory_isSet = true;
-	return *this;
-}
-
 /* custom_methods_begin *//* custom_methods_end */
 
 bool User::hasName() const {
@@ -89,10 +70,6 @@ bool User::hasName() const {
 
 bool User::hasPassword() const {
 	return _isPasswordSet(mgen::SHALLOW);
-}
-
-bool User::hasGameHistory() const {
-	return _isGameHistorySet(mgen::SHALLOW);
 }
 
 User& User::unsetName() {
@@ -105,19 +82,12 @@ User& User::unsetPassword() {
 	return *this;
 }
 
-User& User::unsetGameHistory() {
-	_setGameHistorySet(false, mgen::SHALLOW);
-	return *this;
-}
-
 bool User::operator==(const User& other) const {
 	return true
 		 && _isNameSet(mgen::SHALLOW) == other._isNameSet(mgen::SHALLOW)
 		 && _isPasswordSet(mgen::SHALLOW) == other._isPasswordSet(mgen::SHALLOW)
-		 && _isGameHistorySet(mgen::SHALLOW) == other._isGameHistorySet(mgen::SHALLOW)
 		 && getName() == other.getName()
-		 && getPassword() == other.getPassword()
-		 && getGameHistory() == other.getGameHistory();
+		 && getPassword() == other.getPassword();
 }
 
 bool User::operator!=(const User& other) const {
@@ -142,15 +112,13 @@ const mgen::Field * User::_fieldById(const short id) const {
 		return &_field_name_metadata();
 	case _field_password_id:
 		return &_field_password_metadata();
-	case _field_gameHistory_id:
-		return &_field_gameHistory_metadata();
 	default:
 		return 0;
 	}
 }
 
 const mgen::Field * User::_fieldByName(const std::string& name) const {
-	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("name", &User::_field_name_metadata())("password", &User::_field_password_metadata())("gameHistory", &User::_field_gameHistory_metadata());
+	static const std::map<std::string, const mgen::Field*> name2meta = mgen::make_map<std::string, const mgen::Field*>()("name", &User::_field_name_metadata())("password", &User::_field_password_metadata());
 	const std::map<std::string, const mgen::Field*>::const_iterator it = name2meta.find(name);
 	return it != name2meta.end() ? it->second : 0;
 }
@@ -209,19 +177,9 @@ User& User::_setPasswordSet(const bool state, const mgen::FieldSetDepth depth) {
 	return *this;
 }
 
-User& User::_setGameHistorySet(const bool state, const mgen::FieldSetDepth depth) {
-	if (!state)
-		m_gameHistory.clear();
-	else if (depth == mgen::DEEP)
-		mgen::validation::setFieldSetDeep(m_gameHistory);
-	_m_gameHistory_isSet = state;
-	return *this;
-}
-
 User& User::_setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth) { 
 	_setNameSet(state, depth);
 	_setPasswordSet(state, depth);
-	_setGameHistorySet(state, depth);
 	return *this;
 }
 
@@ -229,7 +187,6 @@ int User::_numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTrans
 	int out = 0;
 	out += _isNameSet(depth) ? 1 : 0;
 	out += _isPasswordSet(depth) ? 1 : 0;
-	out += _isGameHistorySet(depth) ? 1 : 0;
 	return out;
 }
 
@@ -239,8 +196,6 @@ bool User::_isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth depth
 			return _isNameSet(depth);
 		case (_field_password_id):
 			return _isPasswordSet(depth);
-		case (_field_gameHistory_id):
-			return _isGameHistorySet(depth);
 		default:
 			return false;
 	}
@@ -254,20 +209,11 @@ bool User::_isPasswordSet(const mgen::FieldSetDepth depth) const {
 	return _m_password_isSet;
 }
 
-bool User::_isGameHistorySet(const mgen::FieldSetDepth depth) const {
-	if (depth == mgen::SHALLOW) {
-		return _m_gameHistory_isSet;
-	} else {
-		return _m_gameHistory_isSet && mgen::validation::validateFieldDeep(getGameHistory());
-	}
-}
-
 bool User::_validate(const mgen::FieldSetDepth depth) const { 
 	if (depth == mgen::SHALLOW) {
 		return true;
 	} else {
-		return true
-				&& (!_isGameHistorySet(mgen::SHALLOW) || _isGameHistorySet(mgen::DEEP));
+		return true;
 	}
 }
 
@@ -331,7 +277,7 @@ const std::string& User::_type_id_16bit_base64() {
 }
 
 const std::vector<mgen::Field>& User::_field_metadatas() {
-	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_name_metadata() << _field_password_metadata() << _field_gameHistory_metadata();
+	static const std::vector<mgen::Field> out = mgen::make_vector<mgen::Field>() << _field_name_metadata() << _field_password_metadata();
 	return out;
 }
 
@@ -342,11 +288,6 @@ const mgen::Field& User::_field_name_metadata() {
 
 const mgen::Field& User::_field_password_metadata() {
 	static const mgen::Field out(5242, "password");
-	return out;
-}
-
-const mgen::Field& User::_field_gameHistory_metadata() {
-	static const mgen::Field out(16619, "gameHistory");
 	return out;
 }
 

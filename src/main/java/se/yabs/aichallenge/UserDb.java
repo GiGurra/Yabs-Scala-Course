@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-05 13:12:21 +0100)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -23,22 +23,34 @@ import se.culvertsoft.mgen.javapack.util.Marker;
 public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* custom_ifcs_begin *//* custom_ifcs_end */ {
 
 	private java.util.HashMap<String, User> m_users;
+	private java.util.ArrayList<GamePlayed> m_games;
 
 	public UserDb() {
 		super();
 		m_users = new java.util.HashMap<String, User>();
+		m_games = new java.util.ArrayList<GamePlayed>();
 	}
 
-	public UserDb(final java.util.HashMap<String, User> users) {
+	public UserDb(final java.util.HashMap<String, User> users,
+				final java.util.ArrayList<GamePlayed> games) {
 		m_users = users;
+		m_games = games;
 	}
 
 	public java.util.HashMap<String, User> getUsers() {
 		return m_users;
 	}
 
+	public java.util.ArrayList<GamePlayed> getGames() {
+		return m_games;
+	}
+
 	public boolean hasUsers() {
 		return _isUsersSet(FieldSetDepth.SHALLOW);
+	}
+
+	public boolean hasGames() {
+		return _isGamesSet(FieldSetDepth.SHALLOW);
 	}
 
 	public UserDb unsetUsers() {
@@ -46,8 +58,18 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		return this;
 	}
 
+	public UserDb unsetGames() {
+		_setGamesSet(false, FieldSetDepth.SHALLOW);
+		return this;
+	}
+
 	public UserDb setUsers(final java.util.HashMap<String, User> users) {
 		m_users = users;
+		return this;
+	}
+
+	public UserDb setGames(final java.util.ArrayList<GamePlayed> games) {
+		m_games = games;
 		return this;
 	}
 
@@ -58,7 +80,6 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 			return m_users.get(userName).getPassword().equals(password);
 		} else {
 			final User user = new User();
-			user.setGameHistory(new java.util.ArrayList<GamePlayed>());
 			user.setName(userName);
 			user.setPassword(password);
 			m_users.put(userName, user);
@@ -66,11 +87,8 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		}
 	}
 	
-	public void handleGamePlayed(final GamePlayed result) {		
-		for (final String winnerName : result.getPlayers()) {
-			final User user = m_users.get(winnerName);
-			user.getGameHistory().add(result);
-		}
+	public void handleGamePlayed(final GamePlayed result) {	
+		m_games.add(result);
 	}
 	
 	/* custom_methods_end */
@@ -85,6 +103,7 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		final int prime = 31;
 		int result = 1439317237;
 		result = _isUsersSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getUsers(), _users_METADATA.typ())) : result;
+		result = _isGamesSet(FieldSetDepth.SHALLOW) ? (prime * result + FieldHasher.calc(getGames(), _games_METADATA.typ())) : result;
 		return result;
 	}
 
@@ -96,13 +115,16 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		final UserDb o = (UserDb)other;
 		return true
 		  && hasUsers() == o.hasUsers()
-		  && EqualityTester.areEqual(getUsers(), o.getUsers(), _users_METADATA.typ());
+		  && hasGames() == o.hasGames()
+		  && EqualityTester.areEqual(getUsers(), o.getUsers(), _users_METADATA.typ())
+		  && EqualityTester.areEqual(getGames(), o.getGames(), _games_METADATA.typ());
 	}
 
 	@Override
 	public UserDb deepCopy() {
 		final UserDb out = new UserDb(
-			DeepCopyer.deepCopy(getUsers(), _users_METADATA.typ()));
+			DeepCopyer.deepCopy(getUsers(), _users_METADATA.typ()),
+			DeepCopyer.deepCopy(getGames(), _games_METADATA.typ()));
 		return out;
 	}
 
@@ -168,8 +190,9 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 	public void _accept(final FieldVisitor visitor, final FieldVisitSelection selection) throws java.io.IOException {
 		switch(selection) {
 			case ALL: {
-				visitor.beginVisit(this, 1);
+				visitor.beginVisit(this, 2);
 				visitor.visit(getUsers(), _users_METADATA);
+				visitor.visit(getGames(), _games_METADATA);
 				visitor.endVisit();
 				break;
 			}
@@ -177,6 +200,8 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 				visitor.beginVisit(this, _nFieldsSet(FieldSetDepth.SHALLOW, false));
 				if (_isUsersSet(FieldSetDepth.SHALLOW))
 					visitor.visit(getUsers(), _users_METADATA);
+				if (_isGamesSet(FieldSetDepth.SHALLOW))
+					visitor.visit(getGames(), _games_METADATA);
 				visitor.endVisit();
 				break;
 			}
@@ -191,6 +216,9 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		switch(fieldId) {
 			case (_users_ID):
 				setUsers((java.util.HashMap<String, User>)reader.readMapField(_users_METADATA, context));
+				return true;
+			case (_games_ID):
+				setGames((java.util.ArrayList<GamePlayed>)reader.readListField(_games_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);
@@ -211,10 +239,20 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		}
 	}
 
+	public boolean _isGamesSet(final FieldSetDepth fieldSetDepth) {
+		if (fieldSetDepth == FieldSetDepth.SHALLOW) {
+			return m_games != null;
+		} else {
+			return m_games != null && Validator.validateFieldDeep(getGames(), _games_METADATA.typ());
+		}
+	}
+
 	public boolean _isFieldSet(final Field field, final FieldSetDepth depth) {
 		switch(field.id()) {
 			case (_users_ID):
 				return _isUsersSet(depth);
+			case (_games_ID):
+				return _isGamesSet(depth);
 			default:
 				return false;
 		}
@@ -230,8 +268,19 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		return this;
 	}
 
+	public UserDb _setGamesSet(final boolean state, final FieldSetDepth depth) {
+		if (state)
+			m_games = m_games != null ? m_games : new java.util.ArrayList<GamePlayed>();
+		else
+			m_games = null;
+		if (depth == FieldSetDepth.DEEP)
+			Marker.setFieldSetDeep(getGames(), _games_METADATA.typ());
+		return this;
+	}
+
 	public UserDb _setAllFieldsSet(final boolean state, final FieldSetDepth depth) { 
 		_setUsersSet(state, depth);
+		_setGamesSet(state, depth);
 		return this;
 	}
 
@@ -240,7 +289,8 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 			return true;
 		} else {
 			return true
-				&& (!_isUsersSet(FieldSetDepth.SHALLOW) || _isUsersSet(FieldSetDepth.DEEP));
+				&& (!_isUsersSet(FieldSetDepth.SHALLOW) || _isUsersSet(FieldSetDepth.DEEP))
+				&& (!_isGamesSet(FieldSetDepth.SHALLOW) || _isGamesSet(FieldSetDepth.DEEP));
 		}
 	}
 
@@ -248,6 +298,7 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 	public int _nFieldsSet(final FieldSetDepth depth, final boolean includeTransient) {
 		int out = 0;
 		out += _isUsersSet(depth) ? 1 : 0;
+		out += _isGamesSet(depth) ? 1 : 0;
 		return out;
 	}
 
@@ -256,6 +307,8 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		switch(fieldId) {
 			case (_users_ID):
 				return _users_METADATA;
+			case (_games_ID):
+				return _games_METADATA;
 			default:
 				return null;
 		}
@@ -266,6 +319,8 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		switch(fieldName) {
 			case ("users"):
 				return _users_METADATA;
+			case ("games"):
+				return _games_METADATA;
 			default:
 				return null;
 		}
@@ -303,9 +358,11 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 	public static final String[] _TYPE_NAMES = { se.yabs.aichallenge.UserDb._TYPE_NAME };
 
 	public static final Field _users_METADATA = new Field("se.yabs.aichallenge.UserDb", "users", new se.culvertsoft.mgen.api.model.MapType(se.culvertsoft.mgen.api.model.StringType.INSTANCE, new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.User", 5020658785704657625L)), null, (short)-23008);
+	public static final Field _games_METADATA = new Field("se.yabs.aichallenge.UserDb", "games", new se.culvertsoft.mgen.api.model.ListType(new se.culvertsoft.mgen.api.model.RuntimeClassType("se.yabs.aichallenge.GamePlayed", 300559125798525147L)), null, (short)9075);
 
 	public static final short _users_ID = (short)-23008;
+	public static final short _games_ID = (short)9075;
 
-	public static final Field[] _FIELDS = { _users_METADATA };
+	public static final Field[] _FIELDS = { _users_METADATA, _games_METADATA };
 
 }

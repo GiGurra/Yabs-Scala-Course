@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-05 13:12:21 +0100)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -11,6 +11,7 @@
 #define SE_YABS_AICHALLENGE_USERDB
 
 #include "mgen/classes/MGenBase.h"
+#include "se/yabs/aichallenge/GamePlayed.h"
 #include "se/yabs/aichallenge/User.h"
 /* custom_includes_begin *//* custom_includes_end */
 
@@ -21,24 +22,32 @@ namespace aichallenge {
 class UserDb : public mgen::MGenBase /* custom_ifcs_begin *//* custom_ifcs_end */ {
 private:
 	std::map<std::string, User>  m_users;
+	std::vector<GamePlayed>  m_games;
 	bool _m_users_isSet;
+	bool _m_games_isSet;
 
 public:
 	UserDb();
-	UserDb(const std::map<std::string, User> & users);
+	UserDb(const std::map<std::string, User> & users,
+			const std::vector<GamePlayed> & games);
 	virtual ~UserDb();
 
 	const std::map<std::string, User> & getUsers() const;
+	const std::vector<GamePlayed> & getGames() const;
 
 	std::map<std::string, User> & getUsersMutable();
+	std::vector<GamePlayed> & getGamesMutable();
 
 	UserDb& setUsers(const std::map<std::string, User> & users);
+	UserDb& setGames(const std::vector<GamePlayed> & games);
 
 	/* custom_methods_begin *//* custom_methods_end */
 
 	bool hasUsers() const;
+	bool hasGames() const;
 
 	UserDb& unsetUsers();
+	UserDb& unsetGames();
 
 	bool operator==(const UserDb& other) const;
 	bool operator!=(const UserDb& other) const;
@@ -62,6 +71,9 @@ public:
 		case _field_users_id:
 			reader.readField(_field_users_metadata(), context, getUsersMutable());
 			break;
+		case _field_games_id:
+			reader.readField(_field_games_metadata(), context, getGamesMutable());
+			break;
 		default:
 			reader.handleUnknownField(fieldId, context);
 			break;
@@ -72,8 +84,9 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) const {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 1);
+				visitor.beginVisit(*this, 2);
 				visitor.visit(getUsers(), _field_users_metadata());
+				visitor.visit(getGames(), _field_games_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -81,6 +94,8 @@ public:
 				visitor.beginVisit(*this, _numFieldsSet(mgen::SHALLOW, false));
 				if (_isUsersSet(mgen::SHALLOW))
 					visitor.visit(getUsers(), _field_users_metadata());
+				if (_isGamesSet(mgen::SHALLOW))
+					visitor.visit(getGames(), _field_games_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -91,8 +106,9 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 1);
+				visitor.beginVisit(*this, 2);
 				visitor.visit(getUsersMutable(), _field_users_metadata());
+				visitor.visit(getGamesMutable(), _field_games_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -100,6 +116,8 @@ public:
 				visitor.beginVisit(*this, _numFieldsSet(mgen::SHALLOW, false));
 				if (_isUsersSet(mgen::SHALLOW))
 					visitor.visit(getUsersMutable(), _field_users_metadata());
+				if (_isGamesSet(mgen::SHALLOW))
+					visitor.visit(getGamesMutable(), _field_games_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -124,12 +142,14 @@ public:
 	bool _isFieldSet(const mgen::Field& field, const mgen::FieldSetDepth depth) const;
 
 	UserDb& _setUsersSet(const bool state, const mgen::FieldSetDepth depth);
+	UserDb& _setGamesSet(const bool state, const mgen::FieldSetDepth depth);
 
 	UserDb& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
 
 	int _numFieldsSet(const mgen::FieldSetDepth depth, const bool includeTransient) const;
 
 	bool _isUsersSet(const mgen::FieldSetDepth depth) const;
+	bool _isGamesSet(const mgen::FieldSetDepth depth) const;
 
 	bool _validate(const mgen::FieldSetDepth depth) const;
 
@@ -165,8 +185,10 @@ public:
 	static const std::vector<std::string>& _type_names();
 
 	static const mgen::Field& _field_users_metadata();
+	static const mgen::Field& _field_games_metadata();
 
 	static const short _field_users_id = -23008;
+	static const short _field_games_id = 9075;
 
 	static const std::vector<mgen::Field>& _field_metadatas();
 

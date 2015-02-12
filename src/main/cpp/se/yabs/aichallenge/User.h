@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-05 13:12:21 +0100)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -11,7 +11,6 @@
 #define SE_YABS_AICHALLENGE_USER
 
 #include "mgen/classes/MGenBase.h"
-#include "se/yabs/aichallenge/GamePlayed.h"
 /* custom_includes_begin *//* custom_includes_end */
 
 namespace se {
@@ -22,39 +21,31 @@ class User : public mgen::MGenBase /* custom_ifcs_begin *//* custom_ifcs_end */ 
 private:
 	std::string m_name;
 	std::string m_password;
-	std::vector<GamePlayed>  m_gameHistory;
 	bool _m_name_isSet;
 	bool _m_password_isSet;
-	bool _m_gameHistory_isSet;
 
 public:
 	User();
 	User(const std::string& name,
-			const std::string& password,
-			const std::vector<GamePlayed> & gameHistory);
+			const std::string& password);
 	virtual ~User();
 
 	const std::string& getName() const;
 	const std::string& getPassword() const;
-	const std::vector<GamePlayed> & getGameHistory() const;
 
 	std::string& getNameMutable();
 	std::string& getPasswordMutable();
-	std::vector<GamePlayed> & getGameHistoryMutable();
 
 	User& setName(const std::string& name);
 	User& setPassword(const std::string& password);
-	User& setGameHistory(const std::vector<GamePlayed> & gameHistory);
 
 	/* custom_methods_begin *//* custom_methods_end */
 
 	bool hasName() const;
 	bool hasPassword() const;
-	bool hasGameHistory() const;
 
 	User& unsetName();
 	User& unsetPassword();
-	User& unsetGameHistory();
 
 	bool operator==(const User& other) const;
 	bool operator!=(const User& other) const;
@@ -81,9 +72,6 @@ public:
 		case _field_password_id:
 			reader.readField(_field_password_metadata(), context, getPasswordMutable());
 			break;
-		case _field_gameHistory_id:
-			reader.readField(_field_gameHistory_metadata(), context, getGameHistoryMutable());
-			break;
 		default:
 			reader.handleUnknownField(fieldId, context);
 			break;
@@ -94,10 +82,9 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) const {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 3);
+				visitor.beginVisit(*this, 2);
 				visitor.visit(getName(), _field_name_metadata());
 				visitor.visit(getPassword(), _field_password_metadata());
-				visitor.visit(getGameHistory(), _field_gameHistory_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -107,8 +94,6 @@ public:
 					visitor.visit(getName(), _field_name_metadata());
 				if (_isPasswordSet(mgen::SHALLOW))
 					visitor.visit(getPassword(), _field_password_metadata());
-				if (_isGameHistorySet(mgen::SHALLOW))
-					visitor.visit(getGameHistory(), _field_gameHistory_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -119,10 +104,9 @@ public:
 	void _accept(VisitorType& visitor, const mgen::FieldVisitSelection selection) {
 		switch(selection) {
 			case mgen::ALL: {
-				visitor.beginVisit(*this, 3);
+				visitor.beginVisit(*this, 2);
 				visitor.visit(getNameMutable(), _field_name_metadata());
 				visitor.visit(getPasswordMutable(), _field_password_metadata());
-				visitor.visit(getGameHistoryMutable(), _field_gameHistory_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -132,8 +116,6 @@ public:
 					visitor.visit(getNameMutable(), _field_name_metadata());
 				if (_isPasswordSet(mgen::SHALLOW))
 					visitor.visit(getPasswordMutable(), _field_password_metadata());
-				if (_isGameHistorySet(mgen::SHALLOW))
-					visitor.visit(getGameHistoryMutable(), _field_gameHistory_metadata());
 				visitor.endVisit();
 				break;
 			}
@@ -159,7 +141,6 @@ public:
 
 	User& _setNameSet(const bool state, const mgen::FieldSetDepth depth);
 	User& _setPasswordSet(const bool state, const mgen::FieldSetDepth depth);
-	User& _setGameHistorySet(const bool state, const mgen::FieldSetDepth depth);
 
 	User& _setAllFieldsSet(const bool state, const mgen::FieldSetDepth depth);
 
@@ -167,7 +148,6 @@ public:
 
 	bool _isNameSet(const mgen::FieldSetDepth depth) const;
 	bool _isPasswordSet(const mgen::FieldSetDepth depth) const;
-	bool _isGameHistorySet(const mgen::FieldSetDepth depth) const;
 
 	bool _validate(const mgen::FieldSetDepth depth) const;
 
@@ -204,11 +184,9 @@ public:
 
 	static const mgen::Field& _field_name_metadata();
 	static const mgen::Field& _field_password_metadata();
-	static const mgen::Field& _field_gameHistory_metadata();
 
 	static const short _field_name_id = -28058;
 	static const short _field_password_id = 5242;
-	static const short _field_gameHistory_id = 16619;
 
 	static const std::vector<mgen::Field>& _field_metadatas();
 

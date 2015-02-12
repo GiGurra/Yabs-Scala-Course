@@ -42,11 +42,11 @@
 		<User>
 			<name type="String" />
 			<password type="String" />
-			<gameHistory type="List[GamePlayed]" />
 		</User>
 
 		<UserDb>
 			<users type="map[String, User]">{}</users>
+			<games type="list[GamePlayed]">[]</games>
 		</UserDb>
 
 	</Types>

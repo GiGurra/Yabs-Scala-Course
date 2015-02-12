@@ -1,10 +1,8 @@
 package se.yabs.aichallenge.battleship
 
 import java.util.ArrayList
-
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.util.Random
-
 import GamePhase.GAME_OVER
 import GamePhase.JOINING
 import GamePhase.PLACING_SHIPS
@@ -15,6 +13,9 @@ import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.Message
 import se.yabs.aichallenge.host.Game
 import se.yabs.aichallenge.host.LoggedInUser
+import se.yabs.aichallenge.GamePlayed
+
+import scala.collection.JavaConversions._
 
 object BattleshipGame {
   val NUM_SHIPS = 5
@@ -32,6 +33,8 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   private var phase: GamePhase = JOINING
   private var tLastMove = 0.0
   private var tStartedSelectingShips = 0.0
+  private var winner: LoggedInUser = null
+  private var loser: LoggedInUser = null
 
   private val randomizer = new Random(System.nanoTime)
   private val gameState = new GameState
@@ -97,6 +100,16 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
       }
       case _ => throw new RuntimeException(s"Bad msg received by BattleshipGame: ${msg.getClass}")
     }
+  }
+
+  override def result(): GamePlayed = {
+    if (!isGameOver())
+      throw new RuntimeException("Called result() before game was finished")
+
+    new GamePlayed(
+      GameSelection.BATTLESHIP,
+      new java.util.ArrayList(Seq(winner.dbUser.getName, loser.dbUser.getName)),
+      new java.util.ArrayList(Seq(winner.dbUser.getName)))
   }
 
   ///////////////////////////////////////////////////////////////////
@@ -192,6 +205,9 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     phase = GAME_OVER
     println(s"Game over [$redUser vs $blueUser]: $winner won after ${player.getShotsFired.size} moves!")
     broadCast(new GameOver(player.getName, opponent.getName, "no ships alive", gameState))
+
+    this.winner = winner
+    this.loser = opponentOf(player.getTeam)
   }
 
   private def userOf(team: Team): LoggedInUser = {

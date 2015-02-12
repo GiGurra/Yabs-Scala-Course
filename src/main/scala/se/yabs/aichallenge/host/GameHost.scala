@@ -136,8 +136,15 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
   }
 
   private def handleFinishedGames() {
-    while (ongoingGames.exists(_.isGameOver)) {
-      ongoingGames -= ongoingGames.find(_.isGameOver).get
+    if (ongoingGames.exists(_.isGameOver)) {
+      val (done, notDone) = ongoingGames.partition(_.isGameOver)
+      ongoingGames.clear()
+      ongoingGames ++= notDone
+
+      for (g <- done) {
+        val result = g.result()
+        userDb.handleGamePlayed(result);
+      }
     }
   }
 

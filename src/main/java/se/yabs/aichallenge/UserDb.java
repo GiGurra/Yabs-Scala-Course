@@ -66,6 +66,13 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		}
 	}
 	
+	public void handleGamePlayed(final GamePlayed result) {		
+		for (final String winnerName : result.getPlayers()) {
+			final User user = m_users.get(winnerName);
+			user.getGameHistory().add(result);
+		}
+	}
+	
 	/* custom_methods_end */
 
 	@Override

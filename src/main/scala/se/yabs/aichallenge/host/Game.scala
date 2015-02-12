@@ -1,6 +1,7 @@
 package se.yabs.aichallenge.host
 
 import se.yabs.aichallenge.GameMessage
+import se.yabs.aichallenge.GamePlayed
 import se.yabs.aichallenge.GameSelection
 
 abstract class Game(val gameSelected: GameSelection) {
@@ -12,5 +13,7 @@ abstract class Game(val gameSelected: GameSelection) {
   def isPlayer(client: LoggedInUser): Boolean
 
   def handleMessage(client: LoggedInUser, msg: GameMessage)
+  
+  def result(): GamePlayed
 
 }

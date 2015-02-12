@@ -1,14 +1,12 @@
 package se.yabs.aichallenge.host
 
 import java.util.ArrayList
-
 import scala.collection.JavaConversions.seqAsJavaList
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.HashMap
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
-
 import se.yabs.aichallenge.Checkin
 import se.yabs.aichallenge.ErrorMessage
 import se.yabs.aichallenge.GameMessage
@@ -22,16 +20,22 @@ import se.yabs.aichallenge.client.serialization.Serializer
 import se.yabs.aichallenge.util.SimpleThread
 import se.yabs.aichallenge.util.ZmqSocket
 import se.yabs.aichallenge.util.ZmqUtil
+import se.yabs.aichallenge.client.serialization.DbSaver
+import scala.reflect.io.File
 
 class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends SimpleThread[GameHost] {
   val bindAddr = ZmqUtil.mkAddr(ifc, port)
 
   private val userDb = new UserDb
   private val clients = new HashMap[ClientId, LoggedInUser]
-  private val ongoingGames = new ArrayBuffer[Game]
+  private val ongoingGames = new ArrayBuffer[Game]  
   private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER) // Lazy to be initialized by internal thread
+  
+  private val saveFile = "game_results.json"
+  private val saveIntervalSeconds = 1.0
+  private var tLastSave = timeSeconds
 
-  override def step() {
+  protected override def step() {
 
     for (zmqMsgParts <- socket.getNewMessages(100)) {
       Try(handleMsg(zmqMsgParts)) match {
@@ -46,11 +50,31 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
 
     stepGames()
     handleFinishedGames()
+    handleAutoSave()
   }
 
-  override def finish() {
+  protected override def finish() {
     socket.close()
+    save()
   }
+  
+  def results() =  {
+    if (isRunning)
+      throw new RuntimeException("Cannot get results while the server is still running")
+    userDb
+  }
+  
+  private def handleAutoSave() {
+    if (timeSeconds > tLastSave + saveIntervalSeconds) {
+      save()
+    }
+  }
+  
+  private def save() {
+      tLastSave = timeSeconds      
+      File(saveFile).writeAll(DbSaver.write(userDb))
+  }
+    
 
   private def stepGames() {
     ongoingGames.foreach(_.step())
@@ -172,6 +196,10 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
       case Failure(e) =>
         e.printStackTrace()
     }
+  }
+  
+  private def timeSeconds: Double = {
+    System.nanoTime/1e9
   }
 
 }

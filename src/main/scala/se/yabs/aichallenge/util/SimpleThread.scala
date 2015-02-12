@@ -13,9 +13,9 @@ trait SimpleThread[T <: SimpleThread[T]] {
     }
   }
 
-  def init(): Unit = {}
-  def step(): Unit = {}
-  def finish(): Unit = {}
+  protected def init(): Unit = {}
+  protected def step(): Unit = {}
+  protected def finish(): Unit = {}
 
   def signalStop(): T = {
     stopSignal = true

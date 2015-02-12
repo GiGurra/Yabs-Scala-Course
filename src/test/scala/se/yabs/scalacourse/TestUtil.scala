@@ -1,18 +1,10 @@
 package se.yabs.scalacourse
 
-import scala.annotation.compileTimeOnly
-import scala.annotation.meta.beanGetter
-import scala.annotation.meta.beanSetter
-import scala.annotation.meta.companionClass
-import scala.annotation.meta.companionMethod
-import scala.annotation.meta.getter
-import scala.annotation.meta.setter
 import scala.async.Async.async
 import scala.async.Async.await
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.concurrent.TimeoutException
 import scala.concurrent.duration.DurationInt
 
 object TestUtil {

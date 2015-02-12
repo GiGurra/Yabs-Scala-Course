@@ -12,7 +12,8 @@ libraryDependencies ++= Seq(
     "com.novocode" % "junit-interface" % "0.11" % "test",
     "org.zeromq" % "jeromq" % "0.3.4",
     "se.culvertsoft" % "mgen-javalib" % "0.1",
-    "org.scala-lang.modules" %% "scala-xml" % "1.0.3"
+    "org.scala-lang.modules" %% "scala-xml" % "1.0.3",
+    "org.scala-lang.modules" %% "scala-async" % "0.9.2"
 )
 
 EclipseKeys.withSource := true

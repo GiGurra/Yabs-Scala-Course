@@ -12,10 +12,11 @@ import se.yabs.aichallenge.WelcomeMessage
 import se.yabs.aichallenge.client.GameClient
 import se.yabs.aichallenge.host.GameHost
 
-class BattleshipClient(name: String, pw: String, zmqAddr: String) {
-  def this(name: String, pw: String, addr: String, port: Int) = this(name, pw, s"tcp://$addr:$port")
-  def this(name: String, pw: String, host: GameHost) = this(name, pw, "127.0.0.1", host.port)
+class BattleshipClient(name: String, pw: String, zmqAddr: String, ai: => BattleshipAi) {
+  def this(name: String, pw: String, addr: String, port: Int, ai: => BattleshipAi) = this(name, pw, s"tcp://$addr:$port", ai)
+  def this(name: String, pw: String, host: GameHost, ai: => BattleshipAi) = this(name, pw, "127.0.0.1", host.port, ai)
 
+  private val aiCtor = () => ai
   private val gameClient = new GameClient(name, pw, zmqAddr)
   gameClient.checkin()
 
@@ -26,7 +27,8 @@ class BattleshipClient(name: String, pw: String, zmqAddr: String) {
     gameClient.getNewMessages(pollTimeMillis)
   }
 
-  def playGame(ai: BattleshipAi): GameOver = {
+  def playGame(): GameOver = {
+    val ai = aiCtor()
     gameClient.playGame(GameSelection.BATTLESHIP)
 
     while (true) {
@@ -61,23 +63,3 @@ class BattleshipClient(name: String, pw: String, zmqAddr: String) {
 
 }
 
-object BattleshipClient {
-  def playGame(
-    clientA: BattleshipClient, aiA: BattleshipAi,
-    clientB: BattleshipClient, aiB: BattleshipAi): GameOver = {
-
-    clientA.gameClient.playGame(GameSelection.BATTLESHIP)
-    clientB.gameClient.playGame(GameSelection.BATTLESHIP)
-    
-    while (true) {
-      val optGameOverA = clientA.poll(aiA)
-      val optGameOverB = clientB.poll(aiB)
-
-      if (optGameOverA.isDefined) {
-        return optGameOverA.get
-      }
-    }
-
-    ???
-  }
-}

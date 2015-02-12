@@ -1,5 +1,9 @@
 package se.yabs.scalacourse
 
+import scala.async.Async.async
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
 import org.junit.Test
 
 import se.yabs.aichallenge.battleship.BattleshipClient
@@ -102,10 +106,13 @@ class test_GameHost_func {
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
 
-    val clientA = new BattleshipClient("a", "testPw", host)
-    val clientB = new BattleshipClient("b", "testPw", host)
+    val clientA = new BattleshipClient("a", "testPw", host, new DumbAi)
+    val clientB = new BattleshipClient("b", "testPw", host, new DumbAi)
 
-    BattleshipClient.playGame(clientA, new DumbAi, clientB, new DumbAi)
+    val futA = Future { clientA.playGame() }
+    val futB = Future { clientB.playGame() }
+
+    TestUtil.await5sec(futA, futB)
 
     clientA.close()
     clientB.close()
@@ -122,14 +129,13 @@ class test_GameHost_func {
     val port = TestPorts.getAndIncrement
     val host = new GameHost(port).start()
 
-    val clientA = new BattleshipClient("a", "testPw", host)
-    val clientB = new BattleshipClient("b", "testPw", host)
+    val clients = ('a' to 'f').map(c => new BattleshipClient(c.toString, "testPw", host, new DumbAi))
 
-    for (i <- 0 until 100)
-      BattleshipClient.playGame(clientA, new DumbAi, clientB, new DumbAi)
+    for (i <- 0 until 100) {
+      TestUtil.await5sec(clients.map(c => async { c.playGame() }))
+    }
 
-    clientA.close()
-    clientB.close()
+    clients.foreach(_.close())
     host.signalStop()
     host.join()
 

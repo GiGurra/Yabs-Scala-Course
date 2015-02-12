@@ -8,12 +8,2718 @@
 		"b": {
 			"name": "b",
 			"password": "testPw"
+		},
+		"c": {
+			"name": "c",
+			"password": "testPw"
+		},
+		"d": {
+			"name": "d",
+			"password": "testPw"
+		},
+		"e": {
+			"name": "e",
+			"password": "testPw"
+		},
+		"f": {
+			"name": "f",
+			"password": "testPw"
 		}
 	},
 	"games": [
 		{
 			"gameType": "BATTLESHIP",
 			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"a"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"f"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"e"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"f"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"c"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"f"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"e"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"a"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"e"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"d"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"b"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"f"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"c"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"c"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"b"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"f"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"f"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"c"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"a"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"e"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"e"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"a"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"c"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"a"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"e"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"f"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"d"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"e"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"f"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"a"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"c"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"b"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"e"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"c"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"a"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"a"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"c"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"f"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"d"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"a"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"f"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"c"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"a"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"c"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"c"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"d"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"f"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"f"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"e"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"c"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"c"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"b"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"e"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"e"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"e"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"b"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"c"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"f"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"d"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"e"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"e"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"b"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"e"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"b"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"c"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"c"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"a"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"e"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"f"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"b"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"e"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"f"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"e"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"c"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"a"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"d"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"a"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"e"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"f"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"b"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"b"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"e"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"c"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"e"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"b"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"a"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"c"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"e"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"b"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"e"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"d"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"e"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"c"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"f"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"c"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"b"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"b"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"e"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"d"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"e"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"f"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"d"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"a"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"c"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"b"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"e"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"e"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"b"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"a"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"c"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"e"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"a"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"d"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"e"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"f"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"b"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"a"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"d"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"c"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"f"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"e"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"b"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"b"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"f"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"b"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"c"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"b"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"c"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"e"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"b"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"d"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"c"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"d"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"e"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"c"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"d"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"f"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"b"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"c"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
 				"b",
 				"a"
 			],
@@ -34,8 +2740,48 @@
 		{
 			"gameType": "BATTLESHIP",
 			"players": [
-				"a",
+				"d",
+				"e"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"f"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
 				"b"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"e"
 			],
 			"winners": [
 				"a"
@@ -44,8 +2790,28 @@
 		{
 			"gameType": "BATTLESHIP",
 			"players": [
-				"a",
+				"f",
+				"e"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"d"
+			],
+			"winners": [
 				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
 			],
 			"winners": [
 				"a"
@@ -54,8 +2820,78 @@
 		{
 			"gameType": "BATTLESHIP",
 			"players": [
-				"a",
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"d"
+			],
+			"winners": [
 				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"e"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"c",
+				"a"
+			],
+			"winners": [
+				"c"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"e",
+				"f"
+			],
+			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"b"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"d"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
 			],
 			"winners": [
 				"a"
@@ -64,11 +2900,101 @@
 		{
 			"gameType": "BATTLESHIP",
 			"players": [
-				"a",
+				"e",
 				"b"
 			],
 			"winners": [
+				"e"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
 				"a"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"e"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"c"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"e"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"f"
+			],
+			"winners": [
+				"d"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"a",
+				"c"
+			],
+			"winners": [
+				"a"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"b",
+				"c"
+			],
+			"winners": [
+				"b"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"f",
+				"a"
+			],
+			"winners": [
+				"f"
+			]
+		},
+		{
+			"gameType": "BATTLESHIP",
+			"players": [
+				"d",
+				"e"
+			],
+			"winners": [
+				"d"
 			]
 		},
 		{
@@ -84,931 +3010,21 @@
 		{
 			"gameType": "BATTLESHIP",
 			"players": [
-				"a",
-				"b"
+				"e",
+				"d"
 			],
 			"winners": [
-				"a"
+				"e"
 			]
 		},
 		{
 			"gameType": "BATTLESHIP",
 			"players": [
-				"b",
-				"a"
+				"c",
+				"f"
 			],
 			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"a",
-				"b"
-			],
-			"winners": [
-				"a"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
-			]
-		},
-		{
-			"gameType": "BATTLESHIP",
-			"players": [
-				"b",
-				"a"
-			],
-			"winners": [
-				"b"
+				"c"
 			]
 		}
 	]

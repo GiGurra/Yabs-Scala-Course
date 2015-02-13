@@ -33,14 +33,14 @@ object PatternMatching {
     }
 
   }                                               //> it's a string: A STRING!
+                                                  //| it's a string: A STRING!
+                                                  //| it's an int: 12345
+                                                  //| it's a string: A STRING!
                                                   //| it's an int: 12345
                                                   //| it's a string: A STRING!
                                                   //| it's a string: A STRING!
-                                                  //| it's an int: 12345
-                                                  //| it's an int: 12345
-                                                  //| it's an int: 12345
                                                   //| it's a string: A STRING!
-                                                  //| it's a string: A STRING!
+                                                  //| it's an int: 12345
                                                   //| it's a string: A STRING!
 
   ////////////////////////////////

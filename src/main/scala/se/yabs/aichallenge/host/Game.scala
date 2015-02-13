@@ -12,6 +12,8 @@ abstract class Game(val gameSelected: GameSelection) {
   def canJoin(client: LoggedInUser): Boolean
   def isPlayer(client: LoggedInUser): Boolean
 
+  def leftGame(client: LoggedInUser): Option[GamePlayed]
+  
   def handleMessage(client: LoggedInUser, msg: GameMessage)
   
   def result(): GamePlayed

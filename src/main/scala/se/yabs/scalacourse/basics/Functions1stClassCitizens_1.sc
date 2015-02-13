@@ -33,7 +33,8 @@ object Functions1stClassCitizens {
 	  else {
 	    (x: Int) =>
 	      {
-	        println(s"recurse from $magicNumber -> ${magicNumber / 10}")
+	      	val myString = s"recurse from $magicNumber -> ${magicNumber / 10}"
+	        println(myString)
 	        makeMagicTool(magicNumber / 10)(x)
 	      }
 	  }
@@ -66,11 +67,12 @@ object Functions1stClassCitizens {
 	val magicToolX = makeMagicTool(Random.nextInt(999999))
                                                   //> magicToolX  : se.yabs.scalacourse.basics.Functions1stClassCitizens.MagicToo
                                                   //| l = <function1>
-	magicToolX(1)                             //> recurse from 449219 -> 44921
-                                                  //| recurse from 44921 -> 4492
-                                                  //| recurse from 4492 -> 449
-                                                  //| recurse from 449 -> 44
-                                                  //| recurse from 44 -> 4
+	magicToolX(1)                             //> recurse from 605346 -> 60534
+                                                  //| recurse from 60534 -> 6053
+                                                  //| recurse from 6053 -> 605
+                                                  //| recurse from 605 -> 60
+                                                  //| recurse from 60 -> 6
+                                                  //| recurse from 6 -> 0
                                                   //| Hello 1!
                                                   
 	//magicTool666(0)

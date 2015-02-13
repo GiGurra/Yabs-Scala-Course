@@ -92,6 +92,20 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     (user eq redUser) || (user eq blueUser)
   }
 
+  override def leftGame(client: LoggedInUser): Option[GamePlayed] = {
+    if (isPlayer(client)) {
+      if (hasTwoUsers) {
+        val player = playerOf(client)
+        gameOver(opponentOf(player.getTeam), s"$client left the game")
+        Some(result())
+      } else {
+        None
+      }
+    } else {
+      None
+    }
+  }
+
   override def handleMessage(client: LoggedInUser, msg: GameMessage) {
     msg match {
       case msg: BattleshipMessage => msg match {

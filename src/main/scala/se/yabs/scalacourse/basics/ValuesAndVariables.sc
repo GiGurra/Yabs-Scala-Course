@@ -2,12 +2,16 @@ package se.yabs.scalacourse.basics
 
 object ValuesAndVariables {
 
+	var myString: String = null               //> myString  : String = null
+  myString = "12345"
+	val int = myString.toInt                  //> int  : Int = 12345
+
 
 	/////////////////////////////////////////
   // Values are constants,
   // Declared with 'val'
   
-  val intValue = 1                                //> intValue  : Int = 1
+  val intValue = 1L                               //> intValue  : Long = 1
   val floatValue = -3.5f                          //> floatValue  : Float = -3.5
   val calculatedValue = intValue + floatValue     //> calculatedValue  : Float = -2.5
 

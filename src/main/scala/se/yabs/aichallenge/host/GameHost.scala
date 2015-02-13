@@ -28,9 +28,9 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
 
   private val userDb = new UserDb
   private val clients = new HashMap[ClientId, LoggedInUser]
-  private val ongoingGames = new ArrayBuffer[Game]  
+  private val ongoingGames = new ArrayBuffer[Game]
   private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER) // Lazy to be initialized by internal thread
-  
+
   private val saveFile = "game_results.json"
   private val saveIntervalSeconds = 1.0
   private var tLastSave = timeSeconds
@@ -57,24 +57,23 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
     socket.close()
     save()
   }
-  
-  def results() =  {
+
+  def results() = {
     if (isRunning)
       throw new RuntimeException("Cannot get results while the server is still running")
     userDb
   }
-  
+
   private def handleAutoSave() {
     if (timeSeconds > tLastSave + saveIntervalSeconds) {
       save()
     }
   }
-  
+
   private def save() {
-      tLastSave = timeSeconds      
-      File(saveFile).writeAll(DbSaver.write(userDb))
+    tLastSave = timeSeconds
+    File(saveFile).writeAll(DbSaver.write(userDb))
   }
-    
 
   private def stepGames() {
     ongoingGames.foreach(_.step())
@@ -143,15 +142,15 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
   private def tryLogin(msg: Checkin): Boolean = {
     userDb.login(msg.getName, msg.getPassword)
   }
-  
+
   private def kickGhosts(user: LoggedInUser) {
     clients.find(_._2.dbUser.getName == user.dbUser.getName) match {
       case Some(ghost) =>
         clients.remove(ghost._1)
         println(s"Removing ghost: ${ghost}")
-        
+
         ongoingGames.find(_.isPlayer(ghost._2)) match {
-          case Some(gameInProgress) => 
+          case Some(gameInProgress) =>
             ongoingGames -= gameInProgress
             gameInProgress.leftGame(ghost._2) match {
               case Some(gameResult) =>
@@ -166,14 +165,14 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
 
   private def handleNewClient(clientId: ClientId, msg: Checkin) {
     if (tryLogin(msg)) {
-      
+
       val user = new LoggedInUser(userDb.getUsers.get(msg.getName), sendTo(clientId, _))
       sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", gamesAvail))
       println(s"Client '$user' logged in")
       clients.put(clientId, user)
-                 
+
       kickGhosts(user)
-      
+
     } else {
       throw new RuntimeException("Login failed")
     }
@@ -221,13 +220,20 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
         e.printStackTrace()
     }
   }
-  
+
   private def timeSeconds: Double = {
-    System.nanoTime/1e9
+    System.nanoTime / 1e9
   }
 
 }
 
 object GameHost {
   val DEFAULT_PORT = 12345
+
+  def main(args: Array[String]) {
+    val host = new GameHost()
+    host.start()
+    host.join()
+  }
+
 }

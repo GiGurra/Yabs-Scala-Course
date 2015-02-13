@@ -169,9 +169,11 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
       val user = new LoggedInUser(userDb.getUsers.get(msg.getName), sendTo(clientId, _))
       sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", gamesAvail))
       println(s"Client '$user' logged in")
-      clients.put(clientId, user)
-
+      
+      
       kickGhosts(user)
+      
+      clients.put(clientId, user)
 
     } else {
       throw new RuntimeException("Login failed")

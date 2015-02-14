@@ -15,10 +15,14 @@ class test_GameHost_func {
 
     val port = TestPorts.getAndIncrement
     val host = new GameHost(TestSaveFile.random(), port).start()
-
+    
+    
     val clientA = new BattleshipClient("a", "testPw", host, new DumbAi)
     val clientB = new BattleshipClient("b", "testPw", host, new DumbAi)
 
+/*    val clientA = new BattleshipClient("a", "testPw", "jenkins.culvertsoft.se", 12345, new DumbAi)
+    val clientB = new BattleshipClient("b", "testPw", "jenkins.culvertsoft.se", 12345, new DumbAi)
+*/
     val futA = Future { clientA.playGame() }
     val futB = Future { clientB.playGame() }
 
@@ -26,9 +30,9 @@ class test_GameHost_func {
 
     clientA.close()
     clientB.close()
+    
     host.signalStop()
     host.join()
-
     assert(!host.isRunning)
 
   }
@@ -37,12 +41,15 @@ class test_GameHost_func {
   def dumbAiGames() {
 
     val host = new GameHost(TestSaveFile.random(), TestPorts.getAndIncrement()).start()
-    val clients = ('a' to 'f').map(new BattleshipClient(_, "pw", host, new DumbAi))
+    val clients = ('a' to 'f').map(new BattleshipClient(_, "testPw", host, new DumbAi))
+  
+   // val clients = ('a' to 'f').map(new BattleshipClient(_, "testPw", "jenkins.culvertsoft.se", 12345, new DumbAi))
 
-    for (i <- 0 until 100)
+    for (i <- 0 until 5)
       TestUtil.await5sec(clients.map(c => async { c.playGame() }))
 
     clients.foreach(_.close())
+ 
     host.signalStop().join()
 
     assert(!host.isRunning)

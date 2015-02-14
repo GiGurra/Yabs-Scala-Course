@@ -30,7 +30,7 @@ class GameHost(
   val bindAddr = ZmqUtil.mkAddr(ifc, port)
 
   private val userDb = DbSaver.readFile(saveFile).getOrElse(new UserDb)
-  private val clients = new HashMap[ClientId, LoggedInUser]
+  private val clients = new HashMap[ConnectionId, LoggedInUser]
   private val ongoingGames = new ArrayBuffer[Game]
   private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER) // Lazy to be initialized by internal thread
 
@@ -54,7 +54,7 @@ class GameHost(
         case Success(_) =>
         case Failure(e) =>
           sendTo(
-            getClientId(zmqMsgParts),
+            getConnectionId(zmqMsgParts),
             new ErrorMessage(s"Failed to handle your message, error: ${e.getMessage}. Check server stdErr for stack trace"))
           e.printStackTrace()
       }
@@ -73,8 +73,8 @@ class GameHost(
     ongoingGames.foreach(_.step())
   }
 
-  private def handleMsg(clientId: ClientId, msg: Message) {
-    clients.get(clientId) match {
+  private def handleMsg(connId: ConnectionId, msg: Message) {
+    clients.get(connId) match {
       case Some(user) =>
         msg match {
           case msg: PlayGame    => handlePlayGame(user, msg.getGame)
@@ -83,7 +83,7 @@ class GameHost(
         }
       case None =>
         msg match {
-          case msg: Checkin => handleNewClient(clientId, msg)
+          case msg: Checkin => handleNewClient(connId, msg)
           case _            => throw new RuntimeException(s"Bad message type: ${msg.getClass}")
         }
     }
@@ -133,14 +133,14 @@ class GameHost(
     ongoingGames.exists(_.isPlayer(user))
   }
 
-  private def findClientId(userName: String): Option[ClientId] = {
+  private def findConnectionId(userName: String): Option[ConnectionId] = {
     clients.find(_._2.dbUser.getName == userName).map(_._1)
   }
 
   private def kickGhost(userName: String) {
     for (
-      clientId <- findClientId(userName);
-      ghost <- clients.remove(clientId);
+      connId <- findConnectionId(userName);
+      ghost <- clients.remove(connId);
       game <- ongoingGames.find(_.isPlayer(ghost))
     ) {
       println(s"Removing ghost: ${ghost}")
@@ -151,14 +151,14 @@ class GameHost(
     }
   }
 
-  private def handleNewClient(clientId: ClientId, msg: Checkin) {
+  private def handleNewClient(connId: ConnectionId, msg: Checkin) {
     if (userDb.login(msg)) {
 
       kickGhost(msg.getName)
 
-      val user = new LoggedInUser(userDb.getUsers.get(msg.getName), sendTo(clientId, _))
-      sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", Seq(GameSelection.BATTLESHIP)))
-      clients.put(clientId, user)
+      val user = new LoggedInUser(userDb.getUsers.get(msg.getName), sendTo(connId, _))
+      sendTo(connId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", Seq(GameSelection.BATTLESHIP)))
+      clients.put(connId, user)
 
     } else {
       throw new RuntimeException("Login failed")
@@ -178,21 +178,21 @@ class GameHost(
   }
 
   private def handleMsg(zmqMsgParts: Seq[Array[Byte]]) {
-    val (clientId, msg) = parse(zmqMsgParts)
-    handleMsg(clientId, msg)
+    val (connId, msg) = parse(zmqMsgParts)
+    handleMsg(connId, msg)
   }
 
-  private def parse(zmqMsgParts: Seq[Array[Byte]]): (ClientId, Message) = {
-    val id = getClientId(zmqMsgParts)
+  private def parse(zmqMsgParts: Seq[Array[Byte]]): (ConnectionId, Message) = {
+    val id = getConnectionId(zmqMsgParts)
     val msg = Serializer.read(zmqMsgParts.last)
     (id, msg)
   }
 
-  private def getClientId(zmqMsgParts: Seq[Array[Byte]]): ClientId = {
-    ClientId(zmqMsgParts.head)
+  private def getConnectionId(zmqMsgParts: Seq[Array[Byte]]): ConnectionId = {
+    ConnectionId(zmqMsgParts.head)
   }
 
-  private def sendTo(id: ClientId, msg: Message) {
+  private def sendTo(id: ConnectionId, msg: Message) {
     Try(socket.route1(id.route, Serializer.write(msg))) match {
       case Success(_) =>
       case Failure(e) => e.printStackTrace()

@@ -151,18 +151,20 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
     userDb.login(msg.getName, msg.getPassword)
   }
 
-  private def removeUser(userName: String): Option[LoggedInUser] = {
-    clients.find(_._2.dbUser.getName == userName).flatMap(p => clients.remove(p._1))
+  private def findClientId(userName: String): Option[ClientId] = {
+    clients.find(_._2.dbUser.getName == userName).map(_._1)
   }
 
-  private def kickGhosts(user: LoggedInUser) {
-    for (ghost <- removeUser(user.dbUser.getName)) {
+  private def kickGhost(user: LoggedInUser) {
+    for (
+      clientId <- findClientId(user.dbUser.getName);
+      ghost <- clients.remove(clientId);
+      game <- ongoingGames.find(_.isPlayer(user))
+    ) {
       println(s"Removing ghost: ${ghost}")
-      for (game <- ongoingGames.find(_.isPlayer(user))) {
-        ongoingGames -= game
-        for (result <- game.leftGame(user)) {
-          userDb.handleGamePlayed(result)
-        }
+      ongoingGames -= game
+      for (result <- game.leftGame(user)) {
+        userDb.handleGamePlayed(result)
       }
     }
   }
@@ -174,7 +176,7 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
       sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", gamesAvail))
       println(s"Client '$user' logged in")
 
-      kickGhosts(user)
+      kickGhost(user)
 
       clients.put(clientId, user)
 

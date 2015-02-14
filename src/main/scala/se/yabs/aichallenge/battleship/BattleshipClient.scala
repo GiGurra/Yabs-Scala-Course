@@ -10,19 +10,17 @@ import se.yabs.aichallenge.client.GameClient
 import se.yabs.aichallenge.host.GameHost
 import se.yabs.aichallenge.util.MGenJavaConversions.seq2ArrayList
 
-class BattleshipClient(name: String, pw: String, zmqAddr: String, ai: => BattleshipAi) {
+class BattleshipClient(name: String, pw: String, zmqAddr: String, aiCtor: => BattleshipAi) {
   def this(name: String, pw: String, addr: String, port: Int, ai: => BattleshipAi) = this(name, pw, s"tcp://$addr:$port", ai)
   def this(name: String, pw: String, host: GameHost, ai: => BattleshipAi) = this(name, pw, "127.0.0.1", host.port, ai)
 
-  private val aiCtor = () => ai
-  private val client = new GameClient(name, pw, zmqAddr)
-  client.checkin()
+  private val client = new GameClient(name, pw, zmqAddr).checkin()
 
   ///////////////////////////////////////////////////////////////////
   /////   API 
 
   def playGame(): GameOver = {
-    val ai = aiCtor()
+    val ai = aiCtor
     client.playGame(GameSelection.BATTLESHIP)
 
     for (

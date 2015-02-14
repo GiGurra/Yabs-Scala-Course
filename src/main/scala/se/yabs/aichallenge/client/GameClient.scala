@@ -23,20 +23,24 @@ class GameClient(val name: String, val password: String, val zmqAddr: String) {
     }
   }
 
-  def checkin() {
+  def checkin(): GameClient = {
     send(new Checkin(name, password));
+    this
   }
 
-  def playGame(gameSelection: GameSelection) {
+  def playGame(gameSelection: GameSelection): GameClient = {
     send(new PlayGame(gameSelection))
+    this
   }
 
-  def close() {
+  def close(): GameClient = {
     socket.close()
+    this
   }
 
-  def send(msg: Message) {
+  def send(msg: Message): GameClient = {
     socket.send(List(Serializer.write(msg)))
+    this
   }
 
 }

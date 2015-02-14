@@ -1,8 +1,5 @@
 package se.yabs.aichallenge.host
 
-import java.util.ArrayList
-
-import scala.collection.JavaConversions.seqAsJavaList
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.HashMap
 import scala.util.Failure
@@ -20,6 +17,8 @@ import se.yabs.aichallenge.WelcomeMessage
 import se.yabs.aichallenge.battleship.BattleshipGame
 import se.yabs.aichallenge.client.serialization.DbSaver
 import se.yabs.aichallenge.client.serialization.Serializer
+import se.yabs.aichallenge.util.MGenJavaConversions.seq2ArrayList
+import se.yabs.aichallenge.util.RepeatingTimer
 import se.yabs.aichallenge.util.SimpleThread
 import se.yabs.aichallenge.util.ZmqSocket
 import se.yabs.aichallenge.util.ZmqUtil
@@ -28,7 +27,6 @@ class GameHost(
   val saveFile: String = "game_results.json",
   val port: Int = GameHost.DEFAULT_PORT,
   val ifc: String = "*") extends SimpleThread[GameHost] {
-
   val bindAddr = ZmqUtil.mkAddr(ifc, port)
 
   private val userDb = DbSaver.readFile(saveFile).getOrElse(new UserDb)
@@ -36,8 +34,7 @@ class GameHost(
   private val ongoingGames = new ArrayBuffer[Game]
   private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER) // Lazy to be initialized by internal thread
 
-  private val saveIntervalSeconds = 1.0
-  private var tLastAutoSave = timeSeconds
+  private val autosaveTimer = new RepeatingTimer(1.0)
 
   protected override def step() {
     handleNewMessages()
@@ -65,13 +62,11 @@ class GameHost(
   }
 
   private def handleAutoSave() {
-    if (timeSeconds > tLastAutoSave + saveIntervalSeconds) {
-      tLastAutoSave = timeSeconds
-      save()
-    }
+    autosaveTimer.step(save())
   }
 
   private def save() {
+    println("Save")
     DbSaver.writeFile(userDb, saveFile)
   }
 
@@ -139,10 +134,6 @@ class GameHost(
     ongoingGames.exists(_.isPlayer(user))
   }
 
-  private def tryLogin(msg: Checkin): Boolean = {
-    userDb.login(msg.getName, msg.getPassword)
-  }
-
   private def findClientId(userName: String): Option[ClientId] = {
     clients.find(_._2.dbUser.getName == userName).map(_._1)
   }
@@ -162,22 +153,17 @@ class GameHost(
   }
 
   private def handleNewClient(clientId: ClientId, msg: Checkin) {
-    if (tryLogin(msg)) {
+    if (userDb.login(msg)) {
 
       kickGhost(msg.getName)
-      
+
       val user = new LoggedInUser(userDb.getUsers.get(msg.getName), sendTo(clientId, _))
-      sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", gamesAvail))
-      println(s"Client '$user' logged in")
+      sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", Seq(GameSelection.BATTLESHIP)))
       clients.put(clientId, user)
 
     } else {
       throw new RuntimeException("Login failed")
     }
-  }
-
-  private def gamesAvail = {
-    new ArrayList(Seq(GameSelection.BATTLESHIP))
   }
 
   private def handleFinishedGames() {

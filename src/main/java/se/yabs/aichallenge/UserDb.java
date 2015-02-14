@@ -86,6 +86,10 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 			return true;
 		}
 	}
+
+	public boolean login(final Checkin checkin) {
+		return login(checkin.getName(), checkin.getPassword());
+	}
 	
 	public void handleGamePlayed(final GamePlayed result) {	
 		m_games.add(result);

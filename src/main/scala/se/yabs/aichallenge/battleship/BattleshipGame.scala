@@ -1,9 +1,6 @@
 package se.yabs.aichallenge.battleship
 
-import java.util.ArrayList
-
 import scala.collection.JavaConversions.asScalaBuffer
-import scala.collection.JavaConversions.seqAsJavaList
 import scala.util.Random
 
 import GamePhase.GAME_OVER
@@ -18,6 +15,7 @@ import se.yabs.aichallenge.Message
 import se.yabs.aichallenge.host.Game
 import se.yabs.aichallenge.host.LoggedInUser
 import se.yabs.aichallenge.util.CountDown
+import se.yabs.aichallenge.util.MGenJavaConversions.seq2ArrayList
 
 object BattleshipGame {
   val NUM_SHIPS = 5
@@ -113,8 +111,8 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
 
     new GamePlayed(
       GameSelection.BATTLESHIP,
-      new java.util.ArrayList(Seq(winner.dbUser.getName, loser.dbUser.getName)),
-      new java.util.ArrayList(Seq(winner.dbUser.getName)))
+      Seq(winner.dbUser.getName, loser.dbUser.getName),
+      Seq(winner.dbUser.getName))
   }
 
   ///////////////////////////////////////////////////////////////////
@@ -214,17 +212,17 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   private def mkPlayer(user: LoggedInUser, team: Team): Player = {
     new Player()
       .setName(user.name)
-      .setShotsFired(new ArrayList)
-      .setShotsReceived(new ArrayList)
+      .setShotsFired(Nil)
+      .setShotsReceived(Nil)
       .setTeam(team)
-      .setShips(new ArrayList)
+      .setShips(Nil)
   }
 
   private def initGameState() {
     gameState.setBluePlayer(mkPlayer(blueUser, Team.BLUE))
     gameState.setRedPlayer(mkPlayer(redUser, Team.RED))
     gameState.setCurrentTeam(curTeam)
-    gameState.setObservers(new ArrayList)
+    gameState.setObservers(Nil)
     gameState.setPhase(GamePhase.JOINING)
   }
 

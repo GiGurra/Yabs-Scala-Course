@@ -22,6 +22,7 @@ import se.yabs.aichallenge.util.ZmqSocket
 import se.yabs.aichallenge.util.ZmqUtil
 import se.yabs.aichallenge.client.serialization.DbSaver
 import scala.reflect.io.File
+import se.yabs.aichallenge.GamePlayed
 
 class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends SimpleThread[GameHost] {
   val bindAddr = ZmqUtil.mkAddr(ifc, port)
@@ -150,23 +151,19 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
     userDb.login(msg.getName, msg.getPassword)
   }
 
-  private def kickGhosts(user: LoggedInUser) {
-    clients.find(_._2.dbUser.getName == user.dbUser.getName) match {
-      case Some(ghost) =>
-        clients.remove(ghost._1)
-        println(s"Removing ghost: ${ghost}")
+  private def removeUser(userName: String): Option[LoggedInUser] = {
+    clients.find(_._2.dbUser.getName == userName).flatMap(p => clients.remove(p._1))
+  }
 
-        ongoingGames.find(_.isPlayer(ghost._2)) match {
-          case Some(gameInProgress) =>
-            ongoingGames -= gameInProgress
-            gameInProgress.leftGame(ghost._2) match {
-              case Some(gameResult) =>
-                userDb.handleGamePlayed(gameResult)
-              case None =>
-            }
-          case None =>
+  private def kickGhosts(user: LoggedInUser) {
+    for (ghost <- removeUser(user.dbUser.getName)) {
+      println(s"Removing ghost: ${ghost}")
+      for (game <- ongoingGames.find(_.isPlayer(user))) {
+        ongoingGames -= game
+        for (result <- game.leftGame(user)) {
+          userDb.handleGamePlayed(result)
         }
-      case None =>
+      }
     }
   }
 

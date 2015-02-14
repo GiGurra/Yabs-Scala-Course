@@ -24,10 +24,13 @@ import se.yabs.aichallenge.client.serialization.DbSaver
 import scala.reflect.io.File
 import se.yabs.aichallenge.GamePlayed
 
-class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends SimpleThread[GameHost] {
+class GameHost(
+  val saveFile: String = "game_results.json",
+  val port: Int = GameHost.DEFAULT_PORT,
+  val ifc: String = "*") extends SimpleThread[GameHost] {
+  
   val bindAddr = ZmqUtil.mkAddr(ifc, port)
 
-  private val saveFile = "game_results.json"
   private val userDb = loadDabase()
   private val clients = new HashMap[ClientId, LoggedInUser]
   private val ongoingGames = new ArrayBuffer[Game]

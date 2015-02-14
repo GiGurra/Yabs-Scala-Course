@@ -3,11 +3,10 @@ package se.yabs.scalacourse
 import scala.async.Async.async
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-
 import org.junit.Test
-
 import se.yabs.aichallenge.battleship.BattleshipClient
 import se.yabs.aichallenge.host.GameHost
+import java.util.UUID
 
 class test_GameHost_func {
 
@@ -15,7 +14,7 @@ class test_GameHost_func {
   def dumbAiGame() {
 
     val port = TestPorts.getAndIncrement
-    val host = new GameHost(port).start()
+    val host = new GameHost(TestSaveFile.random(), port).start()
 
     val clientA = new BattleshipClient("a", "testPw", host, new DumbAi)
     val clientB = new BattleshipClient("b", "testPw", host, new DumbAi)
@@ -37,7 +36,7 @@ class test_GameHost_func {
   @Test
   def dumbAiGames() {
 
-    val host = new GameHost(TestPorts.getAndIncrement()).start()
+    val host = new GameHost(TestSaveFile.random(), TestPorts.getAndIncrement()).start()
     val clients = ('a' to 'f').map(new BattleshipClient(_, "pw", host, new DumbAi))
 
     for (i <- 0 until 100)

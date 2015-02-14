@@ -34,7 +34,7 @@ class GameHost(
   private val ongoingGames = new ArrayBuffer[Game]
   private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER) // Lazy to be initialized by internal thread
 
-  private val autosaveTimer = new RepeatingTimer(1.0)
+  private val autosaveTimer = new RepeatingTimer(2.0)
 
   protected override def step() {
     handleNewMessages()
@@ -66,7 +66,6 @@ class GameHost(
   }
 
   private def save() {
-    println("Save")
     DbSaver.writeFile(userDb, saveFile)
   }
 

@@ -218,7 +218,7 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     val opponent = opponentOf(player)
     phase = GAME_OVER
     println(s"Game over [$redUser vs $blueUser]: $winner won after ${player.getShotsFired.size} moves!")
-    broadCast(new GameOver(player.getName, opponent.getName, "no ships alive", gameState))
+    broadCast(new GameOver(reason, player.getName, opponent.getName, gameState))
 
     this.winner = winner
     this.loser = opponentOf(player.getTeam)

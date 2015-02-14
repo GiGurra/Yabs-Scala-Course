@@ -26,12 +26,12 @@ import scala.reflect.io.File
 class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends SimpleThread[GameHost] {
   val bindAddr = ZmqUtil.mkAddr(ifc, port)
 
-  private val userDb = new UserDb
+  private val saveFile = "game_results.json"
+  private val userDb = loadDabase()
   private val clients = new HashMap[ClientId, LoggedInUser]
   private val ongoingGames = new ArrayBuffer[Game]
   private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER) // Lazy to be initialized by internal thread
 
-  private val saveFile = "game_results.json"
   private val saveIntervalSeconds = 1.0
   private var tLastSave = timeSeconds
 
@@ -68,6 +68,10 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
     if (timeSeconds > tLastSave + saveIntervalSeconds) {
       save()
     }
+  }
+  
+  private def loadDabase(): UserDb = {
+    DbSaver.read(file2String(saveFile))
   }
 
   private def save() {
@@ -225,6 +229,14 @@ class GameHost(val port: Int = GameHost.DEFAULT_PORT, ifc: String = "*") extends
 
   private def timeSeconds: Double = {
     System.nanoTime / 1e9
+  }
+
+  
+  private def file2String(fileName: String): String = {
+    val source = scala.io.Source.fromFile(fileName)
+    val lines = source.mkString
+    source.close()
+    lines
   }
 
 }

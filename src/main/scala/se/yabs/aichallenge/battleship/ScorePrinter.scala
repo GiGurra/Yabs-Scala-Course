@@ -57,7 +57,8 @@ object ScorePrinter {
     }
 
     printScoreLine("name", "wins", "losses", "ratio")
-    for ((name, score) <- scores) {
+    for ((name, score) <- scores.toSeq.sortBy(_._2.wins).reverse) {
+      
       printScoreLine(name, score.wins.toString, score.losses.toString, score.winRatio.toString)
     }
 

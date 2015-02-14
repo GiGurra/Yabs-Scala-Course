@@ -1,17 +1,12 @@
 package se.yabs.aichallenge.battleship
 
-import se.yabs.aichallenge.client.serialization.DbSaver
+import scala.annotation.migration
+import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.mutable.HashMap
-import scala.collection.JavaConversions._
+
+import se.yabs.aichallenge.client.serialization.DbSaver
 
 object ScorePrinter {
-
-  def file2String(fileName: String): String = {
-    val source = scala.io.Source.fromFile(fileName)
-    val lines = source.mkString
-    source.close()
-    lines
-  }
 
   class UserScore {
     private var _wins: Int = 0
@@ -38,7 +33,7 @@ object ScorePrinter {
 
   def main(args: Array[String]) {
 
-    val userDb = DbSaver.read(file2String("game_results.json"))
+    val userDb = DbSaver.readFile("game_results.json").get
     val scores = new HashMap[String, UserScore]
 
     for (gameResult <- userDb.getGames) {
@@ -58,7 +53,7 @@ object ScorePrinter {
 
     printScoreLine("name", "wins", "losses", "ratio")
     for ((name, score) <- scores.toSeq.sortBy(_._2.wins).reverse) {
-      
+
       printScoreLine(name, score.wins.toString, score.losses.toString, score.winRatio.toString)
     }
 

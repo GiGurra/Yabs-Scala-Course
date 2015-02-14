@@ -200,10 +200,6 @@ class GameHost(
     }
   }
 
-  private def timeSeconds: Double = {
-    System.nanoTime / 1e9
-  }
-
 }
 
 object GameHost {

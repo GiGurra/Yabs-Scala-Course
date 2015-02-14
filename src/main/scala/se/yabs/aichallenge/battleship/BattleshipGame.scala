@@ -1,21 +1,23 @@
 package se.yabs.aichallenge.battleship
 
 import java.util.ArrayList
+
 import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConversions.seqAsJavaList
 import scala.util.Random
+
 import GamePhase.GAME_OVER
 import GamePhase.JOINING
 import GamePhase.PLACING_SHIPS
 import GamePhase.PLAYING
 import se.yabs.aichallenge.GameChallengeFound
 import se.yabs.aichallenge.GameMessage
+import se.yabs.aichallenge.GamePlayed
 import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.Message
 import se.yabs.aichallenge.host.Game
 import se.yabs.aichallenge.host.LoggedInUser
-import se.yabs.aichallenge.GamePlayed
-
-import scala.collection.JavaConversions._
+import se.yabs.aichallenge.util.CountDown
 
 object BattleshipGame {
   val NUM_SHIPS = 5
@@ -24,35 +26,29 @@ object BattleshipGame {
 }
 
 class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
-  import GamePhase._
 
   println(s"A new battleship game ($this) is hosted")
 
+  private var phase: GamePhase = JOINING
   private var redUser: LoggedInUser = null
   private var blueUser: LoggedInUser = null
-  private var phase: GamePhase = JOINING
-  private var tLastMove = 0.0
-  private var tStartedSelectingShips = 0.0
   private var winner: LoggedInUser = null
   private var loser: LoggedInUser = null
 
-  private val randomizer = new Random(System.nanoTime)
+  private val countDown = new CountDown(3.0)
   private val gameState = new GameState
 
   ///////////////////////////////////////////////////////////////////
   /////   API 
 
   override def step() {
-    phase match {
-      case PLACING_SHIPS =>
-        if (timeSinceStartedPlacingShips > 3.0)
-          gameOver(opponentOf(curTeam), "Place ships timeout")
-      case PLAYING =>
-        if (timeSinceLastMove > 3.0)
-          gameOver(opponentOf(curTeam), "Make shot timeout")
-      case _ =>
+    if (countDown.isReached) {
+      phase match {
+        case PLACING_SHIPS => gameOver(opponentOf(userOf(curTeam)), "Place ships timeout")
+        case PLAYING       => gameOver(opponentOf(userOf(curTeam)), "Make shot timeout")
+        case _             =>
+      }
     }
-
   }
 
   override def isGameOver(): Boolean = {
@@ -78,14 +74,14 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
       broadCast(new PlaceShipsRequest())
       println(s"Challenge found, $redUser vs $blueUser")
       phase = PLACING_SHIPS
-      tStartedSelectingShips = time()
+      countDown.reset()
 
     }
 
   }
 
   override def canJoin(client: LoggedInUser): Boolean = {
-    !hasTwoUsers
+    phase == JOINING && !hasTwoUsers
   }
 
   override def isPlayer(user: LoggedInUser): Boolean = {
@@ -93,14 +89,9 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   }
 
   override def leftGame(client: LoggedInUser): Option[GamePlayed] = {
-    if (isPlayer(client)) {
-      if (hasTwoUsers) {
-        val player = playerOf(client)
-        gameOver(opponentOf(player.getTeam), s"$client left the game")
-        Some(result())
-      } else {
-        None
-      }
+    if (isPlayer(client) && hasTwoUsers) {
+      gameOver(opponentOf(client), s"$client left the game")
+      Some(result())
     } else {
       None
     }
@@ -137,7 +128,7 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     if (!BattleshipUtil.areValid(msg.getShips))
       throw new RuntimeException("Ship placement not valid!")
 
-    playerOf(user).setShips(msg.getShips)
+    user.setShips(msg.getShips)
 
     if (players.forall(_.getShips.nonEmpty)) {
       phase = PLAYING
@@ -151,20 +142,17 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     if (phase != PLAYING)
       throw new RuntimeException(s"Cannot make shot, game is int phase $phase!")
 
-    val player = playerOf(user)
-    if (player.getTeam != curTeam)
+    if (user.getTeam != curTeam)
       throw new RuntimeException("Cannot make shot, it's not yet your turn!")
 
     if (!BattleshipUtil.isInsideMap(msg.getShot.getPos))
       throw new RuntimeException("Cannot make shot, tried to fire outside the map!")
 
-    val opponent = opponentOf(player)
-
-    val result = BattleshipUtil.fireAt(player, opponent, msg.getShot)
+    val opponent = opponentOf(user)
+    val result = BattleshipUtil.fireAt(user, opponent, msg.getShot)
 
     broadCast(result)
 
-    // Check alive
     if (BattleshipUtil.isAlive(opponent)) {
       nextTurn()
     } else {
@@ -173,71 +161,31 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   }
 
   private def nextTurn() {
+
     val newTeam =
       curTeam match {
         case Team.BLUE => Team.RED
         case Team.RED  => Team.BLUE
         case _         => throw new RuntimeException(s"Bad team: $curTeam")
       }
+
     gameState.setCurrentTeam(newTeam)
 
     userOf(newTeam).send(new MakeShotRequest)
 
-    tLastMove = time()
+    countDown.reset()
 
-  }
-
-  private def time() = System.nanoTime() / 1e9
-  private def timeSinceLastMove() = time - tLastMove
-  private def timeSinceStartedPlacingShips() = time - tStartedSelectingShips
-
-  private def playerOf(user: LoggedInUser): Player = {
-    if (user == redUser) redPlayer
-    else if (user == blueUser) bluePlayer
-    else throw new RuntimeException(s"$user is not in game $this")
-  }
-
-  private def playerOf(team: Team): Player = {
-    team match {
-      case Team.RED  => redPlayer
-      case Team.BLUE => bluePlayer
-      case _         => throw new RuntimeException(s"Bad team: $curTeam")
-    }
-  }
-
-  private def opponentOf(team: Team): LoggedInUser = {
-    team match {
-      case Team.RED  => blueUser
-      case Team.BLUE => redUser
-      case _         => throw new RuntimeException(s"Bad team: $curTeam")
-    }
   }
 
   private def gameOver(winner: LoggedInUser, reason: String) {
-    val player = playerOf(winner)
-    val opponent = opponentOf(player)
+    val opponent = opponentOf(winner)
     phase = GAME_OVER
-    println(s"Game over [$redUser vs $blueUser]: $winner won after ${player.getShotsFired.size} moves!")
-    broadCast(new GameOver(reason, player.getName, opponent.getName, gameState))
+    println(s"Game over [$redUser vs $blueUser]: $winner won after ${winner.getShotsFired.size} moves!")
+    println(s"  reason: $reason")
+    broadCast(new GameOver(reason, winner.getName, opponent.getName, gameState))
 
     this.winner = winner
-    this.loser = opponentOf(player.getTeam)
-  }
-
-  private def userOf(team: Team): LoggedInUser = {
-    team match {
-      case Team.RED  => redUser
-      case Team.BLUE => blueUser
-      case _         => throw new RuntimeException(s"Bad team: $curTeam")
-    }
-  }
-
-  private def opponentOf(player: Player): Player = {
-    player.getTeam match {
-      case Team.RED  => bluePlayer
-      case Team.BLUE => redPlayer
-      case _         => throw new RuntimeException(s"Bad team: $curTeam")
-    }
+    this.loser = opponent
   }
 
   private def broadCast(msg: Message) { users.foreach(_.send(msg)) }
@@ -250,7 +198,7 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
 
   private def curTeam: Team = {
     if (!gameState.hasCurrentTeam) {
-      if (randomizer.nextFloat() > 0.5) {
+      if (Random.nextFloat() > 0.5) {
         gameState.setCurrentTeam(Team.RED)
       } else {
         gameState.setCurrentTeam(Team.BLUE)
@@ -282,6 +230,34 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
 
   private def startGame() {
     nextTurn()
+  }
+
+  ////////////////////
+
+  implicit def toPlayer(client: LoggedInUser): Player = {
+    if (client == redUser) redPlayer
+    else if (client == blueUser) bluePlayer
+    else throw new RuntimeException(s"$client is not in game $this")
+  }
+
+  implicit def toUser(client: Player): LoggedInUser = {
+    userOf(client.getTeam)
+  }
+
+  private def userOf(team: Team): LoggedInUser = {
+    team match {
+      case Team.RED  => redUser
+      case Team.BLUE => blueUser
+      case _         => throw new RuntimeException(s"Bad team: $curTeam")
+    }
+  }
+
+  private def opponentOf(player: Player): Player = {
+    player.getTeam match {
+      case Team.RED  => bluePlayer
+      case Team.BLUE => redPlayer
+      case _         => throw new RuntimeException(s"Bad team: $curTeam")
+    }
   }
 
 }

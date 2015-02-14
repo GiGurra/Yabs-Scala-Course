@@ -2,6 +2,7 @@ package se.yabs.aichallenge.battleship
 
 import java.util.ArrayList
 
+import scala.annotation.tailrec
 import scala.collection.JavaConversions.seqAsJavaList
 
 import se.yabs.aichallenge.ErrorMessage
@@ -31,14 +32,15 @@ class BattleshipClient(name: String, pw: String, zmqAddr: String, ai: => Battles
     val ai = aiCtor()
     gameClient.playGame(GameSelection.BATTLESHIP)
 
-    while (true) {
+    @tailrec
+    def pollResult(): GameOver = {
       poll(ai) match {
-        case Some(gameOver) => return gameOver
-        case _              =>
+        case Some(gameOver) => gameOver
+        case _              => pollResult()
       }
     }
 
-    ???
+    pollResult()
   }
 
   private def poll(ai: BattleshipAi): Option[GameOver] = {

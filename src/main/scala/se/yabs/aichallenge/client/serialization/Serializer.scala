@@ -8,6 +8,7 @@ import se.yabs.aichallenge.ClassRegistry
 import se.yabs.aichallenge.Message
 import se.culvertsoft.mgen.javapack.classes.MGenBase
 import se.yabs.aichallenge.UserDb
+import se.yabs.aichallenge.util.FileUtil
 
 object Serializer {
 
@@ -43,6 +44,14 @@ object DbSaver {
 
   def read(db: String): UserDb = synchronized {
     jsonReader.readObject(db, classOf[UserDb])
+  }
+
+  def readFile(fileName: String): Option[UserDb] = synchronized {
+    FileUtil.textFile2String(fileName).map(read)
+  }
+
+  def writeFile(db: UserDb, fileName: String): Unit = synchronized {
+    FileUtil.string2TextFile(write(db), fileName)
   }
 
 }

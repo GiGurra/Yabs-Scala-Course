@@ -1,12 +1,14 @@
 package se.yabs.aichallenge.host
 
 import java.util.ArrayList
+
 import scala.collection.JavaConversions.seqAsJavaList
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.HashMap
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
+
 import se.yabs.aichallenge.Checkin
 import se.yabs.aichallenge.ErrorMessage
 import se.yabs.aichallenge.GameMessage
@@ -16,42 +18,29 @@ import se.yabs.aichallenge.PlayGame
 import se.yabs.aichallenge.UserDb
 import se.yabs.aichallenge.WelcomeMessage
 import se.yabs.aichallenge.battleship.BattleshipGame
+import se.yabs.aichallenge.client.serialization.DbSaver
 import se.yabs.aichallenge.client.serialization.Serializer
 import se.yabs.aichallenge.util.SimpleThread
 import se.yabs.aichallenge.util.ZmqSocket
 import se.yabs.aichallenge.util.ZmqUtil
-import se.yabs.aichallenge.client.serialization.DbSaver
-import scala.reflect.io.File
-import se.yabs.aichallenge.GamePlayed
 
 class GameHost(
   val saveFile: String = "game_results.json",
   val port: Int = GameHost.DEFAULT_PORT,
   val ifc: String = "*") extends SimpleThread[GameHost] {
-  
+
   val bindAddr = ZmqUtil.mkAddr(ifc, port)
 
-  private val userDb = loadDabase()
+  private val userDb = DbSaver.readFile(saveFile).getOrElse(new UserDb)
   private val clients = new HashMap[ClientId, LoggedInUser]
   private val ongoingGames = new ArrayBuffer[Game]
   private lazy val socket = new ZmqSocket(bindAddr, ZmqSocket.Type.SERVER) // Lazy to be initialized by internal thread
 
   private val saveIntervalSeconds = 1.0
-  private var tLastSave = timeSeconds
+  private var tLastAutoSave = timeSeconds
 
   protected override def step() {
-
-    for (zmqMsgParts <- socket.getNewMessages(100)) {
-      Try(handleMsg(zmqMsgParts)) match {
-        case Success(_) =>
-        case Failure(e) =>
-          sendTo(
-            getClientId(zmqMsgParts),
-            new ErrorMessage(s"Failed to handle your message, error: ${e.getMessage}. Check server stdErr for stack trace"))
-          e.printStackTrace()
-      }
-    }
-
+    handleNewMessages()
     stepGames()
     handleFinishedGames()
     handleAutoSave()
@@ -62,28 +51,28 @@ class GameHost(
     save()
   }
 
-  def results() = {
-    if (isRunning)
-      throw new RuntimeException("Cannot get results while the server is still running")
-    userDb
+  private def handleNewMessages() {
+    for (zmqMsgParts <- socket.getNewMessages(100)) {
+      Try(handleMsg(zmqMsgParts)) match {
+        case Success(_) =>
+        case Failure(e) =>
+          sendTo(
+            getClientId(zmqMsgParts),
+            new ErrorMessage(s"Failed to handle your message, error: ${e.getMessage}. Check server stdErr for stack trace"))
+          e.printStackTrace()
+      }
+    }
   }
 
   private def handleAutoSave() {
-    if (timeSeconds > tLastSave + saveIntervalSeconds) {
+    if (timeSeconds > tLastAutoSave + saveIntervalSeconds) {
+      tLastAutoSave = timeSeconds
       save()
     }
   }
 
-  private def loadDabase(): UserDb = {
-    if (new java.io.File(saveFile).exists)
-      DbSaver.read(file2String(saveFile))
-    else
-      new UserDb
-  }
-
   private def save() {
-    tLastSave = timeSeconds
-    File(saveFile).writeAll(DbSaver.write(userDb))
+    DbSaver.writeFile(userDb, saveFile)
   }
 
   private def stepGames() {
@@ -158,15 +147,15 @@ class GameHost(
     clients.find(_._2.dbUser.getName == userName).map(_._1)
   }
 
-  private def kickGhost(user: LoggedInUser) {
+  private def kickGhost(userName: String) {
     for (
-      clientId <- findClientId(user.dbUser.getName);
+      clientId <- findClientId(userName);
       ghost <- clients.remove(clientId);
-      game <- ongoingGames.find(_.isPlayer(user))
+      game <- ongoingGames.find(_.isPlayer(ghost))
     ) {
       println(s"Removing ghost: ${ghost}")
       ongoingGames -= game
-      for (result <- game.leftGame(user)) {
+      for (result <- game.leftGame(ghost)) {
         userDb.handleGamePlayed(result)
       }
     }
@@ -175,12 +164,11 @@ class GameHost(
   private def handleNewClient(clientId: ClientId, msg: Checkin) {
     if (tryLogin(msg)) {
 
+      kickGhost(msg.getName)
+      
       val user = new LoggedInUser(userDb.getUsers.get(msg.getName), sendTo(clientId, _))
       sendTo(clientId, new WelcomeMessage("Welcome to the yabs ai game server, please select a game", gamesAvail))
       println(s"Client '$user' logged in")
-
-      kickGhost(user)
-
       clients.put(clientId, user)
 
     } else {
@@ -199,8 +187,7 @@ class GameHost(
       ongoingGames ++= notDone
 
       for (g <- done) {
-        val result = g.result()
-        userDb.handleGamePlayed(result);
+        userDb.handleGamePlayed(g.result);
       }
     }
   }
@@ -221,25 +208,14 @@ class GameHost(
   }
 
   private def sendTo(id: ClientId, msg: Message) {
-    Try {
-      val zmqMsg = Serializer.write(msg)
-      socket.send(Seq(id.zmqId.toArray, Array.emptyByteArray, zmqMsg))
-    } match {
+    Try(socket.route1(id.route, Serializer.write(msg))) match {
       case Success(_) =>
-      case Failure(e) =>
-        e.printStackTrace()
+      case Failure(e) => e.printStackTrace()
     }
   }
 
   private def timeSeconds: Double = {
     System.nanoTime / 1e9
-  }
-
-  private def file2String(fileName: String): String = {
-    val source = scala.io.Source.fromFile(fileName)
-    val lines = source.mkString
-    source.close()
-    lines
   }
 
 }

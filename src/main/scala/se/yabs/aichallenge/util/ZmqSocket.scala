@@ -32,6 +32,10 @@ class ZmqSocket(val endPoint: String, val typ: ZmqSocket.SocketType) {
     }
   }
 
+  def route1(connId: Array[Byte], msg: Array[Byte]) {
+    send(Seq(connId, Array.emptyByteArray, msg))
+  }
+
   def getNewMessages(pollTimeMillis: Int): Seq[ZmqMessage] = {
     if (poller.poll(pollTimeMillis) != 0) {
       val out = new ArrayBuffer[ZmqMessage]

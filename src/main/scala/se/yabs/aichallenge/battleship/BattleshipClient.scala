@@ -14,9 +14,7 @@ import se.yabs.aichallenge.host.GameHost
 
 class BattleshipClient(name: String, pw: String, zmqAddr: String, ai: => BattleshipAi) {
   def this(name: String, pw: String, addr: String, port: Int, ai: => BattleshipAi) = this(name, pw, s"tcp://$addr:$port", ai)
-  def this(name: Char, pw: String, addr: String, port: Int, ai: => BattleshipAi) = this(name.toString, pw, s"tcp://$addr:$port", ai)
   def this(name: String, pw: String, host: GameHost, ai: => BattleshipAi) = this(name, pw, "127.0.0.1", host.port, ai)
-  def this(name: Char, pw: String, host: GameHost, ai: => BattleshipAi) = this(name.toString, pw, "127.0.0.1", host.port, ai)
 
   private val aiCtor = () => ai
   private val gameClient = new GameClient(name, pw, zmqAddr)

@@ -205,9 +205,21 @@ object GameHost {
   val DEFAULT_PORT = 12345
 
   def main(args: Array[String]) {
+
     val host = new GameHost()
+
+    Runtime.getRuntime().addShutdownHook(new Thread() {
+      override def run() {
+        println("Shutting down server..")
+        host.signalStop()
+        host.join()
+        println("Server closed normally")
+      }
+    });
+
     host.start()
     host.join()
+
   }
 
 }

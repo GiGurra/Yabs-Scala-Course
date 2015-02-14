@@ -21,7 +21,6 @@ class GameClient(val name: String, val password: String, val zmqAddr: String) {
     } else {
       Nil
     }
-
   }
 
   def checkin() {

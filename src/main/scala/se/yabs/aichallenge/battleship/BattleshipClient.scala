@@ -1,7 +1,5 @@
 package se.yabs.aichallenge.battleship
 
-import scala.annotation.tailrec
-
 import se.yabs.aichallenge.ErrorMessage
 import se.yabs.aichallenge.GameChallengeFound
 import se.yabs.aichallenge.GameSelection

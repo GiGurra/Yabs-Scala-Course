@@ -42,8 +42,8 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
   override def step() {
     if (countDown.isReached) {
       phase match {
-        case PLACING_SHIPS => gameOver(opponentOf(userOf(curTeam)), "Place ships timeout")
-        case PLAYING       => gameOver(opponentOf(userOf(curTeam)), "Make shot timeout")
+        case PLACING_SHIPS => gameOver(opponentOf(curTeam), "Place ships timeout")
+        case PLAYING       => gameOver(opponentOf(curTeam), "Make shot timeout")
         case _             =>
       }
     }
@@ -238,9 +238,7 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     else throw new RuntimeException(s"$client is not in game $this")
   }
 
-  implicit def toUser(client: Player): LoggedInUser = {
-    userOf(client.getTeam)
-  }
+  implicit def toUser(client: Player): LoggedInUser = userOf(client.getTeam)
 
   private def userOf(team: Team): LoggedInUser = {
     team match {
@@ -250,12 +248,14 @@ class BattleshipGame extends Game(GameSelection.BATTLESHIP) {
     }
   }
 
-  private def opponentOf(player: Player): Player = {
-    player.getTeam match {
+  private def opponentOf(team: Team): Player = {
+    team match {
       case Team.RED  => bluePlayer
       case Team.BLUE => redPlayer
       case _         => throw new RuntimeException(s"Bad team: $curTeam")
     }
   }
+
+  private def opponentOf(player: Player): Player = opponentOf(player.getTeam)
 
 }

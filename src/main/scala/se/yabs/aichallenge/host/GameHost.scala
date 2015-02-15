@@ -166,14 +166,9 @@ class GameHost(
   }
 
   private def handleFinishedGames() {
-    if (ongoingGames.exists(_.isGameOver)) {
-      val (done, notDone) = ongoingGames.partition(_.isGameOver)
-      ongoingGames.clear()
-      ongoingGames ++= notDone
-
-      for (g <- done) {
-        userDb.handleGamePlayed(g.result);
-      }
+    for (g <- ongoingGames.filter(_.isGameOver)) {
+      userDb.handleGamePlayed(g.result);
+      ongoingGames -= g
     }
   }
 

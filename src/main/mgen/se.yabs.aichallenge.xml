@@ -12,7 +12,7 @@
 
 		<WelcomeMessage extends="Message">
 			<msg type="String" />
-			<availableGames type="List[GameSelection]" />
+			<availableGames type="List[GameSelection]">[]</availableGames>
 		</WelcomeMessage>
 
 		<ErrorMessage extends="Message">
@@ -35,8 +35,8 @@
 
 		<GamePlayed>
 			<gameType type="GameSelection" />
-			<players type="List[String]" />
-			<winners type="List[String]" />
+			<players type="List[String]" >[]</players>
+			<winners type="List[String]" >[]</winners>
 		</GamePlayed>
 
 		<User>

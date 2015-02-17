@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -20,8 +20,8 @@ namespace battleship {
 Vec2::Vec2() : 
 		m_x(0),
 		m_y(0),
-		_m_x_isSet(false),
-		_m_y_isSet(false) {
+		_m_x_isSet(true),
+		_m_y_isSet(true) {
 }
 
 Vec2::Vec2(const int& x, 
@@ -167,6 +167,8 @@ const std::vector<mgen::Field>& Vec2::_fieldMetadatas() const {
 }
 
 Vec2& Vec2::_setXSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isXSet(mgen::SHALLOW))
+		m_x = 0;
 	if (!state)
 		m_x = 0;
 	_m_x_isSet = state;
@@ -174,6 +176,8 @@ Vec2& Vec2::_setXSet(const bool state, const mgen::FieldSetDepth depth) {
 }
 
 Vec2& Vec2::_setYSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isYSet(mgen::SHALLOW))
+		m_y = 0;
 	if (!state)
 		m_y = 0;
 	_m_y_isSet = state;

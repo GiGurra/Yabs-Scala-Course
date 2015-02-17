@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -22,8 +22,8 @@ import se.culvertsoft.mgen.javapack.util.Marker;
 
 public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* custom_ifcs_begin *//* custom_ifcs_end */ {
 
-	private java.util.HashMap<String, User> m_users;
-	private java.util.ArrayList<GamePlayed> m_games;
+	private java.util.Map<String, User> m_users;
+	private java.util.List<GamePlayed> m_games;
 
 	public UserDb() {
 		super();
@@ -31,17 +31,17 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		m_games = new java.util.ArrayList<GamePlayed>();
 	}
 
-	public UserDb(final java.util.HashMap<String, User> users,
-				final java.util.ArrayList<GamePlayed> games) {
+	public UserDb(final java.util.Map<String, User> users,
+				final java.util.List<GamePlayed> games) {
 		m_users = users;
 		m_games = games;
 	}
 
-	public java.util.HashMap<String, User> getUsers() {
+	public java.util.Map<String, User> getUsers() {
 		return m_users;
 	}
 
-	public java.util.ArrayList<GamePlayed> getGames() {
+	public java.util.List<GamePlayed> getGames() {
 		return m_games;
 	}
 
@@ -63,12 +63,12 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		return this;
 	}
 
-	public UserDb setUsers(final java.util.HashMap<String, User> users) {
+	public UserDb setUsers(final java.util.Map<String, User> users) {
 		m_users = users;
 		return this;
 	}
 
-	public UserDb setGames(final java.util.ArrayList<GamePlayed> games) {
+	public UserDb setGames(final java.util.List<GamePlayed> games) {
 		m_games = games;
 		return this;
 	}
@@ -219,10 +219,10 @@ public class UserDb extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 	                         final Reader reader) throws java.io.IOException {
 		switch(fieldId) {
 			case (_users_ID):
-				setUsers((java.util.HashMap<String, User>)reader.readMapField(_users_METADATA, context));
+				setUsers((java.util.Map<String, User>)reader.readMapField(_users_METADATA, context));
 				return true;
 			case (_games_ID):
-				setGames((java.util.ArrayList<GamePlayed>)reader.readListField(_games_METADATA, context));
+				setGames((java.util.List<GamePlayed>)reader.readListField(_games_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);

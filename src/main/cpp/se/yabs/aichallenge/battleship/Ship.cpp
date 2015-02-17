@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -18,7 +18,8 @@ namespace aichallenge {
 namespace battleship {
 
 Ship::Ship() : 
-		_m_points_isSet(false) {
+		m_points(std::vector<Segment>()),
+		_m_points_isSet(true) {
 }
 
 Ship::Ship(const std::vector<Segment> & points) : 
@@ -133,6 +134,8 @@ const std::vector<mgen::Field>& Ship::_fieldMetadatas() const {
 }
 
 Ship& Ship::_setPointsSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isPointsSet(mgen::SHALLOW))
+		m_points = std::vector<Segment>();
 	if (!state)
 		m_points.clear();
 	else if (depth == mgen::DEEP)

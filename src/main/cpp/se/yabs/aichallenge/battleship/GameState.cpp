@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -18,11 +18,12 @@ namespace aichallenge {
 namespace battleship {
 
 GameState::GameState() : 
+		m_observers(std::vector<Player>()),
 		m_phase(GamePhase_UNKNOWN),
 		m_currentTeam(Team_UNKNOWN),
 		_m_redPlayer_isSet(false),
 		_m_bluePlayer_isSet(false),
-		_m_observers_isSet(false),
+		_m_observers_isSet(true),
 		_m_phase_isSet(false),
 		_m_currentTeam_isSet(false) {
 }
@@ -277,6 +278,8 @@ GameState& GameState::_setBluePlayerSet(const bool state, const mgen::FieldSetDe
 }
 
 GameState& GameState::_setObserversSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isObserversSet(mgen::SHALLOW))
+		m_observers = std::vector<Player>();
 	if (!state)
 		m_observers.clear();
 	else if (depth == mgen::DEEP)

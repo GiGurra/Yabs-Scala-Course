@@ -1,12 +1,13 @@
 package se.yabs.aichallenge.battleship
 
+import scala.collection.JavaConversions.seqAsJavaList
+
 import se.yabs.aichallenge.ErrorMessage
 import se.yabs.aichallenge.GameChallengeFound
 import se.yabs.aichallenge.GameSelection
 import se.yabs.aichallenge.WelcomeMessage
 import se.yabs.aichallenge.client.GameClient
 import se.yabs.aichallenge.host.GameHost
-import se.yabs.aichallenge.util.MGenJavaConversions.seq2ArrayList
 
 class BattleshipClient(name: String, pw: String, zmqAddr: String, aiCtor: => BattleshipAi) {
   def this(name: String, pw: String, addr: String, port: Int, ai: => BattleshipAi) = this(name, pw, s"tcp://$addr:$port", ai)

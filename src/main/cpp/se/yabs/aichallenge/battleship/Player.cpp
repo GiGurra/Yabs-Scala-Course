@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -19,11 +19,14 @@ namespace battleship {
 
 Player::Player() : 
 		m_team(Team_UNKNOWN),
+		m_shotsFired(std::vector<Shot>()),
+		m_shotsReceived(std::vector<Shot>()),
+		m_ships(std::vector<Ship>()),
 		_m_name_isSet(false),
 		_m_team_isSet(false),
-		_m_shotsFired_isSet(false),
-		_m_shotsReceived_isSet(false),
-		_m_ships_isSet(false) {
+		_m_shotsFired_isSet(true),
+		_m_shotsReceived_isSet(true),
+		_m_ships_isSet(true) {
 }
 
 Player::Player(const std::string& name, 
@@ -276,6 +279,8 @@ Player& Player::_setTeamSet(const bool state, const mgen::FieldSetDepth depth) {
 }
 
 Player& Player::_setShotsFiredSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isShotsFiredSet(mgen::SHALLOW))
+		m_shotsFired = std::vector<Shot>();
 	if (!state)
 		m_shotsFired.clear();
 	else if (depth == mgen::DEEP)
@@ -285,6 +290,8 @@ Player& Player::_setShotsFiredSet(const bool state, const mgen::FieldSetDepth de
 }
 
 Player& Player::_setShotsReceivedSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isShotsReceivedSet(mgen::SHALLOW))
+		m_shotsReceived = std::vector<Shot>();
 	if (!state)
 		m_shotsReceived.clear();
 	else if (depth == mgen::DEEP)
@@ -294,6 +301,8 @@ Player& Player::_setShotsReceivedSet(const bool state, const mgen::FieldSetDepth
 }
 
 Player& Player::_setShipsSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isShipsSet(mgen::SHALLOW))
+		m_ships = std::vector<Ship>();
 	if (!state)
 		m_ships.clear();
 	else if (depth == mgen::DEEP)

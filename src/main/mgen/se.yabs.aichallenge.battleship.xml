@@ -19,7 +19,7 @@
 
 		<!-- ********** STATE ********** -->
 		<Ship>
-			<points type="list[Segment]" />
+			<points type="list[Segment]">[]</points>
 		</Ship>
 		<Segment>
 			<alive type="bool">true</alive>
@@ -28,24 +28,24 @@
 		<Player>
 			<name type="string" />
 			<team type="Team" />
-			<shotsFired type="list[Shot]" />
-			<shotsReceived type="list[Shot]" />
-			<ships type="list[Ship]" />
+			<shotsFired type="list[Shot]">[]</shotsFired>
+			<shotsReceived type="list[Shot]">[]</shotsReceived>
+			<ships type="list[Ship]">[]</ships>
 		</Player>
 		<GameState>
 			<redPlayer type="Player" />
 			<bluePlayer type="Player" />
-			<observers type="list[Player]" />
+			<observers type="list[Player]">[]</observers>
 			<phase type="GamePhase" />
 			<currentTeam type="Team" />
 		</GameState>
 		<Vec2>
-			<x type="int32" />
-			<y type="int32" />
+			<x type="int32">0</x>
+			<y type="int32">0</y>
 		</Vec2>
 		<Shot>
-			<pos type="Vec2" />
-			<isHit type="bool" />
+			<pos type="Vec2">{}</pos>
+			<isHit type="bool">false</isHit>
 		</Shot>
 
 
@@ -56,7 +56,7 @@
 
 		<PlaceShipsRequest extends="RequestFromServer" />
 		<PlaceShips extends="BattleshipMessage">
-			<ships type="List[Ship]" />
+			<ships type="List[Ship]">[]</ships>
 		</PlaceShips>
 
 		<MakeShotRequest extends="RequestFromServer" />

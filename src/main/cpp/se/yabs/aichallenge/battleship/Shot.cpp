@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -18,9 +18,10 @@ namespace aichallenge {
 namespace battleship {
 
 Shot::Shot() : 
+		m_pos(Vec2()),
 		m_isHit(false),
-		_m_pos_isSet(false),
-		_m_isHit_isSet(false) {
+		_m_pos_isSet(true),
+		_m_isHit_isSet(true) {
 }
 
 Shot::Shot(const Vec2& pos, 
@@ -166,6 +167,8 @@ const std::vector<mgen::Field>& Shot::_fieldMetadatas() const {
 }
 
 Shot& Shot::_setPosSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isPosSet(mgen::SHALLOW))
+		m_pos = Vec2();
 	if (depth == mgen::DEEP)
 		m_pos._setAllFieldsSet(state, mgen::DEEP);
 	_m_pos_isSet = state;
@@ -173,6 +176,8 @@ Shot& Shot::_setPosSet(const bool state, const mgen::FieldSetDepth depth) {
 }
 
 Shot& Shot::_setIsHitSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isIsHitSet(mgen::SHALLOW))
+		m_isHit = false;
 	if (!state)
 		m_isHit = false;
 	_m_isHit_isSet = state;

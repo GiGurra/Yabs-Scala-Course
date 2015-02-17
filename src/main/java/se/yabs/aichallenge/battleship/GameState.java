@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -24,7 +24,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 
 	private Player m_redPlayer;
 	private Player m_bluePlayer;
-	private java.util.ArrayList<Player> m_observers;
+	private java.util.List<Player> m_observers;
 	private GamePhase m_phase;
 	private Team m_currentTeam;
 
@@ -32,14 +32,14 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		super();
 		m_redPlayer = null;
 		m_bluePlayer = null;
-		m_observers = null;
+		m_observers = new java.util.ArrayList<Player>();
 		m_phase = null;
 		m_currentTeam = null;
 	}
 
 	public GameState(final Player redPlayer,
 				final Player bluePlayer,
-				final java.util.ArrayList<Player> observers,
+				final java.util.List<Player> observers,
 				final GamePhase phase,
 				final Team currentTeam) {
 		m_redPlayer = redPlayer;
@@ -57,7 +57,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		return m_bluePlayer;
 	}
 
-	public java.util.ArrayList<Player> getObservers() {
+	public java.util.List<Player> getObservers() {
 		return m_observers;
 	}
 
@@ -124,7 +124,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 		return this;
 	}
 
-	public GameState setObservers(final java.util.ArrayList<Player> observers) {
+	public GameState setObservers(final java.util.List<Player> observers) {
 		m_observers = observers;
 		return this;
 	}
@@ -290,7 +290,7 @@ public class GameState extends se.culvertsoft.mgen.javapack.classes.MGenBase /* 
 				setBluePlayer((Player)reader.readMgenObjectField(_bluePlayer_METADATA, context));
 				return true;
 			case (_observers_ID):
-				setObservers((java.util.ArrayList<Player>)reader.readListField(_observers_METADATA, context));
+				setObservers((java.util.List<Player>)reader.readListField(_observers_METADATA, context));
 				return true;
 			case (_phase_ID):
 				setPhase((GamePhase)reader.readEnumField(_phase_METADATA, context));

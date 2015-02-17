@@ -1,5 +1,6 @@
 package se.yabs.aichallenge.host
 
+import scala.collection.JavaConversions.seqAsJavaList
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.HashMap
 import scala.util.Failure
@@ -17,7 +18,6 @@ import se.yabs.aichallenge.WelcomeMessage
 import se.yabs.aichallenge.battleship.BattleshipGame
 import se.yabs.aichallenge.client.serialization.DbSaver
 import se.yabs.aichallenge.client.serialization.Serializer
-import se.yabs.aichallenge.util.MGenJavaConversions.seq2ArrayList
 import se.yabs.aichallenge.util.RepeatingTimer
 import se.yabs.aichallenge.util.SimpleThread
 import se.yabs.aichallenge.util.ZmqSocket

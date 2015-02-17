@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -24,24 +24,24 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 
 	private String m_name;
 	private Team m_team;
-	private java.util.ArrayList<Shot> m_shotsFired;
-	private java.util.ArrayList<Shot> m_shotsReceived;
-	private java.util.ArrayList<Ship> m_ships;
+	private java.util.List<Shot> m_shotsFired;
+	private java.util.List<Shot> m_shotsReceived;
+	private java.util.List<Ship> m_ships;
 
 	public Player() {
 		super();
 		m_name = null;
 		m_team = null;
-		m_shotsFired = null;
-		m_shotsReceived = null;
-		m_ships = null;
+		m_shotsFired = new java.util.ArrayList<Shot>();
+		m_shotsReceived = new java.util.ArrayList<Shot>();
+		m_ships = new java.util.ArrayList<Ship>();
 	}
 
 	public Player(final String name,
 				final Team team,
-				final java.util.ArrayList<Shot> shotsFired,
-				final java.util.ArrayList<Shot> shotsReceived,
-				final java.util.ArrayList<Ship> ships) {
+				final java.util.List<Shot> shotsFired,
+				final java.util.List<Shot> shotsReceived,
+				final java.util.List<Ship> ships) {
 		m_name = name;
 		m_team = team;
 		m_shotsFired = shotsFired;
@@ -57,15 +57,15 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		return m_team;
 	}
 
-	public java.util.ArrayList<Shot> getShotsFired() {
+	public java.util.List<Shot> getShotsFired() {
 		return m_shotsFired;
 	}
 
-	public java.util.ArrayList<Shot> getShotsReceived() {
+	public java.util.List<Shot> getShotsReceived() {
 		return m_shotsReceived;
 	}
 
-	public java.util.ArrayList<Ship> getShips() {
+	public java.util.List<Ship> getShips() {
 		return m_ships;
 	}
 
@@ -124,17 +124,17 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 		return this;
 	}
 
-	public Player setShotsFired(final java.util.ArrayList<Shot> shotsFired) {
+	public Player setShotsFired(final java.util.List<Shot> shotsFired) {
 		m_shotsFired = shotsFired;
 		return this;
 	}
 
-	public Player setShotsReceived(final java.util.ArrayList<Shot> shotsReceived) {
+	public Player setShotsReceived(final java.util.List<Shot> shotsReceived) {
 		m_shotsReceived = shotsReceived;
 		return this;
 	}
 
-	public Player setShips(final java.util.ArrayList<Ship> ships) {
+	public Player setShips(final java.util.List<Ship> ships) {
 		m_ships = ships;
 		return this;
 	}
@@ -290,13 +290,13 @@ public class Player extends se.culvertsoft.mgen.javapack.classes.MGenBase /* cus
 				setTeam((Team)reader.readEnumField(_team_METADATA, context));
 				return true;
 			case (_shotsFired_ID):
-				setShotsFired((java.util.ArrayList<Shot>)reader.readListField(_shotsFired_METADATA, context));
+				setShotsFired((java.util.List<Shot>)reader.readListField(_shotsFired_METADATA, context));
 				return true;
 			case (_shotsReceived_ID):
-				setShotsReceived((java.util.ArrayList<Shot>)reader.readListField(_shotsReceived_METADATA, context));
+				setShotsReceived((java.util.List<Shot>)reader.readListField(_shotsReceived_METADATA, context));
 				return true;
 			case (_ships_ID):
-				setShips((java.util.ArrayList<Ship>)reader.readListField(_ships_METADATA, context));
+				setShips((java.util.List<Ship>)reader.readListField(_ships_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);

@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -21,16 +21,16 @@ import se.culvertsoft.mgen.javapack.util.EqualityTester;
 public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifcs_end */ {
 
 	private String m_msg;
-	private java.util.ArrayList<GameSelection> m_availableGames;
+	private java.util.List<GameSelection> m_availableGames;
 
 	public WelcomeMessage() {
 		super();
 		m_msg = null;
-		m_availableGames = null;
+		m_availableGames = new java.util.ArrayList<GameSelection>();
 	}
 
 	public WelcomeMessage(final String msg,
-				final java.util.ArrayList<GameSelection> availableGames) {
+				final java.util.List<GameSelection> availableGames) {
 		m_msg = msg;
 		m_availableGames = availableGames;
 	}
@@ -39,7 +39,7 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 		return m_msg;
 	}
 
-	public java.util.ArrayList<GameSelection> getAvailableGames() {
+	public java.util.List<GameSelection> getAvailableGames() {
 		return m_availableGames;
 	}
 
@@ -66,7 +66,7 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 		return this;
 	}
 
-	public WelcomeMessage setAvailableGames(final java.util.ArrayList<GameSelection> availableGames) {
+	public WelcomeMessage setAvailableGames(final java.util.List<GameSelection> availableGames) {
 		m_availableGames = availableGames;
 		return this;
 	}
@@ -198,7 +198,7 @@ public class WelcomeMessage extends Message /* custom_ifcs_begin *//* custom_ifc
 				setMsg((String)reader.readStringField(_msg_METADATA, context));
 				return true;
 			case (_availableGames_ID):
-				setAvailableGames((java.util.ArrayList<GameSelection>)reader.readListField(_availableGames_METADATA, context));
+				setAvailableGames((java.util.List<GameSelection>)reader.readListField(_availableGames_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);

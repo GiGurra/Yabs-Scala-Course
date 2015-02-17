@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -17,8 +17,9 @@ namespace yabs {
 namespace aichallenge {
 
 WelcomeMessage::WelcomeMessage() : 
+		m_availableGames(std::vector<GameSelection>()),
 		_m_msg_isSet(false),
-		_m_availableGames_isSet(false) {
+		_m_availableGames_isSet(true) {
 }
 
 WelcomeMessage::WelcomeMessage(const std::string& msg, 
@@ -171,6 +172,8 @@ WelcomeMessage& WelcomeMessage::_setMsgSet(const bool state, const mgen::FieldSe
 }
 
 WelcomeMessage& WelcomeMessage::_setAvailableGamesSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isAvailableGamesSet(mgen::SHALLOW))
+		m_availableGames = std::vector<GameSelection>();
 	if (!state)
 		m_availableGames.clear();
 	else if (depth == mgen::DEEP)

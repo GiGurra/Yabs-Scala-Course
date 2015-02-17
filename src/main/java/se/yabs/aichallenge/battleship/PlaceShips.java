@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -22,18 +22,18 @@ import se.culvertsoft.mgen.javapack.util.Marker;
 
 public class PlaceShips extends BattleshipMessage /* custom_ifcs_begin *//* custom_ifcs_end */ {
 
-	private java.util.ArrayList<Ship> m_ships;
+	private java.util.List<Ship> m_ships;
 
 	public PlaceShips() {
 		super();
-		m_ships = null;
+		m_ships = new java.util.ArrayList<Ship>();
 	}
 
-	public PlaceShips(final java.util.ArrayList<Ship> ships) {
+	public PlaceShips(final java.util.List<Ship> ships) {
 		m_ships = ships;
 	}
 
-	public java.util.ArrayList<Ship> getShips() {
+	public java.util.List<Ship> getShips() {
 		return m_ships;
 	}
 
@@ -46,7 +46,7 @@ public class PlaceShips extends BattleshipMessage /* custom_ifcs_begin *//* cust
 		return this;
 	}
 
-	public PlaceShips setShips(final java.util.ArrayList<Ship> ships) {
+	public PlaceShips setShips(final java.util.List<Ship> ships) {
 		m_ships = ships;
 		return this;
 	}
@@ -168,7 +168,7 @@ public class PlaceShips extends BattleshipMessage /* custom_ifcs_begin *//* cust
 	                         final Reader reader) throws java.io.IOException {
 		switch(fieldId) {
 			case (_ships_ID):
-				setShips((java.util.ArrayList<Ship>)reader.readListField(_ships_METADATA, context));
+				setShips((java.util.List<Ship>)reader.readListField(_ships_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);

@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -21,19 +21,19 @@ import se.culvertsoft.mgen.javapack.util.EqualityTester;
 public class GamePlayed extends se.culvertsoft.mgen.javapack.classes.MGenBase /* custom_ifcs_begin *//* custom_ifcs_end */ {
 
 	private GameSelection m_gameType;
-	private java.util.ArrayList<String> m_players;
-	private java.util.ArrayList<String> m_winners;
+	private java.util.List<String> m_players;
+	private java.util.List<String> m_winners;
 
 	public GamePlayed() {
 		super();
 		m_gameType = null;
-		m_players = null;
-		m_winners = null;
+		m_players = new java.util.ArrayList<String>();
+		m_winners = new java.util.ArrayList<String>();
 	}
 
 	public GamePlayed(final GameSelection gameType,
-				final java.util.ArrayList<String> players,
-				final java.util.ArrayList<String> winners) {
+				final java.util.List<String> players,
+				final java.util.List<String> winners) {
 		m_gameType = gameType;
 		m_players = players;
 		m_winners = winners;
@@ -43,11 +43,11 @@ public class GamePlayed extends se.culvertsoft.mgen.javapack.classes.MGenBase /*
 		return m_gameType;
 	}
 
-	public java.util.ArrayList<String> getPlayers() {
+	public java.util.List<String> getPlayers() {
 		return m_players;
 	}
 
-	public java.util.ArrayList<String> getWinners() {
+	public java.util.List<String> getWinners() {
 		return m_winners;
 	}
 
@@ -83,12 +83,12 @@ public class GamePlayed extends se.culvertsoft.mgen.javapack.classes.MGenBase /*
 		return this;
 	}
 
-	public GamePlayed setPlayers(final java.util.ArrayList<String> players) {
+	public GamePlayed setPlayers(final java.util.List<String> players) {
 		m_players = players;
 		return this;
 	}
 
-	public GamePlayed setWinners(final java.util.ArrayList<String> winners) {
+	public GamePlayed setWinners(final java.util.List<String> winners) {
 		m_winners = winners;
 		return this;
 	}
@@ -227,10 +227,10 @@ public class GamePlayed extends se.culvertsoft.mgen.javapack.classes.MGenBase /*
 				setGameType((GameSelection)reader.readEnumField(_gameType_METADATA, context));
 				return true;
 			case (_players_ID):
-				setPlayers((java.util.ArrayList<String>)reader.readListField(_players_METADATA, context));
+				setPlayers((java.util.List<String>)reader.readListField(_players_METADATA, context));
 				return true;
 			case (_winners_ID):
-				setWinners((java.util.ArrayList<String>)reader.readListField(_winners_METADATA, context));
+				setWinners((java.util.List<String>)reader.readListField(_winners_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);

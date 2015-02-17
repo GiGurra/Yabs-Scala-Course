@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -22,18 +22,18 @@ import se.culvertsoft.mgen.javapack.util.Marker;
 
 public class Ship extends se.culvertsoft.mgen.javapack.classes.MGenBase /* custom_ifcs_begin *//* custom_ifcs_end */ {
 
-	private java.util.ArrayList<Segment> m_points;
+	private java.util.List<Segment> m_points;
 
 	public Ship() {
 		super();
-		m_points = null;
+		m_points = new java.util.ArrayList<Segment>();
 	}
 
-	public Ship(final java.util.ArrayList<Segment> points) {
+	public Ship(final java.util.List<Segment> points) {
 		m_points = points;
 	}
 
-	public java.util.ArrayList<Segment> getPoints() {
+	public java.util.List<Segment> getPoints() {
 		return m_points;
 	}
 
@@ -46,7 +46,7 @@ public class Ship extends se.culvertsoft.mgen.javapack.classes.MGenBase /* custo
 		return this;
 	}
 
-	public Ship setPoints(final java.util.ArrayList<Segment> points) {
+	public Ship setPoints(final java.util.List<Segment> points) {
 		m_points = points;
 		return this;
 	}
@@ -168,7 +168,7 @@ public class Ship extends se.culvertsoft.mgen.javapack.classes.MGenBase /* custo
 	                         final Reader reader) throws java.io.IOException {
 		switch(fieldId) {
 			case (_points_ID):
-				setPoints((java.util.ArrayList<Segment>)reader.readListField(_points_METADATA, context));
+				setPoints((java.util.List<Segment>)reader.readListField(_points_METADATA, context));
 				return true;
 			default:
 				reader.handleUnknownField(null, context);

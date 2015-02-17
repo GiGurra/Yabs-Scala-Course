@@ -2,7 +2,7 @@
  ********************************************************************************************************************
  ********************************************************************************************************************
            *****                                                                                      *****
-           *****               GENERATED WITH MGEN (SNAPSHOT 2015-01-04 07:33:42 -0500)               *****
+           *****               GENERATED WITH MGEN (SNAPSHOT 2015-02-16 21:38:45 +0100)               *****
            *****                                                                                      *****		
  ********************************************************************************************************************
  ********************************************************************************************************************/
@@ -18,9 +18,11 @@ namespace aichallenge {
 
 GamePlayed::GamePlayed() : 
 		m_gameType(GameSelection_UNKNOWN),
+		m_players(std::vector<std::string>()),
+		m_winners(std::vector<std::string>()),
 		_m_gameType_isSet(false),
-		_m_players_isSet(false),
-		_m_winners_isSet(false) {
+		_m_players_isSet(true),
+		_m_winners_isSet(true) {
 }
 
 GamePlayed::GamePlayed(const GameSelection& gameType, 
@@ -204,6 +206,8 @@ GamePlayed& GamePlayed::_setGameTypeSet(const bool state, const mgen::FieldSetDe
 }
 
 GamePlayed& GamePlayed::_setPlayersSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isPlayersSet(mgen::SHALLOW))
+		m_players = std::vector<std::string>();
 	if (!state)
 		m_players.clear();
 	else if (depth == mgen::DEEP)
@@ -213,6 +217,8 @@ GamePlayed& GamePlayed::_setPlayersSet(const bool state, const mgen::FieldSetDep
 }
 
 GamePlayed& GamePlayed::_setWinnersSet(const bool state, const mgen::FieldSetDepth depth) {
+	if (state && !_isWinnersSet(mgen::SHALLOW))
+		m_winners = std::vector<std::string>();
 	if (!state)
 		m_winners.clear();
 	else if (depth == mgen::DEEP)

@@ -45,7 +45,8 @@ object DSLxs {
   val printer = new PrettyPrinter(80, 2)          //> printer  : scala.xml.PrettyPrinter = scala.xml.PrettyPrinter@6767c1fc
   val xmlPrettyString = printer.format(mapAsXml)  //> xmlPrettyString  : String = <MyRoot>
                                                   //|   <A>12345</A>
-                                                  //|   <B>the-B</B>
+
+  println(printer)
                                                   //| </MyRoot>
  
 }

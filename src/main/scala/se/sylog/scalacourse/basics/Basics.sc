@@ -21,9 +21,7 @@ for (i <- 0 until 10)
 
 
 // Function
-def double(myInput: String): String = {
-  myInput + myInput
-}
+def double(myInput: String): String = myInput + myInput
 val doubleHej = double("Hej")
 
 

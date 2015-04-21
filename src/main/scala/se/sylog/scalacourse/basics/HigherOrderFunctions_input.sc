@@ -21,7 +21,7 @@ calc(1, System.currentTimeMillis)
 //	Functions are first class citizens.
 // 	We can create them when the code is executed, not just written beforehand
 
-calc(1, () => Random.nextLong())
+calc(1, () => 2)
 
 
 

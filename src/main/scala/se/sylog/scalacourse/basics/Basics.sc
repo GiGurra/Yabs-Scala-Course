@@ -1,8 +1,6 @@
 
 // Printing to console
 println("Hello")
-println("Yo")
-
 
 
 
@@ -14,15 +12,15 @@ y = 3
 
 
 // Loops
-for (i <- 0 until 10)
+for (i <- 0 until 3)
   println("Hello")
 
 
 
 
 // Function
-def double(myInput: String): String = myInput + myInput
-val doubleHej = double("Hej")
+def doubl(myInput: String): String = myInput + myInput
+val doubleHej = doubl("Hej")
 
 
 

@@ -1,6 +1,6 @@
-import java.lang.System._
+import java.lang.System
 
-import scala.util.Random._
+import scala.util.Random
 
 
 
@@ -12,10 +12,8 @@ def calc(x: Long, f: () => Long): Long = {
   x * f()
 }
 
-val myResult1 = calc(1, nextLong)
-val myResult2 = calc(1, () => 1L)
-val myResult3 = calc(1, currentTimeMillis)
-
+calc(1, Random.nextLong)
+calc(1, System.currentTimeMillis)
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -23,13 +21,13 @@ val myResult3 = calc(1, currentTimeMillis)
 //	Functions are first class citizens.
 // 	We can create them when the code is executed, not just written beforehand
 
-val myResult1b = calc(1, () => nextLong())
+calc(1, () => Random.nextLong())
 
 
 
 // In fact we can store the function in a value/variable as well
-val storedInval = () => nextLong()
-var storedInVar = () => nextLong()
+val storedInval = () => Random.nextLong()
+var storedInVar = () => Random.nextLong()
 
 
 

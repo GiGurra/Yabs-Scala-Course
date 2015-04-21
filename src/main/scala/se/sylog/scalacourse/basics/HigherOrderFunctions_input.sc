@@ -11,11 +11,9 @@ import scala.util.Random._
 def calc(x: Long, f: () => Long): Long = {
   x * f()
 }
-val bad = () => 1L
-val time = () => currentTimeMillis() * 2
 
 val myResult1 = calc(1, nextLong)
-val myResult2 = calc(1, bad)
+val myResult2 = calc(1, () => 1L)
 val myResult3 = calc(1, currentTimeMillis)
 
 
